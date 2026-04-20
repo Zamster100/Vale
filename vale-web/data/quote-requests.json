@@ -1,0 +1,98 @@
+[
+  {
+    "id": "qr_1776405199942",
+    "fdId": "fd_001",
+    "fdName": "Smith & Sons Funerals",
+    "familyName": "Zamir Kakar",
+    "email": "zamirkakar@gmail.com",
+    "phone": "6479135629",
+    "serviceType": "cremation",
+    "message": "",
+    "status": "pending",
+    "createdAt": "2026-04-17T05:53:19.942Z"
+  },
+  {
+    "id": "qr_001",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "Sarah Jones",
+    "email": "sarah.jones@gmail.com",
+    "phone": "07700 900 123",
+    "serviceType": "cremation",
+    "message": "We are looking for an affordable cremation for my mother. She passed yesterday.",
+    "status": "pending",
+    "createdAt": "2026-04-17T08:30:00.000Z"
+  },
+  {
+    "id": "qr_002",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "Michael Thompson",
+    "email": "m.thompson@outlook.com",
+    "phone": "07700 900 456",
+    "serviceType": "burial",
+    "message": "Traditional burial for my father. He was Catholic — religious service is important.",
+    "status": "pending",
+    "createdAt": "2026-04-17T04:30:00.000Z"
+  },
+  {
+    "id": "qr_003",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "Priya Sharma",
+    "email": "priya.s@hotmail.co.uk",
+    "phone": "07700 900 789",
+    "serviceType": "direct_cremation",
+    "message": "Looking for a simple, dignified direct cremation. Budget is limited.",
+    "status": "contacted",
+    "createdAt": "2026-04-16T15:14:00.000Z"
+  },
+  {
+    "id": "qr_004",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "David & Carol Reed",
+    "email": "david.reed@email.co.uk",
+    "phone": "07700 901 234",
+    "serviceType": "cremation",
+    "message": "",
+    "status": "booked",
+    "createdAt": "2026-04-15T11:00:00.000Z"
+  },
+  {
+    "id": "qr_005",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "Janet Williams",
+    "email": "janet.williams@btinternet.com",
+    "phone": "07700 901 567",
+    "serviceType": "burial",
+    "message": "My husband always wanted to be buried near family. Can you advise on plots?",
+    "status": "contacted",
+    "createdAt": "2026-04-14T09:30:00.000Z"
+  },
+  {
+    "id": "qr_006",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "Olu Adeyemi",
+    "email": "olu.a@yahoo.co.uk",
+    "phone": "07700 901 890",
+    "serviceType": "repatriation",
+    "message": "Need to repatriate my grandmother to Nigeria. Please advise on process and cost.",
+    "status": "booked",
+    "createdAt": "2026-04-13T14:00:00.000Z"
+  },
+  {
+    "id": "qr_007",
+    "fdId": "fd_001",
+    "fdName": "Westminster Memorial Services",
+    "familyName": "Anonymous",
+    "email": "info-request@vale.co.uk",
+    "phone": "",
+    "serviceType": "direct_cremation",
+    "message": "Please send pricing information.",
+    "status": "declined",
+    "createdAt": "2026-04-12T10:00:00.000Z"
+  }
+]
