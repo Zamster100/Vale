@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
 
 const FOOTER_LINKS = {
@@ -32,23 +31,28 @@ export default function PublicLayout({
       <Navigation />
       <main className="flex-1">{children}</main>
 
-      <footer className="bg-[#1a3a52] text-white mt-16">
+      <footer style={{ background: "#C5D2DC", borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
         <div className="max-w-6xl mx-auto px-6 py-12">
           {/* Top row */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-white/10">
+          <div
+            className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10"
+            style={{ borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}
+          >
             {/* Brand */}
             <div className="md:col-span-1">
               <Link
                 href="/"
-                className="flex items-center gap-2 mb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] rounded w-fit"
+                className="inline-block mb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] rounded"
                 aria-label="VALE homepage"
               >
-                <div className="w-7 h-7 bg-white/10 rounded flex items-center justify-center" aria-hidden="true">
-                  <MapPin className="w-3.5 h-3.5 text-[#d4a574]" />
-                </div>
-                <span className="text-lg font-bold tracking-tight">VALE</span>
+                <span
+                  className="text-2xl tracking-tight"
+                  style={{ fontFamily: "var(--font-instrument-serif)", color: "#5D3A7A" }}
+                >
+                  VALE
+                </span>
               </Link>
-              <p className="text-sm text-[#b8cdd9] leading-relaxed max-w-[200px]">
+              <p className="text-sm leading-relaxed max-w-[200px]" style={{ color: "#8FA0B0" }}>
                 Transparent prices. Genuine choice. Dignity for every family.
               </p>
             </div>
@@ -56,7 +60,10 @@ export default function PublicLayout({
             {/* Link columns */}
             {Object.entries(FOOTER_LINKS).map(([section, links]) => (
               <div key={section}>
-                <p className="text-xs font-semibold uppercase tracking-wider text-white mb-4">
+                <p
+                  className="text-xs font-medium uppercase tracking-wider mb-4"
+                  style={{ color: "#5D3A7A" }}
+                >
                   {section}
                 </p>
                 <ul className="space-y-2.5">
@@ -64,7 +71,8 @@ export default function PublicLayout({
                     <li key={label}>
                       <Link
                         href={href}
-                        className="text-sm text-[#b8cdd9] hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] rounded"
+                        className="text-sm transition-colors hover:opacity-75 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] rounded"
+                        style={{ color: "#8A5FAA" }}
                       >
                         {label}
                       </Link>
@@ -77,10 +85,10 @@ export default function PublicLayout({
 
           {/* Bottom row */}
           <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-xs text-[#6b7280]">
+            <p className="text-xs" style={{ color: "#8FA0B0" }}>
               © 2026 VALE. All rights reserved. Registered in England &amp; Wales.
             </p>
-            <p className="text-xs text-[#6b7280]">
+            <p className="text-xs" style={{ color: "#8FA0B0" }}>
               Helping families navigate one of life&apos;s hardest moments.
             </p>
           </div>

@@ -2,21 +2,13 @@
 
 import { useState } from "react";
 import { Phone, Mail, ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
-import {
-  type QuoteRequest,
-  type QuoteStatus,
-  SERVICE_TYPE_LABELS,
-  timeAgo,
-} from "@/lib/adminData";
+import { type QuoteRequest, type QuoteStatus, SERVICE_TYPE_LABELS, timeAgo } from "@/lib/adminData";
 
-const STATUS_STYLES: Record<
-  QuoteStatus,
-  { bg: string; text: string; label: string }
-> = {
-  pending: { bg: "bg-[#faf6f1]", text: "text-[#92400e]", label: "New" },
-  contacted: { bg: "bg-[#f0fdf4]", text: "text-[#059669]", label: "Contacted" },
-  booked: { bg: "bg-[#eff6ff]", text: "text-[#1d4ed8]", label: "Booked" },
-  declined: { bg: "bg-[#f9fafb]", text: "text-[#6b7280]", label: "Declined" },
+const STATUS_STYLES: Record<QuoteStatus, { bg: string; text: string; label: string }> = {
+  pending: { bg: "rgba(226,107,94,0.1)", text: "#C95548", label: "New" },
+  contacted: { bg: "rgba(138,95,170,0.1)", text: "#5D3A7A", label: "Contacted" },
+  booked: { bg: "rgba(123,168,74,0.15)", text: "#5A8A30", label: "Booked" },
+  declined: { bg: "rgba(197,210,220,0.3)", text: "#8FA0B0", label: "Declined" },
 };
 
 async function patchStatus(id: string, status: QuoteStatus): Promise<void> {
@@ -36,99 +28,91 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
 
   const handleStatus = async (next: QuoteStatus) => {
     setStatus(next);
-    setStatusAnnounce(
-      `${init.familyName} marked as ${STATUS_STYLES[next].label.toLowerCase()}`
-    );
+    setStatusAnnounce(`${init.familyName} marked as ${STATUS_STYLES[next].label.toLowerCase()}`);
     await patchStatus(init.id, next);
   };
 
   return (
     <div
-      className={`border rounded-lg overflow-hidden transition-all ${
-        status === "pending" ? "border-[#d4a574]" : "border-[#e5e7eb]"
-      }`}
+      className="rounded-2xl overflow-hidden transition-all"
+      style={{
+        border: status === "pending" ? "1.5px solid rgba(226,107,94,0.4)" : "0.5px solid rgba(143,160,176,0.3)",
+      }}
     >
-      {/* Hidden live region for status changes */}
-      <p className="sr-only" aria-live="polite" aria-atomic="true">
-        {statusAnnounce}
-      </p>
+      <p className="sr-only" aria-live="polite" aria-atomic="true">{statusAnnounce}</p>
 
-      {/* Card header */}
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
         aria-expanded={expanded}
-        className="w-full flex items-center justify-between gap-4 p-4 bg-white hover:bg-[#f9fafb] transition-colors text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d4a574]"
+        className="w-full flex items-center justify-between gap-4 p-4 text-left focus:outline-none hover:opacity-90 transition-opacity"
+        style={{ background: "white" }}
       >
         <div className="flex items-center gap-3 min-w-0">
           {status === "pending" && (
-            <span
-              className="w-2 h-2 rounded-full bg-[#d4a574] shrink-0"
-              aria-hidden="true"
-            />
+            <span className="w-2 h-2 rounded-full shrink-0" aria-hidden="true" style={{ background: "#5AAE55" }} />
           )}
           <div className="min-w-0">
-            <p className="font-semibold text-sm text-[#111827] truncate">
-              {init.familyName}
-            </p>
-            <p className="text-xs text-[#6b7280]">
-              {SERVICE_TYPE_LABELS[init.serviceType] ?? init.serviceType}
-              {" · "}
-              {timeAgo(init.createdAt)}
+            <p className="font-semibold text-sm truncate" style={{ color: "#3F5E2C" }}>{init.familyName}</p>
+            <p className="text-xs" style={{ color: "#8FA0B0" }}>
+              {SERVICE_TYPE_LABELS[init.serviceType] ?? init.serviceType}{" · "}{timeAgo(init.createdAt)}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <span
-            className={`text-xs font-semibold px-2.5 py-1 rounded-full ${style.bg} ${style.text}`}
+            className="text-xs font-semibold px-2.5 py-1 rounded-full"
+            style={{ background: style.bg, color: style.text }}
           >
             {style.label}
           </span>
-          {expanded ? (
-            <ChevronUp className="w-4 h-4 text-[#6b7280]" aria-hidden="true" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-[#6b7280]" aria-hidden="true" />
-          )}
+          {expanded
+            ? <ChevronUp className="w-4 h-4" aria-hidden="true" style={{ color: "#8FA0B0" }} />
+            : <ChevronDown className="w-4 h-4" aria-hidden="true" style={{ color: "#8FA0B0" }} />
+          }
         </div>
       </button>
 
-      {/* Expanded detail */}
       {expanded && (
-        <div className="border-t border-[#e5e7eb] bg-[#f9fafb] p-4">
-          {/* Quick contact actions */}
+        <div className="p-4" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)", background: "#F5F1E8" }}>
           <div className="flex flex-wrap gap-2 mb-4">
             <a
               href={`mailto:${init.email}`}
-              className="flex items-center gap-1.5 text-sm text-[#1a3a52] hover:underline min-h-[44px] px-3 py-2 bg-white border border-[#e5e7eb] rounded hover:bg-[#f3f4f6] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574]"
+              className="flex items-center gap-1.5 text-sm hover:underline min-h-[44px] px-3 py-2 rounded-xl hover:opacity-80 transition-opacity focus:outline-none"
+              style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)", color: "#8A5FAA" }}
             >
-              <Mail className="w-3.5 h-3.5 text-[#6b7280] shrink-0" aria-hidden="true" />
+              <Mail className="w-3.5 h-3.5 shrink-0" aria-hidden="true" style={{ color: "#8FA0B0" }} />
               <span className="truncate max-w-[180px]">{init.email}</span>
             </a>
             {init.phone && (
               <a
                 href={`tel:${init.phone}`}
-                className="flex items-center gap-1.5 text-sm text-[#1a3a52] hover:underline min-h-[44px] px-3 py-2 bg-white border border-[#e5e7eb] rounded hover:bg-[#f3f4f6] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574]"
+                className="flex items-center gap-1.5 text-sm hover:underline min-h-[44px] px-3 py-2 rounded-xl hover:opacity-80 transition-opacity focus:outline-none"
+                style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)", color: "#8A5FAA" }}
               >
-                <Phone className="w-3.5 h-3.5 text-[#6b7280] shrink-0" aria-hidden="true" />
+                <Phone className="w-3.5 h-3.5 shrink-0" aria-hidden="true" style={{ color: "#8FA0B0" }} />
                 {init.phone}
               </a>
             )}
           </div>
 
           {init.message && (
-            <blockquote className="border-l-2 border-[#d4a574] pl-3 mb-4 text-sm text-[#6b7280] italic leading-relaxed">
+            <blockquote
+              className="pl-3 mb-4 text-sm italic leading-relaxed"
+              style={{ borderLeft: "2px solid #8A5FAA", color: "#8FA0B0" }}
+            >
               &ldquo;{init.message}&rdquo;
             </blockquote>
           )}
 
-          {/* Status action buttons */}
           {status !== "booked" && status !== "declined" && (
             <div className="flex flex-wrap gap-2">
               {status === "pending" && (
                 <button
                   type="button"
                   onClick={() => handleStatus("contacted")}
-                  className="bg-[#1a3a52] text-white px-4 py-2 rounded text-xs font-semibold hover:bg-[#0f2438] transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus-visible:ring-offset-1"
+                  className="text-white px-4 py-2 rounded-full text-xs font-semibold hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
+                  style={{ background: "#5D3A7A" }}
                 >
                   Mark as contacted
                 </button>
@@ -137,7 +121,8 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
                 <button
                   type="button"
                   onClick={() => handleStatus("booked")}
-                  className="bg-[#059669] text-white px-4 py-2 rounded text-xs font-semibold hover:bg-[#047857] transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#059669] focus-visible:ring-offset-1"
+                  className="text-white px-4 py-2 rounded-full text-xs font-semibold hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
+                  style={{ background: "#7BA84A" }}
                 >
                   Mark as booked
                 </button>
@@ -145,7 +130,8 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
               <button
                 type="button"
                 onClick={() => handleStatus("declined")}
-                className="bg-white border border-[#e5e7eb] text-[#6b7280] px-4 py-2 rounded text-xs font-semibold hover:bg-[#f3f4f6] transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus-visible:ring-offset-1"
+                className="px-4 py-2 rounded-full text-xs font-semibold hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
+                style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)", color: "#8FA0B0" }}
               >
                 Decline
               </button>
@@ -153,13 +139,13 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
           )}
 
           {status === "booked" && (
-            <p className="text-xs font-semibold text-[#059669] flex items-center gap-1.5">
+            <p className="text-xs font-semibold flex items-center gap-1.5" style={{ color: "#7BA84A" }}>
               <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
               Booked — funeral arranged
             </p>
           )}
           {status === "declined" && (
-            <p className="text-xs text-[#6b7280]">This request has been declined.</p>
+            <p className="text-xs" style={{ color: "#8FA0B0" }}>This request has been declined.</p>
           )}
         </div>
       )}
@@ -167,36 +153,28 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
   );
 }
 
-interface QuoteRequestFeedProps {
-  requests: QuoteRequest[];
-}
-
-export default function QuoteRequestFeed({ requests }: QuoteRequestFeedProps) {
+export default function QuoteRequestFeed({ requests }: { requests: QuoteRequest[] }) {
   const newCount = requests.filter((r) => r.status === "pending").length;
 
   return (
     <section aria-label="Quote request feed">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-[#1a3a52]">Quote requests</h2>
+        <h2 className="text-lg font-semibold" style={{ color: "#5D3A7A" }}>Quote requests</h2>
         {newCount > 0 && (
-          <span className="text-xs font-semibold bg-[#faf6f1] text-[#92400e] px-2.5 py-1 rounded-full">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(226,107,94,0.1)", color: "#C95548" }}>
             {newCount} new
           </span>
         )}
       </div>
 
       {requests.length === 0 ? (
-        <div className="bg-white border border-[#e5e7eb] rounded-lg p-8 text-center">
-          <p className="text-sm text-[#6b7280]">No quote requests yet.</p>
-          <p className="text-xs text-[#6b7280] mt-1">
-            Requests from families will appear here.
-          </p>
+        <div className="p-8 text-center rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+          <p className="text-sm" style={{ color: "#8FA0B0" }}>No quote requests yet.</p>
+          <p className="text-xs mt-1" style={{ color: "#8FA0B0" }}>Requests from families will appear here.</p>
         </div>
       ) : (
         <div className="space-y-3" aria-live="polite" aria-relevant="additions">
-          {requests.map((r) => (
-            <QuoteCard key={r.id} request={r} />
-          ))}
+          {requests.map((r) => <QuoteCard key={r.id} request={r} />)}
         </div>
       )}
     </section>

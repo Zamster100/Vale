@@ -6,23 +6,19 @@ interface StarRatingProps {
 }
 
 export default function StarRating({ rating, size = "md" }: StarRatingProps) {
-  const cls =
-    size === "sm" ? "w-3.5 h-3.5" : size === "lg" ? "w-5 h-5" : "w-4 h-4";
+  const cls = size === "sm" ? "w-3 h-3" : size === "lg" ? "w-5 h-5" : "w-3.5 h-3.5";
   const filled = Math.round(rating);
   return (
-    <span
-      className="inline-flex items-center gap-0.5"
-      aria-label={`${rating} out of 5 stars`}
-    >
+    <span className="inline-flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((s) => (
         <Star
           key={s}
           aria-hidden="true"
-          className={`${cls} ${
-            s <= filled
-              ? "text-[#d4a574] fill-[#d4a574]"
-              : "text-[#e5e7eb] fill-[#e5e7eb]"
-          }`}
+          className={cls}
+          style={{
+            color: s <= filled ? "#E26B5E" : "#C5D2DC",
+            fill: s <= filled ? "#E26B5E" : "#C5D2DC",
+          }}
         />
       ))}
     </span>

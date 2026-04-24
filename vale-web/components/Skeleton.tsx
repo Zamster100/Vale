@@ -1,16 +1,22 @@
 function Pulse({ className, style }: { className: string; style?: React.CSSProperties }) {
   return (
     <div
-      className={`animate-pulse rounded bg-[#e5e7eb] ${className}`}
-      style={style}
+      className={`animate-pulse rounded ${className}`}
+      style={{ background: "rgba(197,210,220,0.4)", ...style }}
       aria-hidden="true"
     />
   );
 }
 
+const card = {
+  background: "white",
+  border: "0.5px solid rgba(143,160,176,0.3)",
+  borderRadius: "16px",
+};
+
 export function SkeletonMetricCard() {
   return (
-    <div className="bg-white border border-[#e5e7eb] rounded-lg p-6 shadow-sm space-y-3">
+    <div style={card} className="p-6 space-y-3">
       <Pulse className="h-3 w-24" />
       <Pulse className="h-8 w-16" />
       <Pulse className="h-3 w-20" />
@@ -21,7 +27,7 @@ export function SkeletonMetricCard() {
 
 export function SkeletonChartCard() {
   return (
-    <div className="bg-white border border-[#e5e7eb] rounded-lg p-5 shadow-sm">
+    <div style={card} className="p-5">
       <div className="flex items-start justify-between mb-4">
         <div className="space-y-2">
           <Pulse className="h-3.5 w-28" />
@@ -50,7 +56,7 @@ export function SkeletonChartCard() {
 
 export function SkeletonFeedItem() {
   return (
-    <div className="border border-[#e5e7eb] rounded-lg overflow-hidden bg-white">
+    <div style={{ ...card, overflow: "hidden" }}>
       <div className="flex items-center justify-between gap-4 p-4">
         <div className="flex items-center gap-3 min-w-0 flex-1">
           <Pulse className="w-2 h-2 rounded-full shrink-0" />
@@ -70,7 +76,7 @@ export function SkeletonFeedItem() {
 
 export function SkeletonReviewCard() {
   return (
-    <div className="border border-[#e5e7eb] rounded-lg p-5 bg-white space-y-3">
+    <div style={card} className="p-5 space-y-3">
       <div className="flex items-start justify-between">
         <div className="space-y-1.5">
           <Pulse className="h-3.5 w-28" />
@@ -88,10 +94,7 @@ export function SkeletonText({ lines = 3, className = "" }: { lines?: number; cl
   return (
     <div className={`space-y-2 ${className}`}>
       {Array.from({ length: lines }).map((_, i) => (
-        <Pulse
-          key={i}
-          className={`h-3 ${i === lines - 1 ? "w-3/4" : "w-full"}`}
-        />
+        <Pulse key={i} className={`h-3 ${i === lines - 1 ? "w-3/4" : "w-full"}`} />
       ))}
     </div>
   );

@@ -29,7 +29,7 @@ import {
   generateDailyViews,
 } from "@/lib/adminData";
 
-const POLL_INTERVAL = 30_000; // 30 seconds
+const POLL_INTERVAL = 30_000;
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -81,7 +81,6 @@ export default function DashboardPage() {
     fetchRequests(false);
   }, [router, fetchRequests]);
 
-  // Polling
   useEffect(() => {
     if (!authChecked) return;
     const id = setInterval(() => fetchRequests(true), POLL_INTERVAL);
@@ -95,8 +94,8 @@ export default function DashboardPage() {
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen bg-[#f9fafb] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#1a3a52] border-t-transparent rounded-full animate-spin" aria-label="Loading dashboard" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F1E8" }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#5D3A7A", borderTopColor: "transparent" }} aria-label="Loading dashboard" />
       </div>
     );
   }
@@ -115,26 +114,24 @@ export default function DashboardPage() {
   const displayName = profile?.businessName || user?.email?.split("@")[0] || "Your business";
 
   return (
-    <div className="min-h-screen bg-[#f9fafb] flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: "#F5F1E8" }}>
       {/* Admin nav */}
-      <header className="bg-[#1a3a52] text-white sticky top-0 z-50 shadow-md">
+      <header className="sticky top-0 z-50" style={{ background: "#5D3A7A", borderBottom: "0.5px solid rgba(93,58,122,0.3)" }}>
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/" aria-label="VALE public site" className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] rounded">
-              <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center" aria-hidden="true">
-                <MapPin className="w-4 h-4 text-[#d4a574]" />
-              </div>
-              <span className="text-lg font-bold tracking-tight">VALE</span>
+            <Link href="/" aria-label="VALE public site" className="flex items-center gap-2 focus:outline-none rounded">
+              <span className="text-xl tracking-tight text-white" style={{ fontFamily: "var(--font-instrument-serif)" }}>VALE</span>
             </Link>
-            <span className="text-white/30 hidden sm:inline" aria-hidden="true">|</span>
-            <span className="text-sm text-[#b8cdd9] hidden sm:inline">{displayName}</span>
+            <span className="hidden sm:inline" style={{ color: "rgba(255,255,255,0.3)" }} aria-hidden="true">|</span>
+            <span className="text-sm hidden sm:inline" style={{ color: "rgba(255,255,255,0.7)" }}>{displayName}</span>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
-              href={`/funeral-directors/fd_001`}
+              href="/funeral-directors/fd_001"
               target="_blank"
-              className="hidden sm:flex items-center gap-1.5 text-sm text-[#b8cdd9] hover:text-white transition-colors px-3 py-2 rounded min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574]"
+              className="hidden sm:flex items-center gap-1.5 text-sm px-3 py-2 rounded min-h-[44px] hover:opacity-75 transition-opacity focus:outline-none"
+              style={{ color: "rgba(255,255,255,0.7)" }}
             >
               <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
               View profile
@@ -142,14 +139,16 @@ export default function DashboardPage() {
             <button
               type="button"
               aria-label="Settings (coming soon)"
-              className="p-2 text-[#b8cdd9] hover:text-white transition-colors rounded min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574]"
+              className="p-2 rounded min-h-[44px] min-w-[44px] flex items-center justify-center hover:opacity-75 transition-opacity focus:outline-none"
+              style={{ color: "rgba(255,255,255,0.7)" }}
             >
               <Settings className="w-4 h-4" />
             </button>
             <button
               type="button"
               onClick={handleSignOut}
-              className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-sm text-white px-3 py-2 rounded transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574]"
+              className="flex items-center gap-1.5 text-sm px-3 py-2 rounded min-h-[44px] hover:opacity-75 transition-opacity focus:outline-none"
+              style={{ background: "rgba(255,255,255,0.12)", color: "white" }}
             >
               <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
               Sign out
@@ -161,22 +160,23 @@ export default function DashboardPage() {
       <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-8">
         {/* Page header */}
         <div className="mb-8">
-          <h1 className="mb-1">Dashboard</h1>
-          <p className="text-[#6b7280] text-sm">
+          <h1 className="text-2xl font-semibold mb-1" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>Dashboard</h1>
+          <p className="text-sm" style={{ color: "#8FA0B0" }}>
             Here&apos;s how {displayName} is performing on VALE this week.
           </p>
         </div>
 
         {/* Fetch error banner */}
         {fetchError && (
-          <div role="alert" className="mb-6 bg-[#fff5f5] border border-[#fca5a5] rounded-lg px-4 py-3 flex items-center justify-between gap-4">
-            <p className="text-sm text-[#991b1b]">
+          <div role="alert" className="mb-6 px-4 py-3 rounded-xl flex items-center justify-between gap-4" style={{ background: "rgba(226,107,94,0.08)", border: "0.5px solid rgba(226,107,94,0.3)" }}>
+            <p className="text-sm" style={{ color: "#C95548" }}>
               Could not load quote requests. Check your connection and try again.
             </p>
             <button
               type="button"
               onClick={() => fetchRequests(false)}
-              className="flex items-center gap-1.5 text-sm font-semibold text-[#991b1b] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] rounded shrink-0"
+              className="flex items-center gap-1.5 text-sm font-semibold hover:underline focus:outline-none rounded shrink-0"
+              style={{ color: "#C95548" }}
             >
               <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
               Retry
@@ -227,7 +227,7 @@ export default function DashboardPage() {
 
         {/* Analytics section */}
         <section aria-label="Analytics" className="mb-8">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7280] mb-3">Analytics</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#8FA0B0" }}>Analytics</p>
           <div className="grid sm:grid-cols-2 gap-4">
             {dataLoading ? (
               <>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
             {dataLoading ? (
               <div className="space-y-3">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="h-6 w-36 bg-[#e5e7eb] rounded animate-pulse" />
+                  <div className="h-6 w-36 rounded animate-pulse" style={{ background: "rgba(197,210,220,0.4)" }} />
                 </div>
                 {Array.from({ length: 3 }).map((_, i) => <SkeletonFeedItem key={i} />)}
               </div>
@@ -269,92 +269,92 @@ export default function DashboardPage() {
           {/* Sidebar — 1/3 width */}
           <aside className="space-y-5" aria-label="Insights and benchmarks">
             {/* Benchmark */}
-            <section className="bg-white border border-[#e5e7eb] rounded-lg p-5 shadow-sm">
-              <h2 className="text-base font-bold text-[#1a3a52] mb-4">
+            <section className="p-5 rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+              <h2 className="text-base font-semibold mb-4" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
                 How you compare
               </h2>
-              <p className="text-xs text-[#6b7280] uppercase tracking-wider mb-3">
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#8FA0B0" }}>
                 vs. {mockBenchmark.city} average
               </p>
 
               {/* Price comparison */}
               <div className="mb-5">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm text-[#111827] font-medium">Avg. price</span>
-                  <div className="flex items-center gap-1 text-[#059669] text-sm font-semibold">
+                  <span className="text-sm font-medium" style={{ color: "#3F5E2C" }}>Avg. price</span>
+                  <div className="flex items-center gap-1 text-sm font-semibold" style={{ color: "#7BA84A" }}>
                     <TrendingDown className="w-3.5 h-3.5" aria-hidden="true" />
                     {priceDiff > 0 ? "Lower" : "Higher"}
                   </div>
                 </div>
                 <div className="flex items-end gap-3 mb-1">
                   <div className="flex-1">
-                    <p className="text-xs text-[#6b7280] mb-1">You</p>
-                    <div className="bg-[#1a3a52] h-3 rounded-full" style={{ width: `${(mockBenchmark.yourAvgPrice / mockBenchmark.areaAvgPrice) * 100}%` }} aria-hidden="true" />
-                    <p className="text-sm font-bold text-[#1a3a52] mt-1">
+                    <p className="text-xs mb-1" style={{ color: "#8FA0B0" }}>You</p>
+                    <div className="h-3 rounded-full" style={{ width: `${(mockBenchmark.yourAvgPrice / mockBenchmark.areaAvgPrice) * 100}%`, background: "#5D3A7A" }} aria-hidden="true" />
+                    <p className="text-sm font-bold mt-1" style={{ color: "#5D3A7A" }}>
                       £{mockBenchmark.yourAvgPrice.toLocaleString()}
                     </p>
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-[#6b7280] mb-1">Area avg</p>
-                    <div className="bg-[#e5e7eb] h-3 rounded-full w-full" aria-hidden="true" />
-                    <p className="text-sm font-bold text-[#6b7280] mt-1">
+                    <p className="text-xs mb-1" style={{ color: "#8FA0B0" }}>Area avg</p>
+                    <div className="h-3 rounded-full w-full" style={{ background: "rgba(197,210,220,0.4)" }} aria-hidden="true" />
+                    <p className="text-sm font-bold mt-1" style={{ color: "#8FA0B0" }}>
                       £{mockBenchmark.areaAvgPrice.toLocaleString()}
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-[#059669] font-semibold">{priceDiffLabel}</p>
+                <p className="text-xs font-semibold" style={{ color: "#7BA84A" }}>{priceDiffLabel}</p>
               </div>
 
               {/* Rating comparison */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm text-[#111827] font-medium">Rating</span>
-                  <div className="flex items-center gap-1 text-[#059669] text-sm font-semibold">
+                  <span className="text-sm font-medium" style={{ color: "#3F5E2C" }}>Rating</span>
+                  <div className="flex items-center gap-1 text-sm font-semibold" style={{ color: "#7BA84A" }}>
                     <TrendingUp className="w-3.5 h-3.5" aria-hidden="true" />
                     Higher
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#1a3a52]">{mockBenchmark.yourRating}</div>
+                    <div className="text-2xl font-bold" style={{ color: "#5D3A7A" }}>{mockBenchmark.yourRating}</div>
                     <div className="flex justify-center mt-0.5" aria-label={`Your rating: ${mockBenchmark.yourRating} out of 5`}>
                       {[1,2,3,4,5].map((s) => (
-                        <Star key={s} className={`w-3 h-3 ${s <= Math.round(mockBenchmark.yourRating) ? "text-[#d4a574] fill-[#d4a574]" : "text-[#e5e7eb]"}`} aria-hidden="true" />
+                        <Star key={s} className="w-3 h-3" style={{ color: s <= Math.round(mockBenchmark.yourRating) ? "#E26B5E" : "#C5D2DC", fill: s <= Math.round(mockBenchmark.yourRating) ? "#E26B5E" : "#C5D2DC" }} aria-hidden="true" />
                       ))}
                     </div>
-                    <p className="text-xs text-[#6b7280] mt-0.5">You</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>You</p>
                   </div>
-                  <div className="flex-1 h-px bg-[#e5e7eb]" aria-hidden="true" />
+                  <div className="flex-1 h-px" style={{ background: "rgba(197,210,220,0.4)" }} aria-hidden="true" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#6b7280]">{mockBenchmark.areaAvgRating}</div>
+                    <div className="text-2xl font-bold" style={{ color: "#8FA0B0" }}>{mockBenchmark.areaAvgRating}</div>
                     <div className="flex justify-center mt-0.5" aria-label={`Area average: ${mockBenchmark.areaAvgRating} out of 5`}>
                       {[1,2,3,4,5].map((s) => (
-                        <Star key={s} className={`w-3 h-3 ${s <= Math.round(mockBenchmark.areaAvgRating) ? "text-[#d4a574] fill-[#d4a574]" : "text-[#e5e7eb]"}`} aria-hidden="true" />
+                        <Star key={s} className="w-3 h-3" style={{ color: s <= Math.round(mockBenchmark.areaAvgRating) ? "#E26B5E" : "#C5D2DC", fill: s <= Math.round(mockBenchmark.areaAvgRating) ? "#E26B5E" : "#C5D2DC" }} aria-hidden="true" />
                       ))}
                     </div>
-                    <p className="text-xs text-[#6b7280] mt-0.5">Area avg</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>Area avg</p>
                   </div>
                 </div>
-                <p className="text-xs text-[#059669] font-semibold mt-2">
+                <p className="text-xs font-semibold mt-2" style={{ color: "#7BA84A" }}>
                   +{(mockBenchmark.yourRating - mockBenchmark.areaAvgRating).toFixed(1)} above {mockBenchmark.city} average
                 </p>
               </div>
             </section>
 
             {/* Assured upgrade CTA */}
-            <section className="bg-[#1a3a52] text-white rounded-lg p-5 shadow-sm">
+            <section className="p-5 rounded-2xl text-white" style={{ background: "#5D3A7A" }}>
               <div className="flex items-start gap-3 mb-3">
-                <div className="w-8 h-8 bg-[#d4a574] rounded flex items-center justify-center shrink-0" aria-hidden="true">
-                  <Star className="w-4 h-4 text-[#1a3a52] fill-[#1a3a52]" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(226,107,94,0.25)" }} aria-hidden="true">
+                  <Star className="w-4 h-4" style={{ color: "#E26B5E", fill: "#E26B5E" }} />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold text-white mb-0.5">Upgrade to Assured</h2>
-                  <p className="text-[#a8c4d8] text-xs leading-relaxed">
+                  <h2 className="text-base font-semibold text-white mb-0.5">Upgrade to Assured</h2>
+                  <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
                     Get a gold badge, priority placement, and a reduced 2% commission rate.
                   </p>
                 </div>
               </div>
-              <ul className="space-y-1.5 mb-4 text-xs text-[#b8cdd9]">
+              <ul className="space-y-1.5 mb-4 text-xs" style={{ color: "rgba(255,255,255,0.75)" }}>
                 {[
                   "Gold Assured badge on your profile",
                   "Priority placement in search results",
@@ -362,22 +362,23 @@ export default function DashboardPage() {
                   "Dedicated account manager",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2">
-                    <span className="text-[#d4a574]" aria-hidden="true">✓</span>
+                    <span style={{ color: "#E26B5E" }} aria-hidden="true">✓</span>
                     {item}
                   </li>
                 ))}
               </ul>
               <button
                 type="button"
-                className="w-full bg-[#d4a574] text-[#1a3a52] py-2.5 rounded font-semibold text-sm hover:bg-[#c29560] transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a3a52]"
+                className="w-full text-white py-2.5 rounded-full font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] focus:outline-none"
+                style={{ background: "#5AAE55" }}
               >
                 Learn about Assured — £79/month
               </button>
             </section>
 
             {/* Quick stats */}
-            <section className="bg-white border border-[#e5e7eb] rounded-lg p-5 shadow-sm">
-              <h2 className="text-sm font-bold text-[#1a3a52] mb-4">This week at a glance</h2>
+            <section className="p-5 rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+              <h2 className="text-sm font-semibold mb-4" style={{ color: "#5D3A7A" }}>This week at a glance</h2>
               <dl className="space-y-3">
                 {[
                   { label: "Families contacted", value: metrics.contactedRequests },
@@ -386,8 +387,8 @@ export default function DashboardPage() {
                   { label: "Profile views today", value: Math.round(mockMetrics.profileViewsThisWeek / 7) },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex items-center justify-between">
-                    <dt className="text-sm text-[#6b7280]">{label}</dt>
-                    <dd className="text-sm font-bold text-[#1a3a52]">{value}</dd>
+                    <dt className="text-sm" style={{ color: "#8FA0B0" }}>{label}</dt>
+                    <dd className="text-sm font-bold" style={{ color: "#5D3A7A" }}>{value}</dd>
                   </div>
                 ))}
               </dl>

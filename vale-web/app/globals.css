@@ -10,6 +10,7 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-inter);
+  --font-display: var(--font-instrument-serif);
 
   /* VALE Brand Colors */
   --color-vale-blue: #1a3a52;
@@ -63,7 +64,7 @@
 }
 
 :root {
-  --background: #f9fafb;
+  --background: #F5F1E8;
   --foreground: #111827;
   --card: #ffffff;
   --card-foreground: #111827;
@@ -109,22 +110,39 @@
   }
   h1 {
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: #1a3a52;
+    color: #5D3A7A;
   }
   h2 {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.3;
     letter-spacing: -0.01em;
-    color: #1a3a52;
+    color: #5D3A7A;
   }
   h3 {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.4;
-    color: #111827;
+    color: #5D3A7A;
   }
+}
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes question-enter {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@layer utilities {
+  .animate-fade-rise          { animation: fade-rise 0.8s ease-out both; }
+  .animate-fade-rise-delay    { animation: fade-rise 0.8s 0.2s ease-out both; }
+  .animate-fade-rise-delay-2  { animation: fade-rise 0.8s 0.4s ease-out both; }
+  .animate-question-enter     { animation: question-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
 }

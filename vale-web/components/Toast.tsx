@@ -12,21 +12,21 @@ interface ToastItem {
 }
 
 const ICONS: Record<ToastVariant, React.ReactNode> = {
-  success: <CheckCircle className="w-4 h-4 text-[#059669] shrink-0" aria-hidden="true" />,
-  info: <Bell className="w-4 h-4 text-[#1a3a52] shrink-0" aria-hidden="true" />,
-  error: <AlertCircle className="w-4 h-4 text-[#dc2626] shrink-0" aria-hidden="true" />,
+  success: <CheckCircle className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#7BA84A" }} />,
+  info: <Bell className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#8A5FAA" }} />,
+  error: <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#E26B5E" }} />,
 };
 
-const STYLES: Record<ToastVariant, string> = {
-  success: "border-[#059669]/20 bg-[#f0fdf4]",
-  info: "border-[#d4a574] bg-white",
-  error: "border-[#dc2626]/20 bg-[#fff5f5]",
+const STYLES: Record<ToastVariant, React.CSSProperties> = {
+  success: { background: "rgba(123,168,74,0.08)", border: "0.5px solid rgba(123,168,74,0.3)" },
+  info: { background: "white", border: "0.5px solid rgba(138,95,170,0.3)" },
+  error: { background: "rgba(226,107,94,0.08)", border: "0.5px solid rgba(226,107,94,0.3)" },
 };
 
-const TEXT: Record<ToastVariant, string> = {
-  success: "text-[#065f46]",
-  info: "text-[#1a3a52]",
-  error: "text-[#991b1b]",
+const TEXT_COLOR: Record<ToastVariant, string> = {
+  success: "#5A8A30",
+  info: "#5D3A7A",
+  error: "#C95548",
 };
 
 export function useToast() {
@@ -48,13 +48,7 @@ export function useToast() {
   return { toasts, addToast, dismiss };
 }
 
-export function ToastList({
-  toasts,
-  dismiss,
-}: {
-  toasts: ToastItem[];
-  dismiss: (id: string) => void;
-}) {
+export function ToastList({ toasts, dismiss }: { toasts: ToastItem[]; dismiss: (id: string) => void }) {
   if (toasts.length === 0) return null;
 
   return (
@@ -67,17 +61,19 @@ export function ToastList({
         <div
           key={t.id}
           role="status"
-          className={`pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-lg border shadow-lg transition-all animate-in slide-in-from-bottom-2 ${STYLES[t.variant]}`}
+          className="pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-2xl shadow-lg transition-all"
+          style={STYLES[t.variant]}
         >
           {ICONS[t.variant]}
-          <p className={`text-sm font-medium flex-1 leading-snug ${TEXT[t.variant]}`}>
+          <p className="text-sm font-medium flex-1 leading-snug" style={{ color: TEXT_COLOR[t.variant] }}>
             {t.message}
           </p>
           <button
             type="button"
             onClick={() => dismiss(t.id)}
             aria-label="Dismiss notification"
-            className="shrink-0 text-[#6b7280] hover:text-[#374151] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] rounded"
+            className="shrink-0 hover:opacity-70 transition-opacity focus:outline-none rounded"
+            style={{ color: "#8FA0B0" }}
           >
             <X className="w-3.5 h-3.5" />
           </button>

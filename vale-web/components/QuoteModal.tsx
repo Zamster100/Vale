@@ -18,9 +18,20 @@ const SERVICE_OPTIONS = [
   { value: "other", label: "Not sure / other" },
 ];
 
+const inputStyle: React.CSSProperties = {
+  background: "#F5F1E8",
+  border: "0.5px solid rgba(143,160,176,0.5)",
+  borderRadius: "12px",
+  color: "#3F5E2C",
+  width: "100%",
+  padding: "10px 16px",
+  fontSize: "14px",
+  minHeight: "44px",
+  outline: "none",
+};
+
 export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }: QuoteModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
-
   const validTypes = SERVICE_OPTIONS.map((o) => o.value);
   const [form, setForm] = useState({
     name: "",
@@ -33,13 +44,11 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
   const [loading, setLoading] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitError, setSubmitError] = useState("");
+  const [focused, setFocused] = useState<string | null>(null);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-        return;
-      }
+      if (e.key === "Escape") { onClose(); return; }
       if (e.key !== "Tab" || !dialogRef.current) return;
       const focusable = Array.from(
         dialogRef.current.querySelectorAll<HTMLElement>(
@@ -56,58 +65,38 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
       }
     };
     document.addEventListener("keydown", handleKey);
-    // Move focus into modal on open
-    const firstFocusable = dialogRef.current?.querySelector<HTMLElement>(
-      'button, input, select, textarea, a[href]'
-    );
-    firstFocusable?.focus();
+    dialogRef.current?.querySelector<HTMLElement>("button, input, select, textarea, a[href]")?.focus();
     return () => document.removeEventListener("keydown", handleKey);
   }, [onClose]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setSubmitError("");
   };
 
-  const handleBlur = (field: string) =>
-    setTouched((prev) => ({ ...prev, [field]: true }));
-
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const fieldErrors = {
     name: touched.name && !form.name.trim() ? "Please enter your name." : "",
-    email:
-      touched.email && !form.email.trim()
-        ? "Please enter your email address."
-        : touched.email && !EMAIL_RE.test(form.email)
-        ? "Please enter a valid email address."
-        : "",
+    email: touched.email && !form.email.trim() ? "Please enter your email address."
+      : touched.email && !EMAIL_RE.test(form.email) ? "Please enter a valid email address." : "",
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched({ name: true, email: true });
     if (!form.name.trim() || !form.email.trim() || !EMAIL_RE.test(form.email)) return;
-
     setLoading(true);
     setSubmitError("");
-
     try {
       const res = await fetch("/api/quote-requests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fdId,
-          fdName,
-          familyName: form.name,
-          email: form.email,
-          phone: form.phone || undefined,
-          serviceType: form.serviceType,
+          fdId, fdName, familyName: form.name, email: form.email,
+          phone: form.phone || undefined, serviceType: form.serviceType,
           message: form.message || undefined,
         }),
       });
-
       if (!res.ok) throw new Error("Request failed");
       setSubmitted(true);
     } catch {
@@ -117,55 +106,52 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
     }
   };
 
-  const inputClass =
-    "w-full px-4 py-2.5 border border-[#d1d5db] rounded text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus-visible:ring-offset-1 focus:border-[#d4a574] min-h-[44px]";
+  const getFieldStyle = (field: string, hasError: boolean): React.CSSProperties => ({
+    ...inputStyle,
+    border: hasError ? "1.5px solid #E26B5E" : focused === field ? "1.5px solid #8A5FAA" : "0.5px solid rgba(143,160,176,0.5)",
+    boxShadow: focused === field && !hasError ? "0 0 0 3px rgba(138,95,170,0.12)" : "none",
+  });
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: "rgba(0,0,0,0.45)" }}
+      style={{ backgroundColor: "rgba(63,30,60,0.4)" }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="quote-modal-title"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div ref={dialogRef} className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-[#e5e7eb]">
+      <div ref={dialogRef} className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl" style={{ background: "white", boxShadow: "0 20px 60px rgba(93,58,122,0.2)" }}>
+        <div className="flex items-center justify-between p-6" style={{ borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}>
           <div>
-            <h2
-              id="quote-modal-title"
-              className="font-bold text-[#1a3a52] text-base"
-            >
-              Request a quote
-            </h2>
-            <p className="text-sm text-[#6b7280] mt-0.5">from {fdName}</p>
+            <h2 id="quote-modal-title" className="font-semibold text-base" style={{ color: "#5D3A7A" }}>Request a quote</h2>
+            <p className="text-sm mt-0.5" style={{ color: "#8FA0B0" }}>from {fdName}</p>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-[#f3f4f6] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574]"
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:opacity-70 transition-opacity focus:outline-none"
+            style={{ background: "rgba(197,210,220,0.3)", color: "#8FA0B0" }}
           >
-            <X className="w-4 h-4 text-[#6b7280]" aria-hidden="true" />
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
 
         {submitted ? (
           <div className="p-8 text-center">
-            <div className="w-12 h-12 bg-[#f0fdf4] rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-6 h-6 text-[#059669]" aria-hidden="true" />
+            <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(123,168,74,0.12)" }}>
+              <CheckCircle className="w-7 h-7" aria-hidden="true" style={{ color: "#7BA84A" }} />
             </div>
-            <h3 className="font-bold text-[#111827] mb-2">Quote request sent</h3>
-            <p className="text-sm text-[#6b7280] leading-relaxed">
-              We&apos;ve sent your request to <strong>{fdName}</strong>. They&apos;ll
-              typically be in touch within 24 hours.
+            <h3 className="font-semibold mb-2" style={{ color: "#5D3A7A" }}>Quote request sent</h3>
+            <p className="text-sm leading-relaxed" style={{ color: "#8FA0B0" }}>
+              We&apos;ve sent your request to <strong style={{ color: "#3F5E2C" }}>{fdName}</strong>. They&apos;ll typically be in touch within 24 hours.
             </p>
             <button
               type="button"
               onClick={onClose}
-              className="mt-6 bg-[#1a3a52] text-white px-6 py-2.5 rounded text-sm font-semibold hover:bg-[#0f2438] transition-colors min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus-visible:ring-offset-2"
+              className="mt-6 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:scale-[1.03] transition-transform min-h-[44px] focus:outline-none"
+              style={{ background: "#5AAE55" }}
             >
               Close
             </button>
@@ -173,101 +159,59 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
         ) : (
           <form onSubmit={handleSubmit} noValidate className="p-6 space-y-4">
             {submitError && (
-              <div role="alert" className="bg-[#fff5f5] border border-[#fca5a5] rounded px-4 py-3 text-sm text-[#dc2626]">
+              <div role="alert" className="px-4 py-3 text-sm rounded-xl" style={{ background: "rgba(226,107,94,0.08)", border: "0.5px solid rgba(226,107,94,0.3)", color: "#C95548" }}>
                 {submitError}
               </div>
             )}
 
-            <div>
-              <label htmlFor="qm-name" className="block text-sm font-semibold text-[#111827] mb-1.5">
-                Your name <span className="text-[#dc2626]" aria-hidden="true">*</span>
-              </label>
-              <input
-                id="qm-name"
-                name="name"
-                type="text"
-                required
-                autoComplete="name"
-                value={form.name}
-                onChange={handleChange}
-                onBlur={() => handleBlur("name")}
-                aria-invalid={!!fieldErrors.name}
-                aria-describedby={fieldErrors.name ? "qm-name-err" : undefined}
-                placeholder="e.g. Sarah Jones"
-                className={`${inputClass} ${fieldErrors.name ? "border-[#dc2626] focus:border-[#dc2626]" : ""}`}
-              />
-              {fieldErrors.name && (
-                <p id="qm-name-err" role="alert" className="text-xs text-[#dc2626] mt-1.5 font-medium">
-                  {fieldErrors.name}
-                </p>
-              )}
-            </div>
+            {[
+              { id: "qm-name", name: "name", label: "Your name", type: "text", required: true, autoComplete: "name", placeholder: "e.g. Sarah Jones", error: fieldErrors.name },
+              { id: "qm-email", name: "email", label: "Email address", type: "email", required: true, autoComplete: "email", placeholder: "you@example.com", error: fieldErrors.email },
+              { id: "qm-phone", name: "phone", label: "Phone number", type: "tel", required: false, autoComplete: "tel", placeholder: "07700 000000", error: "" },
+            ].map(({ id, name, label, type, required, autoComplete, placeholder, error }) => (
+              <div key={id}>
+                <label htmlFor={id} className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
+                  {label}{required && <span className="ml-1" style={{ color: "#E26B5E" }} aria-hidden="true">*</span>}
+                  {!required && <span className="ml-1 font-normal" style={{ color: "#8FA0B0" }}>(optional)</span>}
+                </label>
+                <input
+                  id={id}
+                  name={name}
+                  type={type}
+                  required={required}
+                  autoComplete={autoComplete}
+                  value={form[name as keyof typeof form]}
+                  onChange={handleChange}
+                  onBlur={() => setTouched(p => ({ ...p, [name]: true }))}
+                  onFocus={() => setFocused(name)}
+                  placeholder={placeholder}
+                  aria-invalid={!!error}
+                  style={getFieldStyle(name, !!error)}
+                />
+                {error && <p role="alert" className="text-xs mt-1.5 font-medium" style={{ color: "#E26B5E" }}>{error}</p>}
+              </div>
+            ))}
 
             <div>
-              <label htmlFor="qm-email" className="block text-sm font-semibold text-[#111827] mb-1.5">
-                Email address <span className="text-[#dc2626]" aria-hidden="true">*</span>
-              </label>
-              <input
-                id="qm-email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                value={form.email}
-                onChange={handleChange}
-                onBlur={() => handleBlur("email")}
-                aria-invalid={!!fieldErrors.email}
-                aria-describedby={fieldErrors.email ? "qm-email-err" : undefined}
-                placeholder="you@example.com"
-                className={`${inputClass} ${fieldErrors.email ? "border-[#dc2626] focus:border-[#dc2626]" : ""}`}
-              />
-              {fieldErrors.email && (
-                <p id="qm-email-err" role="alert" className="text-xs text-[#dc2626] mt-1.5 font-medium">
-                  {fieldErrors.email}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="qm-phone" className="block text-sm font-semibold text-[#111827] mb-1.5">
-                Phone number{" "}
-                <span className="text-[#6b7280] font-normal">(optional)</span>
-              </label>
-              <input
-                id="qm-phone"
-                name="phone"
-                type="tel"
-                autoComplete="tel"
-                value={form.phone}
-                onChange={handleChange}
-                placeholder="07700 000000"
-                className={inputClass}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="qm-serviceType" className="block text-sm font-semibold text-[#111827] mb-1.5">
-                Service type
-              </label>
+              <label htmlFor="qm-serviceType" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>Service type</label>
               <select
                 id="qm-serviceType"
                 name="serviceType"
                 value={form.serviceType}
                 onChange={handleChange}
-                className="w-full px-4 py-2.5 border border-[#d1d5db] rounded text-sm bg-white text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus:border-[#d4a574] min-h-[44px]"
+                onFocus={() => setFocused("serviceType")}
+                onBlur={() => setFocused(null)}
+                style={getFieldStyle("serviceType", false)}
               >
                 {SERVICE_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label htmlFor="qm-message" className="block text-sm font-semibold text-[#111827] mb-1.5">
-                Message{" "}
-                <span className="text-[#6b7280] font-normal">(optional)</span>
+              <label htmlFor="qm-message" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
+                Message <span className="font-normal" style={{ color: "#8FA0B0" }}>(optional)</span>
               </label>
               <textarea
                 id="qm-message"
@@ -275,21 +219,24 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
                 rows={3}
                 value={form.message}
                 onChange={handleChange}
+                onFocus={() => setFocused("message")}
+                onBlur={() => setFocused(null)}
                 placeholder="Tell them about your needs, timeline, or any questions…"
-                className="w-full px-4 py-2.5 border border-[#d1d5db] rounded text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus:border-[#d4a574] resize-none"
+                style={{ ...getFieldStyle("message", false), minHeight: "auto", resize: "none" }}
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#1a3a52] text-white py-3 rounded font-semibold text-sm hover:bg-[#0f2438] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d4a574] focus-visible:ring-offset-2"
+              className="w-full text-white py-3 rounded-full font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px] focus:outline-none"
+              style={{ background: "#5AAE55" }}
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
               {loading ? "Sending…" : "Send quote request"}
             </button>
 
-            <p className="text-xs text-center text-[#6b7280]">
+            <p className="text-xs text-center" style={{ color: "#8FA0B0" }}>
               They&apos;ll typically respond within 24 hours.
             </p>
           </form>

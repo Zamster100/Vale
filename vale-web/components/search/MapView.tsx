@@ -7,7 +7,6 @@ import Link from "next/link";
 import { type FuneralDirector, getLowestPrice } from "@/lib/data";
 import "leaflet/dist/leaflet.css";
 
-// Fix Leaflet default icon paths in Next.js
 const fixLeafletIcon = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -23,9 +22,7 @@ interface MapViewProps {
 }
 
 export default function MapView({ directors }: MapViewProps) {
-  useEffect(() => {
-    fixLeafletIcon();
-  }, []);
+  useEffect(() => { fixLeafletIcon(); }, []);
 
   const center: [number, number] =
     directors.length > 0
@@ -33,7 +30,7 @@ export default function MapView({ directors }: MapViewProps) {
           directors.reduce((sum, fd) => sum + fd.latitude, 0) / directors.length,
           directors.reduce((sum, fd) => sum + fd.longitude, 0) / directors.length,
         ]
-      : [52.3555, -1.1743]; // UK centre
+      : [52.3555, -1.1743];
 
   return (
     <MapContainer
@@ -50,14 +47,15 @@ export default function MapView({ directors }: MapViewProps) {
         <Marker key={fd.id} position={[fd.latitude, fd.longitude]}>
           <Popup>
             <div className="min-w-[180px]">
-              <p className="font-semibold text-[#1a3a52] text-sm mb-0.5">{fd.name}</p>
-              <p className="text-xs text-[#6b7280] mb-2">{fd.city}</p>
-              <p className="text-sm font-bold text-[#1a3a52] mb-2">
+              <p className="font-semibold text-sm mb-0.5" style={{ color: "#5D3A7A" }}>{fd.name}</p>
+              <p className="text-xs mb-2" style={{ color: "#8FA0B0" }}>{fd.city}</p>
+              <p className="text-sm font-bold mb-2" style={{ color: "#5D3A7A" }}>
                 From £{getLowestPrice(fd).toLocaleString()}
               </p>
               <Link
                 href={`/funeral-directors/${fd.id}`}
-                className="block text-center bg-[#1a3a52] text-white text-xs font-semibold px-3 py-1.5 rounded hover:bg-[#0f2438] transition-colors"
+                className="block text-center text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:opacity-90 transition-opacity"
+                style={{ background: "#5AAE55" }}
               >
                 View profile
               </Link>
