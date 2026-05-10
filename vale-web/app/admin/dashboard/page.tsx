@@ -4,7 +4,6 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  MapPin,
   LogOut,
   Star,
   TrendingUp,
@@ -12,11 +11,17 @@ import {
   ExternalLink,
   Settings,
   RefreshCw,
+  LayoutDashboard,
+  Images,
+  ShieldCheck,
+  Clock,
 } from "lucide-react";
 import MetricCard from "@/components/admin/MetricCard";
 import QuoteRequestFeed from "@/components/admin/QuoteRequestFeed";
 import ProfileViewsChart from "@/components/admin/ProfileViewsChart";
 import ServiceBreakdown from "@/components/admin/ServiceBreakdown";
+import GalleryTeamManager from "@/components/admin/GalleryTeamManager";
+import HoursEditor from "@/components/admin/HoursEditor";
 import { SkeletonMetricCard, SkeletonChartCard, SkeletonFeedItem } from "@/components/Skeleton";
 import { useToast, ToastList } from "@/components/Toast";
 import { getUser, getProfile, signOut, type FDUser, type FDProfile } from "@/lib/auth";
@@ -29,6 +34,8 @@ import {
   generateDailyViews,
 } from "@/lib/adminData";
 
+type AdminTab = "overview" | "gallery-team" | "hours";
+
 const POLL_INTERVAL = 30_000;
 
 export default function DashboardPage() {
@@ -39,6 +46,7 @@ export default function DashboardPage() {
   const [dataLoading, setDataLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
   const [requests, setRequests] = useState<QuoteRequest[]>([]);
+  const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   const knownIds = useRef<Set<string>>(new Set());
   const { toasts, addToast, dismiss } = useToast();
 
@@ -128,6 +136,14 @@ export default function DashboardPage() {
 
           <div className="flex items-center gap-3">
             <Link
+              href="/admin/verification"
+              className="hidden sm:flex items-center gap-1.5 text-sm px-3 py-2 rounded min-h-[44px] hover:opacity-75 transition-opacity focus:outline-none"
+              style={{ color: "rgba(255,255,255,0.7)" }}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+              Verification
+            </Link>
+            <Link
               href="/funeral-directors/fd_001"
               target="_blank"
               className="hidden sm:flex items-center gap-1.5 text-sm px-3 py-2 rounded min-h-[44px] hover:opacity-75 transition-opacity focus:outline-none"
@@ -159,13 +175,65 @@ export default function DashboardPage() {
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-8">
         {/* Page header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className="text-2xl font-semibold mb-1" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>Dashboard</h1>
           <p className="text-sm" style={{ color: "#8FA0B0" }}>
             Here&apos;s how {displayName} is performing on VALE this week.
           </p>
         </div>
 
+        {/* Tabs */}
+        <div
+          className="flex items-center gap-1 mb-8 p-1 rounded-xl w-fit"
+          style={{ background: "rgba(197,210,220,0.3)", border: "0.5px solid rgba(143,160,176,0.3)" }}
+          role="tablist"
+          aria-label="Dashboard sections"
+        >
+          {([
+            { id: "overview" as AdminTab, label: "Overview", icon: LayoutDashboard },
+            { id: "gallery-team" as AdminTab, label: "Gallery & Team", icon: Images },
+            { id: "hours" as AdminTab, label: "Hours", icon: Clock },
+          ] as const).map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              role="tab"
+              aria-selected={activeTab === id}
+              onClick={() => setActiveTab(id)}
+              className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-lg font-medium transition-all duration-150 focus:outline-none min-h-[36px]"
+              style={
+                activeTab === id
+                  ? { background: "#5D3A7A", color: "white" }
+                  : { color: "#8FA0B0" }
+              }
+            >
+              <Icon className="w-3.5 h-3.5" aria-hidden="true" />
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Gallery & Team tab panel */}
+        {activeTab === "gallery-team" && (
+          <div
+            className="p-6 rounded-2xl"
+            style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+          >
+            <GalleryTeamManager />
+          </div>
+        )}
+
+        {/* Hours tab panel */}
+        {activeTab === "hours" && (
+          <div
+            className="p-6 rounded-2xl"
+            style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+          >
+            <HoursEditor />
+          </div>
+        )}
+
+        {activeTab === "overview" && (
+          <>
         {/* Fetch error banner */}
         {fetchError && (
           <div role="alert" className="mb-6 px-4 py-3 rounded-xl flex items-center justify-between gap-4" style={{ background: "rgba(226,107,94,0.08)", border: "0.5px solid rgba(226,107,94,0.3)" }}>
@@ -395,6 +463,8 @@ export default function DashboardPage() {
             </section>
           </aside>
         </div>
+          </>
+        )}
       </main>
 
       <ToastList toasts={toasts} dismiss={dismiss} />

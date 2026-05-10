@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { MapPin, List, Map, Star, CheckCircle, ArrowUpDown, Search, SlidersHorizontal } from "lucide-react";
+import ValeAssuredBadge from "@/components/ValeAssuredBadge";
 import {
   funeralDirectors,
   filterByServiceType,
@@ -87,14 +88,6 @@ function FDCard({ fd, serviceFilter }: { fd: FuneralDirector; serviceFilter: Ser
             <h3 className="font-semibold text-base group-hover:underline truncate" style={{ color: "#5D3A7A" }}>
               {fd.name}
             </h3>
-            {fd.assured && (
-              <span
-                className="inline-block text-[12px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0"
-                style={{ background: "rgba(226,107,94,0.12)", color: "#C95548" }}
-              >
-                Assured
-              </span>
-            )}
             {fd.verified && (
               <CheckCircle className="w-4 h-4 shrink-0" aria-label="Verified" style={{ color: "#7BA84A" }} />
             )}
@@ -111,9 +104,14 @@ function FDCard({ fd, serviceFilter }: { fd: FuneralDirector; serviceFilter: Ser
           </div>
         </div>
         <div className="text-right shrink-0">
-          <div className="text-[11px] uppercase tracking-wider mb-0.5" style={{ color: "#8FA0B0" }}>From</div>
+          {fd.assured && (
+            <div className="flex justify-end mb-2.5">
+              <ValeAssuredBadge size="sm" />
+            </div>
+          )}
+          <div className="text-[11px] uppercase tracking-wider mb-0.5" style={{ color: "#5F7080" }}>From</div>
           <div className="text-xl font-bold" style={{ color: "#5D3A7A" }}>£{lowestPrice.toLocaleString()}</div>
-          <div className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>
+          <div className="text-xs mt-0.5" style={{ color: "#5F7080" }}>
             Avg. £{getAveragePrice(fd).toLocaleString()}
           </div>
         </div>

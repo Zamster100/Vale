@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle, PenLine, Star } from "lucide-react";
 import { funeralDirectors } from "@/lib/data";
+import VerifiedFamilyLabel from "@/components/reviews/VerifiedFamilyLabel";
 import {
   getSeedReviews,
   getAllReviewsForFD,
@@ -44,10 +45,11 @@ function ReviewCard({ review }: { review: StoredReview }) {
     <article className="p-5 rounded-xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="min-w-0">
+          {review.quoteRequestId && review.status === "booked" && <VerifiedFamilyLabel />}
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-sm" style={{ color: "#3F5E2C" }}>{review.familyName}</span>
             {review.verified ? (
-              <span className="flex items-center gap-1 text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#5A8A30" }}>
+              <span className="flex items-center gap-1 text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#1F4A0E" }}>
                 <CheckCircle className="w-3 h-3" aria-hidden="true" />
                 Verified
               </span>
@@ -67,6 +69,20 @@ function ReviewCard({ review }: { review: StoredReview }) {
         <blockquote className="text-sm leading-relaxed" style={{ color: "#3F5E2C" }}>
           &ldquo;{review.text}&rdquo;
         </blockquote>
+      )}
+      {(review.communicationRating || review.dignityRating || review.valueRating || review.facilitiesRating) && (
+        <div className="flex flex-wrap gap-1.5 mt-2.5">
+          {[
+            { label: "Communication", value: review.communicationRating },
+            { label: "Dignity", value: review.dignityRating },
+            { label: "Value", value: review.valueRating },
+            { label: "Facilities", value: review.facilitiesRating },
+          ].filter(({ value }) => value != null).map(({ label, value }) => (
+            <span key={label} className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(212,165,116,0.1)", color: "#5D3A7A", border: "0.5px solid rgba(212,165,116,0.3)" }}>
+              {label} <span style={{ color: "#d4a574", fontWeight: 600 }}>{value}/5</span>
+            </span>
+          ))}
+        </div>
       )}
     </article>
   );

@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 const FOOTER_LINKS = {
   Families: [
     { label: "Find a funeral director", href: "/search" },
+    { label: "Planning guide", href: "/resources" },
     { label: "Pre-plan with Vault", href: "/vault/login" },
     { label: "Read reviews", href: "/search" },
     { label: "Submit a review", href: "/submit-review" },

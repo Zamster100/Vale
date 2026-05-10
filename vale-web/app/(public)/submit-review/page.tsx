@@ -6,11 +6,14 @@ import Link from "next/link";
 import { CheckCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { funeralDirectors } from "@/lib/data";
 import { submitReview } from "@/lib/reviews";
-import StarSelector from "@/components/StarSelector";
+import FourFactorSelector, { type FactorRatings } from "@/components/FourFactorSelector";
 
 interface FormState {
   fdId: string;
-  rating: number;
+  communicationRating: number;
+  dignityRating: number;
+  valueRating: number;
+  facilitiesRating: number;
   text: string;
   familyName: string;
   anonymous: boolean;
@@ -24,7 +27,8 @@ interface FieldErrors {
 function validate(form: FormState): FieldErrors {
   const errors: FieldErrors = {};
   if (!form.fdId) errors.fdId = "Please select a funeral director.";
-  if (form.rating === 0) errors.rating = "Please select a star rating.";
+  if (form.communicationRating === 0 || form.dignityRating === 0 || form.valueRating === 0 || form.facilitiesRating === 0)
+    errors.rating = "Please rate all four factors.";
   return errors;
 }
 
@@ -44,7 +48,7 @@ function SubmitReviewForm() {
   const searchParams = useSearchParams();
   const preselected = searchParams.get("fd") ?? "";
 
-  const [form, setForm] = useState<FormState>({ fdId: preselected, rating: 0, text: "", familyName: "", anonymous: false });
+  const [form, setForm] = useState<FormState>({ fdId: preselected, communicationRating: 0, dignityRating: 0, valueRating: 0, facilitiesRating: 0, text: "", familyName: "", anonymous: false });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -62,8 +66,13 @@ function SubmitReviewForm() {
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setLoading(true);
     const fd = funeralDirectors.find((f) => f.id === form.fdId)!;
+    const overall = Math.round((form.communicationRating + form.dignityRating + form.valueRating + form.facilitiesRating) / 4);
     submitReview({
-      fdId: form.fdId, fdName: fd.name, rating: form.rating,
+      fdId: form.fdId, fdName: fd.name, rating: overall,
+      communicationRating: form.communicationRating,
+      dignityRating: form.dignityRating,
+      valueRating: form.valueRating,
+      facilitiesRating: form.facilitiesRating,
       text: form.text.trim(),
       familyName: form.anonymous ? "Anonymous" : form.familyName.trim() || "Anonymous",
     });
@@ -86,18 +95,18 @@ function SubmitReviewForm() {
         <h2 className="text-xl font-semibold mb-2" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
           Thank you for sharing
         </h2>
-        <p className="text-sm leading-relaxed max-w-sm mx-auto mb-2" style={{ color: "#8FA0B0" }}>
+        <p className="text-sm leading-relaxed max-w-sm mx-auto mb-2" style={{ color: "#5F7080" }}>
           Your review for{" "}
           <strong style={{ color: "#3F5E2C" }}>{selectedFD?.name}</strong> has been submitted. It will appear after a brief verification check.
         </p>
-        <p className="text-xs mb-8" style={{ color: "#8FA0B0" }}>
+        <p className="text-xs mb-8" style={{ color: "#5F7080" }}>
           Reviews help other families make informed, confident decisions at a difficult time.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           {selectedFD && (
             <Link
               href={`/reviews/${selectedFD.id}`}
-              className="text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] inline-flex items-center justify-center focus:outline-none"
+              className="text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
               style={{ background: "#5AAE55" }}
             >
               View all reviews
@@ -105,7 +114,7 @@ function SubmitReviewForm() {
           )}
           <Link
             href="/search"
-            className="px-6 py-2.5 rounded-full font-semibold text-sm hover:opacity-80 transition-opacity min-h-[44px] inline-flex items-center justify-center focus:outline-none"
+            className="px-6 py-2.5 rounded-full font-semibold text-sm hover:opacity-80 transition-opacity min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
             style={{ border: "0.5px solid rgba(143,160,176,0.5)", color: "#5D3A7A" }}
           >
             Find another funeral director
@@ -139,16 +148,19 @@ function SubmitReviewForm() {
       </div>
 
       <div>
-        <p className="text-sm font-medium mb-2" style={{ color: "#5D3A7A" }}>
-          Your rating <span aria-hidden="true" style={{ color: "#E26B5E" }}>*</span>
+        <p className="text-sm font-medium mb-3" style={{ color: "#5D3A7A" }}>
+          Your ratings <span aria-hidden="true" style={{ color: "#E26B5E" }}>*</span>
         </p>
-        <StarSelector value={form.rating} onChange={(v) => { setForm((f) => ({ ...f, rating: v })); setErrors((er) => ({ ...er, rating: undefined })); }} />
-        {errors.rating && <p role="alert" className="text-xs mt-1 font-medium" style={{ color: "#E26B5E" }}>{errors.rating}</p>}
+        <FourFactorSelector
+          values={{ communicationRating: form.communicationRating, dignityRating: form.dignityRating, valueRating: form.valueRating, facilitiesRating: form.facilitiesRating }}
+          onChange={(v: FactorRatings) => { setForm((f) => ({ ...f, ...v })); setErrors((er) => ({ ...er, rating: undefined })); }}
+        />
+        {errors.rating && <p role="alert" className="text-xs mt-2 font-medium" style={{ color: "#E26B5E" }}>{errors.rating}</p>}
       </div>
 
       <div>
         <label htmlFor="sr-text" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
-          Your review <span className="font-normal" style={{ color: "#8FA0B0" }}>(optional)</span>
+          Your review <span className="font-normal" style={{ color: "#5F7080" }}>(optional)</span>
         </label>
         <textarea
           id="sr-text"
@@ -160,12 +172,12 @@ function SubmitReviewForm() {
           placeholder="Tell other families what your experience was like — the care, the communication, the value…"
           style={{ ...fieldStyle("text"), resize: "none", minHeight: "auto" }}
         />
-        <p className="text-xs mt-1" style={{ color: "#8FA0B0" }}>Be honest and specific. Other families rely on reviews like yours.</p>
+        <p className="text-xs mt-1" style={{ color: "#5F7080" }}>Be honest and specific. Other families rely on reviews like yours.</p>
       </div>
 
       <div>
         <label htmlFor="sr-name" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
-          Your name <span className="font-normal" style={{ color: "#8FA0B0" }}>(optional)</span>
+          Your name <span className="font-normal" style={{ color: "#5F7080" }}>(optional)</span>
         </label>
         <input
           id="sr-name"
@@ -192,7 +204,7 @@ function SubmitReviewForm() {
       </div>
 
       <div className="p-4 rounded-xl" style={{ background: "rgba(197,210,220,0.2)", border: "0.5px solid rgba(143,160,176,0.3)" }}>
-        <p className="text-xs leading-relaxed" style={{ color: "#8FA0B0" }}>
+        <p className="text-xs leading-relaxed" style={{ color: "#5F7080" }}>
           <strong style={{ color: "#5D3A7A" }}>How we verify reviews:</strong> We ask that reviews come from families who have used the funeral director&apos;s services. Your review will be checked before appearing publicly — this usually takes 1–2 working days.
         </p>
       </div>
@@ -200,7 +212,7 @@ function SubmitReviewForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full text-white py-3 rounded-full font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px] flex items-center justify-center gap-2 focus:outline-none"
+        className="w-full text-white py-3 rounded-full font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px] flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
         style={{ background: "#5AAE55" }}
       >
         {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
@@ -228,7 +240,7 @@ export default function SubmitReviewPage() {
             <h1 className="text-xl font-semibold mb-1" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
               Leave a review
             </h1>
-            <p className="text-sm leading-relaxed" style={{ color: "#8FA0B0" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "#5F7080" }}>
               Your experience helps other families find the right funeral director at the most difficult time.
             </p>
           </div>

@@ -9,6 +9,12 @@ export interface StoredReview {
   familyName: string;
   createdAt: string; // ISO
   verified: boolean;
+  quoteRequestId?: string | null;
+  status?: "booked" | "pending";
+  communicationRating?: number;
+  dignityRating?: number;
+  valueRating?: number;
+  facilitiesRating?: number;
 }
 
 export interface ReviewStats {
@@ -47,6 +53,12 @@ export function getSeedReviews(): StoredReview[] {
         familyName: r.name,
         createdAt: parseLegacyDate(r.date),
         verified: r.verified,
+        quoteRequestId: r.quoteRequestId ?? null,
+        status: r.status,
+        communicationRating: r.communicationRating,
+        dignityRating: r.dignityRating,
+        valueRating: r.valueRating,
+        facilitiesRating: r.facilitiesRating,
       });
     }
   }
@@ -74,6 +86,10 @@ export function submitReview(data: {
   fdId: string;
   fdName: string;
   rating: number;
+  communicationRating?: number;
+  dignityRating?: number;
+  valueRating?: number;
+  facilitiesRating?: number;
   text: string;
   familyName: string;
 }): void {

@@ -18,6 +18,13 @@ import {
 } from "lucide-react";
 import { funeralDirectors, getLowestPrice, type FuneralDirector } from "@/lib/data";
 import QuoteModal from "@/components/QuoteModal";
+import PhotoGallery from "@/components/fd/PhotoGallery";
+import TeamGrid from "@/components/fd/TeamGrid";
+import AccreditationBadges from "@/components/fd/AccreditationBadges";
+import OpeningHoursSection from "@/components/fd/OpeningHours";
+import RatingBreakdown from "@/components/fd/RatingBreakdown";
+import ValeAssuredBadge from "@/components/ValeAssuredBadge";
+import VerifiedFamilyLabel from "@/components/reviews/VerifiedFamilyLabel";
 import { use } from "react";
 
 const REVIEW_MONTHS: Record<string, string> = {
@@ -34,7 +41,7 @@ const MapView = dynamic(() => import("@/components/search/MapView"), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center" style={{ background: "#C5D2DC" }}>
-      <p className="text-sm" style={{ color: "#8FA0B0" }}>Loading map…</p>
+      <p className="text-sm" style={{ color: "#5F7080" }}>Loading map…</p>
     </div>
   ),
 });
@@ -83,7 +90,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
     <div className="min-h-screen" style={{ background: "#F5F1E8" }}>
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" style={{ background: "white", borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}>
-        <ol className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#8FA0B0" }}>
+        <ol className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#5F7080" }}>
           <li>
             <Link
               href="/search"
@@ -108,35 +115,19 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 flex-wrap mb-3">
-                    {fd.assured && (
-                      <span
-                        className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
-                        style={{ background: "rgba(226,107,94,0.12)", color: "#C95548" }}
-                      >
-                        <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                        Assured
-                      </span>
-                    )}
+                    {fd.assured && <ValeAssuredBadge />}
                     {fd.verified && (
                       <span
                         className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
-                        style={{ background: "rgba(123,168,74,0.12)", color: "#5A8A30" }}
+                        style={{ background: "rgba(123,168,74,0.12)", color: "#1F4A0E" }}
                       >
                         <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
                         Verified
                       </span>
                     )}
-                    {fd.assured && (
-                      <span
-                        className="text-xs px-2.5 py-1 rounded-full font-medium"
-                        style={{ background: "rgba(197,210,220,0.4)", color: "#8FA0B0" }}
-                      >
-                        NAFD Member
-                      </span>
-                    )}
                     <span
                       className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium"
-                      style={{ background: "rgba(197,210,220,0.4)", color: "#8FA0B0" }}
+                      style={{ background: "rgba(197,210,220,0.4)", color: "#5F7080" }}
                     >
                       <Users className="w-3 h-3" aria-hidden="true" />
                       Verified by {fd.reviewCount} families
@@ -147,25 +138,31 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   <div className="flex items-center gap-2 mb-3">
                     <StarRating rating={fd.rating} />
                     <span className="text-sm font-semibold" style={{ color: "#5D3A7A" }}>{fd.rating}</span>
-                    <span className="text-sm" style={{ color: "#8FA0B0" }}>({fd.reviewCount} verified reviews)</span>
+                    <span className="text-sm" style={{ color: "#5F7080" }}>({fd.reviewCount} verified reviews)</span>
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: "#8FA0B0" }}>{fd.description}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "#5F7080" }}>{fd.description}</p>
+
+                  {(fd.nafdVerified || fd.saifVerified || fd.bifdVerified || fd.iccmVerified) && (
+                    <div className="mt-4">
+                      <AccreditationBadges fd={fd} />
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="mt-5 pt-5 grid sm:grid-cols-3 gap-4 text-sm" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
                 <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" style={{ color: "#8FA0B0" }} />
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" style={{ color: "#5F7080" }} />
                   <span style={{ color: "#3F5E2C" }}>{fd.address}<br />{fd.postcode}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#8FA0B0" }} />
+                  <Phone className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#5F7080" }} />
                   <a href={`tel:${fd.phone}`} className="hover:underline focus:outline-none rounded" style={{ color: "#8A5FAA" }}>
                     {fd.phone}
                   </a>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#8FA0B0" }} />
+                  <Globe className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#5F7080" }} />
                   <a
                     href={`https://${fd.website}`}
                     target="_blank"
@@ -177,7 +174,11 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   </a>
                 </div>
               </div>
+
             </div>
+
+            {/* Opening hours */}
+            {fd.hours && <OpeningHoursSection hours={fd.hours} />}
 
             {/* Price table */}
             <div style={{ ...card, overflow: "hidden" }}>
@@ -201,10 +202,10 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <table className="w-full text-sm">
                   <thead>
                     <tr style={{ background: "#F5F1E8", borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}>
-                      <th className="text-left px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#8FA0B0" }}>Service</th>
-                      <th className="text-left px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#8FA0B0" }}>Type</th>
-                      <th className="text-right px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#8FA0B0" }}>Price</th>
-                      <th className="text-left px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#8FA0B0" }}>What&apos;s included</th>
+                      <th className="text-left px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#5F7080" }}>Service</th>
+                      <th className="text-left px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#5F7080" }}>Type</th>
+                      <th className="text-right px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#5F7080" }}>Price</th>
+                      <th className="text-left px-6 py-3 font-semibold text-xs uppercase tracking-wider" style={{ color: "#5F7080" }}>What&apos;s included</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -222,13 +223,13 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                             <div className="flex items-center gap-2">
                               <span className="font-medium" style={{ color: "#3F5E2C" }}>{item.service}</span>
                               {isBest && (
-                                <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#5A8A30" }}>
+                                <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#1F4A0E" }}>
                                   Best value
                                 </span>
                               )}
                             </div>
                           </td>
-                          <td className="px-6 py-4" style={{ color: "#8FA0B0" }}>
+                          <td className="px-6 py-4" style={{ color: "#5F7080" }}>
                             {SERVICE_TYPE_LABELS[item.type] ?? item.type}
                           </td>
                           <td className="px-6 py-4 text-right">
@@ -242,7 +243,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                               £{item.price.toLocaleString()}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-xs leading-relaxed" style={{ color: "#8FA0B0" }}>
+                          <td className="px-6 py-4 text-xs leading-relaxed" style={{ color: "#5F7080" }}>
                             {item.includes.join(" · ")}
                           </td>
                         </tr>
@@ -270,12 +271,12 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="font-semibold text-sm" style={{ color: "#3F5E2C" }}>{item.service}</span>
                             {isBest && (
-                              <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#5A8A30" }}>
+                              <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#1F4A0E" }}>
                                 Best value
                               </span>
                             )}
                           </div>
-                          <span className="text-xs mt-0.5 block" style={{ color: "#8FA0B0" }}>
+                          <span className="text-xs mt-0.5 block" style={{ color: "#5F7080" }}>
                             {SERVICE_TYPE_LABELS[item.type] ?? item.type}
                           </span>
                         </div>
@@ -289,7 +290,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           £{item.price.toLocaleString()}
                         </span>
                       </div>
-                      <p className="text-xs leading-relaxed" style={{ color: "#8FA0B0" }}>
+                      <p className="text-xs leading-relaxed" style={{ color: "#5F7080" }}>
                         Includes: {item.includes.join(", ")}
                       </p>
                     </div>
@@ -298,11 +299,16 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               </div>
 
               <div className="px-6 py-3" style={{ borderTop: "0.5px solid rgba(143,160,176,0.2)", background: "#F5F1E8" }}>
-                <p className="text-xs" style={{ color: "#8FA0B0" }}>
+                <p className="text-xs" style={{ color: "#5F7080" }}>
                   Prices are compliant with CMA transparency requirements. All costs shown include VAT.
                 </p>
               </div>
             </div>
+
+            {/* Gallery */}
+            {fd.gallery && fd.gallery.length > 0 && (
+              <PhotoGallery photos={fd.gallery} />
+            )}
 
             {/* Reviews */}
             <div style={card} className="p-6">
@@ -312,7 +318,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   <div className="flex items-center gap-2">
                     <StarRating rating={fd.rating} />
                     <span className="text-sm font-semibold" style={{ color: "#5D3A7A" }}>{fd.rating}</span>
-                    <span className="text-sm" style={{ color: "#8FA0B0" }}>({fd.reviewCount} verified reviews)</span>
+                    <span className="text-sm" style={{ color: "#5F7080" }}>({fd.reviewCount} verified reviews)</span>
                   </div>
                 </div>
                 <Link
@@ -332,7 +338,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   const pct = fd.reviews.length > 0 ? Math.round((count / fd.reviews.length) * 100) : 0;
                   return (
                     <div key={star} className="flex items-center gap-3">
-                      <span className="text-xs w-4 shrink-0 text-right" style={{ color: "#8FA0B0" }}>{star}</span>
+                      <span className="text-xs w-4 shrink-0 text-right" style={{ color: "#5F7080" }}>{star}</span>
                       <StarRating rating={star} size="sm" />
                       <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "rgba(197,210,220,0.4)" }}>
                         <div
@@ -341,11 +347,18 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           aria-hidden="true"
                         />
                       </div>
-                      <span className="text-xs w-4 shrink-0" style={{ color: "#8FA0B0" }}>{count}</span>
+                      <span className="text-xs w-4 shrink-0" style={{ color: "#5F7080" }}>{count}</span>
                     </div>
                   );
                 })}
               </div>
+
+              {/* Rating breakdown */}
+              {fd.reviews.some((r) => r.communicationRating || r.dignityRating || r.valueRating || r.facilitiesRating) && (
+                <div className="mb-6">
+                  <RatingBreakdown reviews={fd.reviews} />
+                </div>
+              )}
 
               {/* Recent reviews */}
               <div className="space-y-4">
@@ -357,19 +370,22 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   >
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div>
+                        {review.quoteRequestId && review.status === "booked" && (
+                          <VerifiedFamilyLabel />
+                        )}
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-semibold text-sm" style={{ color: "#3F5E2C" }}>{review.name}</span>
                           {review.verified && (
                             <span
                               className="flex items-center gap-1 text-xs font-semibold px-1.5 py-0.5 rounded-full"
-                              style={{ background: "rgba(123,168,74,0.15)", color: "#5A8A30" }}
+                              style={{ background: "rgba(123,168,74,0.15)", color: "#1F4A0E" }}
                             >
                               <CheckCircle className="w-3 h-3" aria-hidden="true" />
                               Verified
                             </span>
                           )}
                         </div>
-                        <time dateTime={reviewDatetime(review.date)} className="text-xs mt-0.5 block" style={{ color: "#8FA0B0" }}>
+                        <time dateTime={reviewDatetime(review.date)} className="text-xs mt-0.5 block" style={{ color: "#5F7080" }}>
                           {review.date}
                         </time>
                       </div>
@@ -378,6 +394,20 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     <blockquote className="text-sm leading-relaxed" style={{ color: "#3F5E2C" }}>
                       &ldquo;{review.text}&rdquo;
                     </blockquote>
+                    {(review.communicationRating || review.dignityRating || review.valueRating || review.facilitiesRating) && (
+                      <div className="flex flex-wrap gap-1.5 mt-2.5">
+                        {[
+                          { label: "Communication", value: review.communicationRating },
+                          { label: "Dignity", value: review.dignityRating },
+                          { label: "Value", value: review.valueRating },
+                          { label: "Facilities", value: review.facilitiesRating },
+                        ].filter(({ value }) => value != null).map(({ label, value }) => (
+                          <span key={label} className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(212,165,116,0.1)", color: "#5D3A7A", border: "0.5px solid rgba(212,165,116,0.3)" }}>
+                            {label} <span style={{ color: "#d4a574", fontWeight: 600 }}>{value}/5</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </article>
                 ))}
               </div>
@@ -401,6 +431,11 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 </Link>
               </div>
             </div>
+
+            {/* Team */}
+            {fd.team && fd.team.length > 0 && (
+              <TeamGrid team={fd.team} />
+            )}
           </div>
 
           {/* Sidebar */}
@@ -408,7 +443,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             {/* CTA card */}
             <div style={card} className="p-6">
               <h3 className="mb-1 text-base font-semibold" style={{ color: "#5D3A7A" }}>Interested in {fd.name}?</h3>
-              <p className="text-sm mb-4 leading-relaxed" style={{ color: "#8FA0B0" }}>
+              <p className="text-sm mb-4 leading-relaxed" style={{ color: "#5F7080" }}>
                 Request a free, no-obligation quote. They&apos;ll be in touch within 24 hours.
               </p>
               <button
@@ -423,7 +458,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
                 style={{ border: "0.5px solid rgba(143,160,176,0.5)", color: "#3F5E2C" }}
               >
-                <Phone className="w-4 h-4" aria-hidden="true" style={{ color: "#8FA0B0" }} />
+                <Phone className="w-4 h-4" aria-hidden="true" style={{ color: "#5F7080" }} />
                 Call {fd.phone}
               </a>
             </div>
@@ -458,7 +493,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             <div style={{ ...card, overflow: "hidden" }}>
               <div className="p-4" style={{ borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}>
                 <p className="text-sm font-semibold" style={{ color: "#3F5E2C" }}>{fd.address}</p>
-                <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>{fd.postcode}, {fd.city}</p>
+                <p className="text-xs mt-0.5" style={{ color: "#5F7080" }}>{fd.postcode}, {fd.city}</p>
               </div>
               <div style={{ height: 220 }}>
                 <MapView directors={[fd]} />
@@ -485,7 +520,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   </div>
                 );
               })}
-              <p className="text-xs mt-3" style={{ color: "#8FA0B0" }}>
+              <p className="text-xs mt-3" style={{ color: "#5F7080" }}>
                 From <span className="font-semibold" style={{ color: "#5D3A7A" }}>£{lowestPrice.toLocaleString()}</span> — all prices include VAT
               </p>
             </div>

@@ -1,4 +1,19 @@
 export type ServiceType = "cremation" | "burial" | "direct_cremation";
+export type PhotoCategory = "chapel" | "reception" | "vehicles" | "exterior" | "team";
+export type DayKey = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+
+export interface DayHours {
+  open: boolean;
+  from?: string; // "HH:MM" 24h
+  to?: string;   // "HH:MM" 24h
+}
+
+export interface OpeningHours {
+  schedule: Record<DayKey, DayHours>;
+  availability24hr?: boolean;
+  oohPhone?: string;
+  oohResponseHours?: number; // 1, 2, 4, 8, 24
+}
 
 export interface PriceItem {
   service: string;
@@ -13,6 +28,30 @@ export interface Review {
   text: string;
   date: string;
   verified: boolean;
+  quoteRequestId?: string | null;
+  status?: "booked" | "pending";
+  communicationRating?: number;
+  dignityRating?: number;
+  valueRating?: number;
+  facilitiesRating?: number;
+}
+
+export interface GalleryPhoto {
+  id: string;
+  url: string;
+  category: PhotoCategory;
+  caption?: string;
+  order: number;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  title: string;
+  bio: string;
+  photoUrl: string;
+  yearsExp?: number;
+  order: number;
 }
 
 export interface FuneralDirector {
@@ -32,6 +71,14 @@ export interface FuneralDirector {
   description: string;
   prices: PriceItem[];
   reviews: Review[];
+  gallery?: GalleryPhoto[];
+  team?: TeamMember[];
+  nafdVerified?: boolean;
+  saifVerified?: boolean;
+  bifdVerified?: boolean;
+  iccmVerified?: boolean;
+  verifiedAt?: string;
+  hours?: OpeningHours;
 }
 
 export const funeralDirectors: FuneralDirector[] = [
@@ -49,6 +96,23 @@ export const funeralDirectors: FuneralDirector[] = [
     reviewCount: 31,
     verified: true,
     assured: true,
+    nafdVerified: true,
+    saifVerified: true,
+    bifdVerified: true,
+    verifiedAt: "2025-09-01T00:00:00.000Z",
+    hours: {
+      schedule: {
+        mon: { open: true, from: "09:00", to: "17:00" },
+        tue: { open: true, from: "09:00", to: "17:00" },
+        wed: { open: true, from: "09:00", to: "17:00" },
+        thu: { open: true, from: "09:00", to: "17:00" },
+        fri: { open: true, from: "09:00", to: "17:00" },
+        sat: { open: true, from: "10:00", to: "14:00" },
+        sun: { open: false },
+      },
+      oohPhone: "020 7946 0958",
+      oohResponseHours: 2,
+    },
     description:
       "A family-run funeral home serving Westminster and surrounding areas for over 60 years. Known for compassionate, dignified care at every step.",
     prices: [
@@ -57,9 +121,58 @@ export const funeralDirectors: FuneralDirector[] = [
       { service: "Traditional Burial", type: "burial", price: 4950, includes: ["Coffin", "Transport", "Burial plot", "Gravestone"] },
     ],
     reviews: [
-      { name: "Margaret T.", rating: 5, text: "Smith & Sons made an incredibly difficult time bearable. Compassionate, professional and completely transparent about costs.", date: "March 2026", verified: true },
-      { name: "David & Carol R.", rating: 5, text: "They looked after my father with real dignity. The team guided us every step of the way without any pressure.", date: "February 2026", verified: true },
-      { name: "James H.", rating: 5, text: "Outstanding service. Clear pricing, no surprises. Highly recommend to any family in Westminster.", date: "January 2026", verified: true },
+      { name: "Margaret T.", rating: 5, text: "Smith & Sons made an incredibly difficult time bearable. Compassionate, professional and completely transparent about costs.", date: "March 2026", verified: true, quoteRequestId: "qr_2601_001", status: "booked", communicationRating: 5, dignityRating: 5, valueRating: 4, facilitiesRating: 5 },
+      { name: "David & Carol R.", rating: 5, text: "They looked after my father with real dignity. The team guided us every step of the way without any pressure.", date: "February 2026", verified: true, quoteRequestId: "qr_2602_001", status: "booked", communicationRating: 5, dignityRating: 5, valueRating: 5, facilitiesRating: 5 },
+      { name: "James H.", rating: 5, text: "Outstanding service. Clear pricing, no surprises. Highly recommend to any family in Westminster.", date: "January 2026", verified: true, communicationRating: 5, dignityRating: 5, valueRating: 5, facilitiesRating: 4 },
+    ],
+    gallery: [
+      { id: "g1", url: "https://picsum.photos/seed/vale-chapel-a/800/600", category: "chapel", caption: "Our main chapel — seating up to 80 guests", order: 1 },
+      { id: "g2", url: "https://picsum.photos/seed/vale-chapel-b/800/600", category: "chapel", caption: "Our intimate chapel for smaller services", order: 2 },
+      { id: "g3", url: "https://picsum.photos/seed/vale-chapel-c/800/600", category: "chapel", caption: "Altar and floral arrangements", order: 3 },
+      { id: "g4", url: "https://picsum.photos/seed/vale-reception-a/800/600", category: "reception", caption: "Quiet reception and waiting area", order: 4 },
+      { id: "g5", url: "https://picsum.photos/seed/vale-reception-b/800/600", category: "reception", caption: "Private family consultation room", order: 5 },
+      { id: "g6", url: "https://picsum.photos/seed/vale-hearse-a/800/600", category: "vehicles", caption: "Our Jaguar XJ hearse", order: 6 },
+      { id: "g7", url: "https://picsum.photos/seed/vale-limo-a/800/600", category: "vehicles", caption: "Family limousine — seats up to 6", order: 7 },
+      { id: "g8", url: "https://picsum.photos/seed/vale-exterior-a/800/600", category: "exterior", caption: "47 Buckingham Gate, Westminster", order: 8 },
+      { id: "g9", url: "https://picsum.photos/seed/vale-teamphoto-a/800/600", category: "team", caption: "The Smith & Sons team", order: 9 },
+    ],
+    team: [
+      {
+        id: "t1",
+        name: "Charles Smith",
+        title: "Senior Funeral Director",
+        bio: "Charles has led Smith & Sons for over three decades, continuing the family tradition his grandfather began in 1964. He is known for his calm presence and deep knowledge of Westminster's communities.",
+        photoUrl: "https://picsum.photos/seed/vale-charles-smith/200/200",
+        yearsExp: 32,
+        order: 1,
+      },
+      {
+        id: "t2",
+        name: "Elizabeth Smith",
+        title: "Arrangement Manager",
+        bio: "Elizabeth manages all family arrangements with warmth and precision. She has a particular passion for creating bespoke ceremonies that truly reflect the person being remembered.",
+        photoUrl: "https://picsum.photos/seed/vale-elizabeth-smith/200/200",
+        yearsExp: 22,
+        order: 2,
+      },
+      {
+        id: "t3",
+        name: "James Morrison",
+        title: "Funeral Director",
+        bio: "James joined Smith & Sons after training at the British Institute of Embalmers. He prides himself on meticulous attention to detail and supporting families at every step of the process.",
+        photoUrl: "https://picsum.photos/seed/vale-james-morrison/200/200",
+        yearsExp: 14,
+        order: 3,
+      },
+      {
+        id: "t4",
+        name: "Sarah Williams",
+        title: "Family Liaison",
+        bio: "Sarah is the first point of contact for many families. Her background in bereavement counselling means she can offer emotional support as well as practical guidance throughout the funeral planning process.",
+        photoUrl: "https://picsum.photos/seed/vale-sarah-williams/200/200",
+        yearsExp: 7,
+        order: 4,
+      },
     ],
   },
   {
@@ -128,6 +241,9 @@ export const funeralDirectors: FuneralDirector[] = [
     reviewCount: 42,
     verified: true,
     assured: true,
+    nafdVerified: true,
+    saifVerified: true,
+    verifiedAt: "2025-10-01T00:00:00.000Z",
     description:
       "Specialist multi-faith funeral directors in Wembley, with deep experience in Hindu, Muslim, Sikh and Christian funeral traditions across London.",
     prices: [
@@ -155,6 +271,24 @@ export const funeralDirectors: FuneralDirector[] = [
     reviewCount: 56,
     verified: true,
     assured: true,
+    nafdVerified: true,
+    saifVerified: true,
+    iccmVerified: true,
+    verifiedAt: "2025-08-01T00:00:00.000Z",
+    hours: {
+      schedule: {
+        mon: { open: true, from: "00:00", to: "23:59" },
+        tue: { open: true, from: "00:00", to: "23:59" },
+        wed: { open: true, from: "00:00", to: "23:59" },
+        thu: { open: true, from: "00:00", to: "23:59" },
+        fri: { open: true, from: "00:00", to: "23:59" },
+        sat: { open: true, from: "00:00", to: "23:59" },
+        sun: { open: true, from: "00:00", to: "23:59" },
+      },
+      availability24hr: true,
+      oohPhone: "0161 946 1122",
+      oohResponseHours: 1,
+    },
     description:
       "Manchester's most trusted independent funeral directors, offering dignified and affordable services for over 40 years with full price transparency.",
     prices: [
@@ -207,6 +341,9 @@ export const funeralDirectors: FuneralDirector[] = [
     reviewCount: 38,
     verified: true,
     assured: true,
+    nafdVerified: true,
+    bifdVerified: true,
+    verifiedAt: "2025-11-01T00:00:00.000Z",
     description:
       "Birmingham's premier independent funeral directors, serving all communities with discretion, care, and clear upfront pricing since 1975.",
     prices: [
@@ -259,6 +396,24 @@ export const funeralDirectors: FuneralDirector[] = [
     reviewCount: 47,
     verified: true,
     assured: true,
+    nafdVerified: true,
+    saifVerified: true,
+    bifdVerified: true,
+    iccmVerified: true,
+    verifiedAt: "2025-07-01T00:00:00.000Z",
+    hours: {
+      schedule: {
+        mon: { open: true, from: "09:00", to: "17:30" },
+        tue: { open: true, from: "09:00", to: "17:30" },
+        wed: { open: true, from: "09:00", to: "17:30" },
+        thu: { open: true, from: "09:00", to: "17:30" },
+        fri: { open: true, from: "09:00", to: "17:30" },
+        sat: { open: true, from: "10:00", to: "15:00" },
+        sun: { open: false },
+      },
+      oohPhone: "020 7946 2222",
+      oohResponseHours: 2,
+    },
     description:
       "Award-winning funeral directors on Edgware Road, known for exceptional personalised services and meticulous attention to every family's wishes.",
     prices: [
