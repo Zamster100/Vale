@@ -83,7 +83,7 @@ async function generatePDF(name: string, email: string): Promise<void> {
   const CW = W - MARGIN * 2;
 
   const addHeader = () => {
-    doc.setFillColor(26, 58, 82);
+    doc.setFillColor(93, 58, 122);
     doc.rect(0, 0, W, 20, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
@@ -96,7 +96,7 @@ async function generatePDF(name: string, email: string): Promise<void> {
   };
 
   const addFooter = (p: number) => {
-    doc.setFillColor(26, 58, 82);
+    doc.setFillColor(93, 58, 122);
     doc.rect(0, H - 12, W, 12, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(7.5);
@@ -110,19 +110,19 @@ async function generatePDF(name: string, email: string): Promise<void> {
   };
 
   const drawCheckbox = (x: number, y: number) => {
-    doc.setDrawColor(143, 160, 176);
+    doc.setDrawColor(138, 95, 170);
     doc.setLineWidth(0.3);
     doc.rect(x, y - 3.2, 3.5, 3.5, "S");
   };
 
   const renderSection = (section: ChecklistSection, startY: number): number => {
     let y = startY;
-    doc.setFillColor(212, 165, 116);
+    doc.setFillColor(237, 229, 245);
     doc.rect(MARGIN, y, CW, 7, "F");
-    doc.setTextColor(26, 58, 82);
+    doc.setTextColor(93, 58, 122);
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
-    doc.text(section.title, MARGIN + 3, y + 4.8);
+    doc.text(section.title.replace(/^Section \d+: /, ""), MARGIN + 3, y + 4.8);
     y += 11;
 
     doc.setFont("helvetica", "normal");
@@ -138,11 +138,11 @@ async function generatePDF(name: string, email: string): Promise<void> {
     if (section.notes) {
       y += 3;
       section.notes.forEach((note) => {
-        doc.setTextColor(95, 112, 128);
+        doc.setTextColor(143, 160, 176);
         doc.setFontSize(8.5);
         doc.text(note, MARGIN + 6, y);
         const noteW = doc.getTextWidth(note);
-        doc.setDrawColor(195, 210, 220);
+        doc.setDrawColor(197, 210, 220);
         doc.setLineWidth(0.3);
         doc.line(MARGIN + 6 + noteW + 2, y + 0.5, MARGIN + CW, y + 0.5);
         y += 7;
@@ -156,13 +156,13 @@ async function generatePDF(name: string, email: string): Promise<void> {
   addHeader();
   let y = 28;
 
-  doc.setTextColor(26, 58, 82);
+  doc.setTextColor(93, 58, 122);
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text("Funeral Planning Checklist", MARGIN, y);
   y += 6;
 
-  doc.setTextColor(95, 112, 128);
+  doc.setTextColor(143, 160, 176);
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   const subtitle =
@@ -171,7 +171,7 @@ async function generatePDF(name: string, email: string): Promise<void> {
   doc.text(subtitleLines, MARGIN, y);
   y += subtitleLines.length * 4.5 + 4;
 
-  doc.setFillColor(212, 165, 116);
+  doc.setFillColor(138, 95, 170);
   doc.rect(MARGIN, y, CW, 0.5, "F");
   y += 6;
 
