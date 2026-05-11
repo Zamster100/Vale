@@ -286,29 +286,35 @@ export default function ResourcesPage() {
   return (
     <div className="min-h-screen" style={{ background: "#F5F1E8" }}>
       {/* Hero */}
-      <section style={{ background: "#1a3a52" }}>
-        <div className="max-w-4xl mx-auto px-6 py-14 text-center">
-          <span
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full mb-6"
-            style={{ background: "rgba(212,165,116,0.2)", color: "#d4a574" }}
+      <section style={{ background: "#5D3A7A" }}>
+        <div className="max-w-4xl mx-auto px-6 py-16 text-center">
+          <div
+            className="animate-fade-rise inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-[11px] font-medium uppercase tracking-[0.13em]"
+            style={{
+              border: "0.5px solid rgba(197,210,220,0.3)",
+              background: "rgba(197,210,220,0.15)",
+              color: "#C5D2DC",
+            }}
           >
             <FileText className="w-3.5 h-3.5" aria-hidden="true" />
             Free resource
-          </span>
+          </div>
           <h1
-            className="text-4xl sm:text-5xl mb-4"
+            className="animate-fade-rise mb-5"
             style={{
               fontFamily: "var(--font-instrument-serif)",
+              fontSize: "clamp(38px, 6vw, 64px)",
+              lineHeight: 1.08,
+              letterSpacing: "-0.025em",
               color: "white",
-              lineHeight: 1.15,
             }}
           >
             Funeral Planning
             <br />
-            Checklist
+            <em style={{ color: "#C5D2DC", fontStyle: "italic" }}>Checklist</em>
           </h1>
           <p
-            className="text-base sm:text-lg max-w-xl mx-auto"
+            className="animate-fade-rise-delay text-base sm:text-lg max-w-xl mx-auto leading-relaxed"
             style={{ color: "rgba(197,210,220,0.85)" }}
           >
             A clear, compassionate guide to help families navigate every step —
@@ -318,20 +324,25 @@ export default function ResourcesPage() {
       </section>
 
       {/* Main content */}
-      <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <section className="max-w-5xl mx-auto px-6 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           {/* Left: What's inside */}
           <div>
+            <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#8A5FAA" }} aria-hidden="true" />
             <h2
-              className="text-xl mb-2"
+              className="mb-3"
               style={{
                 fontFamily: "var(--font-instrument-serif)",
-                color: "#1a3a52",
+                fontSize: "clamp(24px, 3vw, 36px)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                fontWeight: 400,
+                color: "#5D3A7A",
               }}
             >
               What&apos;s inside
             </h2>
-            <p className="text-sm mb-6" style={{ color: "#5F7080" }}>
+            <p className="text-sm mb-8 leading-relaxed" style={{ color: "#8FA0B0" }}>
               32 practical steps across 4 clear sections — written with funeral
               directors, bereavement counsellors, and families in mind.
             </p>
@@ -339,17 +350,17 @@ export default function ResourcesPage() {
               {SECTIONS.map((s, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 p-4 rounded-xl"
+                  className="flex items-start gap-3 p-5 rounded-2xl transition-all duration-200"
                   style={{
                     background: "white",
                     border: "0.5px solid rgba(143,160,176,0.3)",
                   }}
                 >
                   <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold"
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold"
                     style={{
-                      background: s.color + "18",
-                      color: s.color,
+                      background: "rgba(138,95,170,0.12)",
+                      color: "#8A5FAA",
                     }}
                     aria-hidden="true"
                   >
@@ -358,11 +369,11 @@ export default function ResourcesPage() {
                   <div>
                     <p
                       className="text-sm font-semibold"
-                      style={{ color: "#1a3a52" }}
+                      style={{ color: "#5D3A7A" }}
                     >
                       {s.title}
                     </p>
-                    <p className="text-xs mt-0.5" style={{ color: "#5F7080" }}>
+                    <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>
                       {s.count} steps
                     </p>
                   </div>
@@ -371,7 +382,7 @@ export default function ResourcesPage() {
             </div>
 
             {/* Trust signals */}
-            <div className="flex flex-wrap gap-5 mt-6">
+            <div className="flex flex-wrap gap-5 mt-8 pt-6" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
               {[
                 { icon: Shield, text: "No spam, ever" },
                 { icon: CheckCircle, text: "Free download" },
@@ -379,12 +390,12 @@ export default function ResourcesPage() {
               ].map(({ icon: Icon, text }) => (
                 <div
                   key={text}
-                  className="flex items-center gap-1.5 text-xs"
-                  style={{ color: "#5F7080" }}
+                  className="flex items-center gap-1.5 text-xs font-medium"
+                  style={{ color: "#8FA0B0" }}
                 >
                   <Icon
                     className="w-3.5 h-3.5"
-                    style={{ color: "#5D3A7A" }}
+                    style={{ color: "#8A5FAA" }}
                     aria-hidden="true"
                   />
                   {text}
@@ -395,7 +406,7 @@ export default function ResourcesPage() {
 
           {/* Right: Signup / Download */}
           <div
-            className="rounded-2xl p-6"
+            className="rounded-2xl p-7"
             style={{
               background: "white",
               border: "0.5px solid rgba(143,160,176,0.3)",
@@ -404,15 +415,18 @@ export default function ResourcesPage() {
             {!submitted ? (
               <>
                 <h2
-                  className="text-lg mb-1"
+                  className="mb-1"
                   style={{
                     fontFamily: "var(--font-instrument-serif)",
+                    fontSize: "clamp(20px, 2vw, 26px)",
+                    lineHeight: 1.2,
+                    fontWeight: 400,
                     color: "#5D3A7A",
                   }}
                 >
                   Get your free guide
                 </h2>
-                <p className="text-sm mb-5" style={{ color: "#5F7080" }}>
+                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#8FA0B0" }}>
                   Enter your details below. We&apos;ll never share your
                   information.
                 </p>
@@ -484,8 +498,8 @@ export default function ResourcesPage() {
                   )}
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-full min-h-[48px] transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-                    style={{ background: "#5D3A7A", color: "white" }}
+                    className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
+                    style={{ background: "#5AAE55", color: "white" }}
                   >
                     <FileText className="w-4 h-4" aria-hidden="true" />
                     Get your free guide
@@ -495,33 +509,36 @@ export default function ResourcesPage() {
             ) : (
               <div className="text-center">
                 <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
-                  style={{ background: "rgba(123,168,74,0.12)" }}
+                  className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                  style={{ background: "rgba(90,174,85,0.12)" }}
                 >
                   <CheckCircle
                     className="w-7 h-7"
-                    style={{ color: "#1F4A0E" }}
+                    style={{ color: "#5AAE55" }}
                     aria-hidden="true"
                   />
                 </div>
                 <h2
-                  className="text-lg mb-1"
+                  className="mb-1"
                   style={{
                     fontFamily: "var(--font-instrument-serif)",
+                    fontSize: "clamp(20px, 2vw, 26px)",
+                    lineHeight: 1.2,
+                    fontWeight: 400,
                     color: "#5D3A7A",
                   }}
                 >
                   {firstName ? `Thank you, ${firstName}.` : "Thank you."}
                 </h2>
-                <p className="text-sm mb-6" style={{ color: "#5F7080" }}>
+                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#8FA0B0" }}>
                   Your checklist is ready to download.
                 </p>
                 <button
                   type="button"
                   onClick={handleDownload}
                   disabled={downloading}
-                  className="w-full flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-full min-h-[48px] transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2 disabled:opacity-60"
-                  style={{ background: "#1a3a52", color: "white" }}
+                  className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2 disabled:opacity-60 disabled:scale-100"
+                  style={{ background: "#5AAE55", color: "white" }}
                 >
                   <Download className="w-4 h-4" aria-hidden="true" />
                   {downloading ? "Generating…" : "Download PDF"}
@@ -536,16 +553,26 @@ export default function ResourcesPage() {
       </section>
 
       {/* Checklist preview */}
-      <section className="max-w-4xl mx-auto px-6 pb-16">
+      <section className="max-w-5xl mx-auto px-6 pb-28">
+        <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#8A5FAA" }} aria-hidden="true" />
         <h2
-          className="text-base font-semibold mb-4"
-          style={{ color: "#5F7080" }}
+          className="mb-2"
+          style={{
+            fontFamily: "var(--font-instrument-serif)",
+            fontSize: "clamp(22px, 2.5vw, 30px)",
+            lineHeight: 1.2,
+            fontWeight: 400,
+            color: "#5D3A7A",
+          }}
         >
-          Preview — the first few steps from each section
+          A look inside
         </h2>
+        <p className="text-sm mb-8 leading-relaxed" style={{ color: "#8FA0B0" }}>
+          The first few steps from each section — the full guide covers all 32.
+        </p>
         <div
           className="rounded-2xl overflow-hidden"
-          style={{ border: "0.5px solid rgba(143,160,176,0.3)" }}
+          style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
         >
           {CHECKLIST.map((section, si) => (
             <div
@@ -559,14 +586,14 @@ export default function ResourcesPage() {
             >
               {/* Section header */}
               <div
-                className="px-5 py-3 flex items-center gap-2"
+                className="px-6 py-4 flex items-center gap-3"
                 style={{ background: si % 2 === 0 ? "white" : "#F5F1E8" }}
               >
                 <div
-                  className="w-5 h-5 rounded flex items-center justify-center shrink-0 text-xs font-bold"
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
                   style={{
-                    background: SECTIONS[si].color + "20",
-                    color: SECTIONS[si].color,
+                    background: "rgba(138,95,170,0.12)",
+                    color: "#8A5FAA",
                   }}
                   aria-hidden="true"
                 >
@@ -574,12 +601,12 @@ export default function ResourcesPage() {
                 </div>
                 <span
                   className="text-sm font-semibold"
-                  style={{ color: "#1a3a52" }}
+                  style={{ color: "#5D3A7A" }}
                 >
-                  {section.title}
+                  {section.title.replace(/^Section \d+: /, "")}
                 </span>
                 <span
-                  className="ml-auto text-xs"
+                  className="ml-auto text-xs font-medium"
                   style={{ color: "#8FA0B0" }}
                 >
                   {section.items.length} steps
@@ -588,30 +615,30 @@ export default function ResourcesPage() {
 
               {/* Preview items */}
               <div
-                className="px-5 pb-4"
+                className="px-6 pb-5"
                 style={{ background: si % 2 === 0 ? "white" : "#F5F1E8" }}
               >
                 {section.items.slice(0, 3).map((item, ii) => (
                   <div
                     key={ii}
-                    className="flex items-start gap-2.5 py-1.5"
+                    className="flex items-start gap-3 py-2"
                   >
                     <div
                       className="w-3.5 h-3.5 border rounded-sm mt-0.5 shrink-0"
-                      style={{ borderColor: "rgba(143,160,176,0.5)" }}
+                      style={{ borderColor: "rgba(138,95,170,0.35)" }}
                       aria-hidden="true"
                     />
-                    <span className="text-sm" style={{ color: "#5F7080" }}>
+                    <span className="text-sm leading-relaxed" style={{ color: "#3F5E2C" }}>
                       {item}
                     </span>
                   </div>
                 ))}
                 {section.items.length > 3 && (
                   <p
-                    className="text-xs mt-1.5 pl-6"
+                    className="text-xs mt-2 pl-6 font-medium"
                     style={{ color: "#8A5FAA" }}
                   >
-                    + {section.items.length - 3} more steps in the full PDF
+                    + {section.items.length - 3} more steps in the full guide
                   </p>
                 )}
               </div>

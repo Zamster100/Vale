@@ -3,11 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search, BookOpen, Building2, FileText } from "lucide-react";
+import { Menu, X, Search, BookOpen, Building2 } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/search", label: "Find a funeral director", icon: Search, match: ["/search", "/funeral-directors"] },
-  { href: "/resources", label: "Planning guide", icon: FileText, match: ["/resources"] },
   { href: "/vault/login", label: "Plan ahead", icon: BookOpen, match: ["/vault"] },
   { href: "/admin/signup", label: "For funeral directors", icon: Building2, match: ["/admin"] },
 ] as const;
