@@ -27,7 +27,7 @@ const CATEGORIES = Object.entries(CATEGORY_LABELS) as [PhotoCategory, string][];
 
 const inputStyle = {
   background: "white",
-  border: "1px solid rgba(143,160,176,0.5)",
+  border: "1px solid #E8E2D8",
   borderRadius: "8px",
   padding: "10px 14px",
   fontSize: "14px",
@@ -211,13 +211,13 @@ export default function GalleryTeamManager() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Camera className="w-4 h-4" style={{ color: "#5D3A7A" }} aria-hidden="true" />
-            <h2 className="text-base font-semibold" style={{ color: "#5D3A7A" }}>
+            <Camera className="w-4 h-4" style={{ color: "#1C1F2A" }} aria-hidden="true" />
+            <h2 className="text-base font-semibold" style={{ color: "#1C1F2A" }}>
               Photo Gallery
             </h2>
             <span
               className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{ background: "rgba(138,95,170,0.1)", color: "#5D3A7A" }}
+              style={{ background: "rgba(94,139,115,0.1)", color: "#1C1F2A" }}
             >
               {photos.length}/{MAX_PHOTOS}
             </span>
@@ -234,7 +234,7 @@ export default function GalleryTeamManager() {
               <div
                 key={photo.id}
                 className="group relative overflow-hidden rounded-xl"
-                style={{ aspectRatio: "4/3", background: "rgba(197,210,220,0.3)" }}
+                style={{ aspectRatio: "4/3", background: "rgba(234,242,238,0.3)" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -277,8 +277,8 @@ export default function GalleryTeamManager() {
                 onClick={() => photoInputRef.current?.click()}
                 className="flex flex-col items-center justify-center gap-3 rounded-xl cursor-pointer transition-colors duration-150"
                 style={{
-                  border: `2px dashed ${dragOver ? "#5D3A7A" : "rgba(143,160,176,0.5)"}`,
-                  background: dragOver ? "rgba(138,95,170,0.04)" : "rgba(249,250,251,0.6)",
+                  border: `2px dashed ${dragOver ? "#1C1F2A" : "#E8E2D8"}`,
+                  background: dragOver ? "rgba(94,139,115,0.04)" : "rgba(249,250,251,0.6)",
                   padding: "36px 24px",
                 }}
                 role="button"
@@ -288,12 +288,12 @@ export default function GalleryTeamManager() {
               >
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={{ background: "rgba(138,95,170,0.1)" }}
+                  style={{ background: "rgba(94,139,115,0.1)" }}
                 >
-                  <Upload className="w-5 h-5" style={{ color: "#5D3A7A" }} />
+                  <Upload className="w-5 h-5" style={{ color: "#1C1F2A" }} />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-semibold" style={{ color: "#5D3A7A" }}>
+                  <p className="text-sm font-semibold" style={{ color: "#1C1F2A" }}>
                     Drag and drop a photo, or click to browse
                   </p>
                   <p className="text-xs mt-1" style={{ color: "#5F7080" }}>
@@ -304,13 +304,13 @@ export default function GalleryTeamManager() {
             ) : (
               <div
                 className="rounded-xl overflow-hidden"
-                style={{ border: "0.5px solid rgba(143,160,176,0.4)" }}
+                style={{ border: "1px solid #E8E2D8" }}
               >
                 <div className="flex gap-5 p-5">
                   {/* Preview */}
                   <div
                     className="shrink-0 rounded-lg overflow-hidden"
-                    style={{ width: 120, height: 90, background: "rgba(197,210,220,0.3)" }}
+                    style={{ width: 120, height: 90, background: "rgba(234,242,238,0.3)" }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={pendingPhoto.previewUrl} alt="Preview" className="w-full h-full object-cover" />
@@ -318,7 +318,7 @@ export default function GalleryTeamManager() {
                   {/* Form */}
                   <div className="flex-1 space-y-3">
                     <div>
-                      <label className="block text-xs font-semibold mb-1.5" style={{ color: "#3F5E2C" }}>
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: "#5A4E44" }}>
                         Category
                       </label>
                       <select
@@ -334,7 +334,7 @@ export default function GalleryTeamManager() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold mb-1.5" style={{ color: "#3F5E2C" }}>
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: "#5A4E44" }}>
                         Caption <span style={{ color: "#5F7080", fontWeight: 400 }}>(optional)</span>
                       </label>
                       <input
@@ -350,20 +350,20 @@ export default function GalleryTeamManager() {
                 </div>
                 <div
                   className="flex items-center justify-end gap-3 px-5 py-3"
-                  style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)", background: "#F5F1E8" }}
+                  style={{ borderTop: "1px solid #E8E2D8", background: "#F7F3EE" }}
                 >
                   <button
                     onClick={() => setPendingPhoto(null)}
-                    className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-full hover:opacity-75 transition-opacity focus:outline-none min-h-[40px]"
-                    style={{ border: "0.5px solid rgba(143,160,176,0.5)", color: "#5F7080" }}
+                    className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-md hover:opacity-75 transition-opacity focus:outline-none min-h-[40px]"
+                    style={{ border: "1px solid #E8E2D8", color: "#5F7080" }}
                   >
                     <X className="w-3.5 h-3.5" />
                     Cancel
                   </button>
                   <button
                     onClick={confirmAddPhoto}
-                    className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity focus:outline-none min-h-[40px]"
-                    style={{ background: "#5D3A7A", color: "white" }}
+                    className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-md font-semibold hover:opacity-90 transition-opacity focus:outline-none min-h-[40px]"
+                    style={{ background: "#1C1F2A", color: "white" }}
                   >
                     <Check className="w-3.5 h-3.5" />
                     Add photo
@@ -389,19 +389,19 @@ export default function GalleryTeamManager() {
         />
       </section>
 
-      <div style={{ height: "0.5px", background: "rgba(143,160,176,0.3)" }} />
+      <div style={{ height: "1px", background: "#E8E2D8" }} />
 
       {/* ─── Team Section ─── */}
       <section>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4" style={{ color: "#5D3A7A" }} aria-hidden="true" />
-            <h2 className="text-base font-semibold" style={{ color: "#5D3A7A" }}>
+            <Users className="w-4 h-4" style={{ color: "#1C1F2A" }} aria-hidden="true" />
+            <h2 className="text-base font-semibold" style={{ color: "#1C1F2A" }}>
               Team Members
             </h2>
             <span
               className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{ background: "rgba(138,95,170,0.1)", color: "#5D3A7A" }}
+              style={{ background: "rgba(94,139,115,0.1)", color: "#1C1F2A" }}
             >
               {team.length}/{MAX_TEAM}
             </span>
@@ -409,8 +409,8 @@ export default function GalleryTeamManager() {
           {team.length < MAX_TEAM && !addingMember && !editingId && (
             <button
               onClick={openAddMember}
-              className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity focus:outline-none min-h-[40px]"
-              style={{ background: "#5D3A7A", color: "white" }}
+              className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-md font-semibold hover:opacity-90 transition-opacity focus:outline-none min-h-[40px]"
+              style={{ background: "#1C1F2A", color: "white" }}
             >
               <Plus className="w-3.5 h-3.5" />
               Add member
@@ -442,12 +442,12 @@ export default function GalleryTeamManager() {
                     className="flex items-start gap-4 p-4 rounded-xl"
                     style={{
                       background: "white",
-                      border: "0.5px solid rgba(143,160,176,0.3)",
+                      border: "1px solid #E8E2D8",
                     }}
                   >
                     <div
                       className="w-14 h-14 rounded-full overflow-hidden shrink-0"
-                      style={{ border: "2px solid rgba(138,95,170,0.2)" }}
+                      style={{ border: "2px solid rgba(94,139,115,0.2)" }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={member.photoUrl} alt={member.name} className="w-full h-full object-cover" />
@@ -455,8 +455,8 @@ export default function GalleryTeamManager() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="font-semibold text-sm" style={{ color: "#3F5E2C" }}>{member.name}</p>
-                          <p className="text-xs mt-0.5 font-medium" style={{ color: "#8A5FAA" }}>{member.title}</p>
+                          <p className="font-semibold text-sm" style={{ color: "#5A4E44" }}>{member.name}</p>
+                          <p className="text-xs mt-0.5 font-medium" style={{ color: "#5E8B73" }}>{member.title}</p>
                           {member.yearsExp && (
                             <p className="text-xs mt-0.5" style={{ color: "#5F7080" }}>{member.yearsExp} years experience</p>
                           )}
@@ -466,7 +466,7 @@ export default function GalleryTeamManager() {
                             onClick={() => moveMember(member.id, -1)}
                             disabled={idx === 0}
                             className="w-7 h-7 rounded flex items-center justify-center hover:opacity-75 transition-opacity focus:outline-none disabled:opacity-30"
-                            style={{ background: "rgba(197,210,220,0.4)", color: "#5D3A7A" }}
+                            style={{ background: "rgba(234,242,238,0.4)", color: "#1C1F2A" }}
                             aria-label="Move up"
                           >
                             <ChevronUp className="w-3.5 h-3.5" />
@@ -475,7 +475,7 @@ export default function GalleryTeamManager() {
                             onClick={() => moveMember(member.id, 1)}
                             disabled={idx === sortedTeam.length - 1}
                             className="w-7 h-7 rounded flex items-center justify-center hover:opacity-75 transition-opacity focus:outline-none disabled:opacity-30"
-                            style={{ background: "rgba(197,210,220,0.4)", color: "#5D3A7A" }}
+                            style={{ background: "rgba(234,242,238,0.4)", color: "#1C1F2A" }}
                             aria-label="Move down"
                           >
                             <ChevronDown className="w-3.5 h-3.5" />
@@ -483,7 +483,7 @@ export default function GalleryTeamManager() {
                           <button
                             onClick={() => openEditMember(member)}
                             className="w-7 h-7 rounded flex items-center justify-center hover:opacity-75 transition-opacity focus:outline-none"
-                            style={{ background: "rgba(138,95,170,0.1)", color: "#5D3A7A" }}
+                            style={{ background: "rgba(94,139,115,0.1)", color: "#1C1F2A" }}
                             aria-label={`Edit ${member.name}`}
                           >
                             <Edit2 className="w-3 h-3" />
@@ -531,24 +531,24 @@ export default function GalleryTeamManager() {
         {team.length === 0 && !addingMember && (
           <div
             className="flex flex-col items-center justify-center gap-3 rounded-xl py-10"
-            style={{ border: "2px dashed rgba(143,160,176,0.4)", background: "rgba(249,250,251,0.5)" }}
+            style={{ border: "2px dashed #E8E2D8", background: "rgba(249,250,251,0.5)" }}
           >
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(138,95,170,0.1)" }}
+              style={{ background: "rgba(94,139,115,0.1)" }}
             >
-              <Users className="w-5 h-5" style={{ color: "#5D3A7A" }} />
+              <Users className="w-5 h-5" style={{ color: "#1C1F2A" }} />
             </div>
             <div className="text-center">
-              <p className="text-sm font-semibold" style={{ color: "#5D3A7A" }}>No team members yet</p>
+              <p className="text-sm font-semibold" style={{ color: "#1C1F2A" }}>No team members yet</p>
               <p className="text-xs mt-1" style={{ color: "#5F7080" }}>
                 Add profiles to help families feel at ease before they call
               </p>
             </div>
             <button
               onClick={openAddMember}
-              className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity focus:outline-none min-h-[40px]"
-              style={{ background: "#5D3A7A", color: "white" }}
+              className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-md font-semibold hover:opacity-90 transition-opacity focus:outline-none min-h-[40px]"
+              style={{ background: "#1C1F2A", color: "white" }}
             >
               <Plus className="w-3.5 h-3.5" />
               Add first team member
@@ -595,9 +595,9 @@ function MemberForm({
   return (
     <div
       className="p-5 rounded-xl"
-      style={{ border: "0.5px solid rgba(138,95,170,0.4)", background: "white" }}
+      style={{ border: "1px solid #E8E2D8", background: "white" }}
     >
-      <p className="text-sm font-semibold mb-4" style={{ color: "#5D3A7A" }}>
+      <p className="text-sm font-semibold mb-4" style={{ color: "#1C1F2A" }}>
         {isEdit ? "Edit team member" : "Add team member"}
       </p>
 
@@ -612,20 +612,20 @@ function MemberForm({
           >
             <div
               className="w-[100px] h-[100px] rounded-full overflow-hidden"
-              style={{ border: "2px solid rgba(138,95,170,0.3)", background: "rgba(197,210,220,0.3)" }}
+              style={{ border: "2px solid rgba(94,139,115,0.3)", background: "rgba(234,242,238,0.3)" }}
             >
               {displayPhoto ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={displayPhoto} alt="Profile preview" className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <Camera className="w-7 h-7" style={{ color: "#C5D2DC" }} />
+                  <Camera className="w-7 h-7" style={{ color: "#EAF2EE" }} />
                 </div>
               )}
             </div>
             <div
               className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{ background: "rgba(93,58,122,0.55)" }}
+              style={{ background: "rgba(28,31,42,0.55)" }}
               aria-hidden="true"
             >
               <Upload className="w-5 h-5 text-white" />
@@ -638,7 +638,7 @@ function MemberForm({
         <div className="flex-1 space-y-3">
           <div className="grid sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold mb-1.5" style={{ color: "#3F5E2C" }}>
+              <label className="block text-xs font-semibold mb-1.5" style={{ color: "#5A4E44" }}>
                 Full name <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <input
@@ -651,7 +651,7 @@ function MemberForm({
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold mb-1.5" style={{ color: "#3F5E2C" }}>
+              <label className="block text-xs font-semibold mb-1.5" style={{ color: "#5A4E44" }}>
                 Job title <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <input
@@ -666,7 +666,7 @@ function MemberForm({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold mb-1.5" style={{ color: "#3F5E2C" }}>
+            <label className="block text-xs font-semibold mb-1.5" style={{ color: "#5A4E44" }}>
               Short bio <span style={{ color: "#5F7080", fontWeight: 400 }}>(50–100 words recommended)</span>
             </label>
             <textarea
@@ -683,7 +683,7 @@ function MemberForm({
           </div>
 
           <div style={{ maxWidth: 160 }}>
-            <label className="block text-xs font-semibold mb-1.5" style={{ color: "#3F5E2C" }}>
+            <label className="block text-xs font-semibold mb-1.5" style={{ color: "#5A4E44" }}>
               Years experience <span style={{ color: "#5F7080", fontWeight: 400 }}>(optional)</span>
             </label>
             <input
@@ -701,12 +701,12 @@ function MemberForm({
 
       <div
         className="flex items-center justify-end gap-3 mt-5 pt-4"
-        style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}
+        style={{ borderTop: "1px solid #E8E2D8" }}
       >
         <button
           onClick={onCancel}
-          className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-full hover:opacity-75 transition-opacity focus:outline-none min-h-[40px]"
-          style={{ border: "0.5px solid rgba(143,160,176,0.5)", color: "#5F7080" }}
+          className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-md hover:opacity-75 transition-opacity focus:outline-none min-h-[40px]"
+          style={{ border: "1px solid #E8E2D8", color: "#5F7080" }}
           type="button"
         >
           <X className="w-3.5 h-3.5" />
@@ -715,8 +715,8 @@ function MemberForm({
         <button
           onClick={onSave}
           disabled={!canSave}
-          className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-full font-semibold transition-opacity focus:outline-none min-h-[40px] disabled:opacity-40"
-          style={{ background: "#5D3A7A", color: "white" }}
+          className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-md font-semibold transition-opacity focus:outline-none min-h-[40px] disabled:opacity-40"
+          style={{ background: "#1C1F2A", color: "white" }}
           type="button"
         >
           <Check className="w-3.5 h-3.5" />

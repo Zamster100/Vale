@@ -39,13 +39,13 @@ export default function OpeningHoursSection({ hours }: { hours: OpeningHoursData
   const todayKey = JS_DAY_TO_KEY[new Date().getDay()];
 
   return (
-    <div className="p-6 rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+    <div className="p-6 rounded-xl" style={{ background: "white", border: "1px solid #E8E2D8" }}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg" style={{ color: "#5D3A7A" }}>Opening hours</h2>
+        <h2 className="text-lg" style={{ color: "#1C1F2A" }}>Opening hours</h2>
         {hours.availability24hr ? (
           <span
             className="flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full"
-            style={{ background: "#d4a574", color: "#1a3a52" }}
+            style={{ background: "#C4975A", color: "#1C1F2A" }}
           >
             <Clock className="w-3 h-3" aria-hidden="true" />
             24/7
@@ -74,15 +74,15 @@ export default function OpeningHoursSection({ hours }: { hours: OpeningHoursData
               <div
                 key={day}
                 className="flex items-center justify-between text-sm py-1.5 px-3 rounded-lg"
-                style={isToday ? { background: "rgba(93,58,122,0.06)" } : {}}
+                style={isToday ? { background: "rgba(28,31,42,0.06)" } : {}}
               >
-                <span style={{ color: isToday ? "#5D3A7A" : "#3F5E2C", fontWeight: isToday ? 600 : 400, minWidth: "90px" }}>
+                <span style={{ color: isToday ? "#1C1F2A" : "#5A4E44", fontWeight: isToday ? 600 : 400, minWidth: "90px" }}>
                   {DAY_LABELS[day]}
                   {isToday && (
-                    <span className="text-xs ml-1.5 font-normal" style={{ color: "#8A5FAA" }}>Today</span>
+                    <span className="text-xs ml-1.5 font-normal" style={{ color: "#5E8B73" }}>Today</span>
                   )}
                 </span>
-                <span style={{ color: d.open ? (isToday ? "#5D3A7A" : "#3F5E2C") : "#5F7080" }}>
+                <span style={{ color: d.open ? (isToday ? "#1C1F2A" : "#5A4E44") : "#5F7080" }}>
                   {d.open && d.from && d.to
                     ? `${format12h(d.from)} – ${format12h(d.to)}`
                     : "Closed"
@@ -95,17 +95,17 @@ export default function OpeningHoursSection({ hours }: { hours: OpeningHoursData
       )}
 
       {(hours.oohPhone || hours.oohResponseHours) && (
-        <div className="mt-4 p-3 rounded-xl" style={{ background: "rgba(212,165,116,0.08)", border: "0.5px solid rgba(212,165,116,0.3)" }}>
-          <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "#5D3A7A" }}>
+        <div className="mt-4 p-3 rounded-xl" style={{ background: "rgba(212,165,116,0.08)", border: "1px solid rgba(212,165,116,0.3)" }}>
+          <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "#1C1F2A" }}>
             Out-of-hours support
           </p>
           {hours.oohPhone && (
             <div className="flex items-center gap-2 mb-1">
-              <Phone className="w-3.5 h-3.5 shrink-0" style={{ color: "#d4a574" }} aria-hidden="true" />
+              <Phone className="w-3.5 h-3.5 shrink-0" style={{ color: "#C4975A" }} aria-hidden="true" />
               <a
                 href={`tel:${hours.oohPhone}`}
-                className="text-sm hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] rounded"
-                style={{ color: "#8A5FAA" }}
+                className="text-sm hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+                style={{ color: "#5E8B73" }}
               >
                 {hours.oohPhone}
               </a>

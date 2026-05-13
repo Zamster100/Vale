@@ -1,24 +1,34 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Cormorant_Garamond, Lora, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const cormorant = Cormorant_Garamond({
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
+const lora = Lora({
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
-  variable: "--font-instrument-serif",
+  variable: "--font-lora",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  weight: ["300", "400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "VALE – Compare Funeral Prices. Choose with Confidence.",
+  title: "Vale",
   description:
-    "Find and compare funeral directors near you. See real prices upfront. No hidden fees.",
+    "Compare verified funeral directors near you with transparent pricing.",
 };
 
 export default function RootLayout({
@@ -27,10 +37,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${instrumentSerif.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased" style={{ background: '#F5F1E8' }}>
-        {children}
-      </body>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${lora.variable} ${dmSans.variable} h-full`}
+    >
+      <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>
   );
 }

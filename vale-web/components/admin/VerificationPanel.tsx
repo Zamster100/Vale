@@ -76,20 +76,20 @@ export default function VerificationPanel() {
     <div>
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-lg font-semibold" style={{ color: "#5D3A7A" }}>
+          <h2 className="text-lg font-semibold" style={{ color: "#1C1F2A" }}>
             Verification Status
           </h2>
           <p className="text-sm mt-0.5" style={{ color: "#5F7080" }}>
-            Manage professional accreditations and VALE Assured status per provider.
+            Manage professional accreditations and Vale Assured status per provider.
           </p>
         </div>
         <button
           onClick={saveAll}
-          className="flex items-center gap-1.5 text-sm px-5 py-2.5 rounded-full font-semibold hover:opacity-90 transition-all duration-200 focus:outline-none shrink-0 min-h-[40px]"
+          className="flex items-center gap-1.5 text-sm px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition-all duration-200 focus:outline-none shrink-0 min-h-[40px]"
           style={
             saved
               ? { background: "rgba(90,174,85,0.15)", color: "#3F7A35" }
-              : { background: "#5D3A7A", color: "white" }
+              : { background: "#1C1F2A", color: "white" }
           }
         >
           {saved ? <Check className="w-4 h-4" aria-hidden="true" /> : <Save className="w-4 h-4" aria-hidden="true" />}
@@ -99,14 +99,14 @@ export default function VerificationPanel() {
 
       <div
         className="overflow-x-auto rounded-xl"
-        style={{ border: "0.5px solid rgba(143,160,176,0.3)" }}
+        style={{ border: "1px solid #E8E2D8" }}
       >
         <table className="w-full text-sm min-w-[700px]">
           <thead>
             <tr
               style={{
-                background: "#F5F1E8",
-                borderBottom: "0.5px solid rgba(143,160,176,0.3)",
+                background: "#F7F3EE",
+                borderBottom: "1px solid #E8E2D8",
               }}
             >
               <th
@@ -126,7 +126,7 @@ export default function VerificationPanel() {
               ))}
               <th
                 className="text-center px-4 py-3 font-semibold text-xs uppercase tracking-wider"
-                style={{ color: "#d4a574" }}
+                style={{ color: "#C4975A" }}
               >
                 Assured
               </th>
@@ -144,10 +144,10 @@ export default function VerificationPanel() {
                 key={row.id}
                 style={{
                   background: i % 2 === 0 ? "white" : "rgba(249,250,251,0.7)",
-                  borderBottom: "0.5px solid rgba(143,160,176,0.15)",
+                  borderBottom: "1px solid #E8E2D8",
                 }}
               >
-                <td className="px-4 py-3 font-medium" style={{ color: "#3F5E2C" }}>
+                <td className="px-4 py-3 font-medium" style={{ color: "#5A4E44" }}>
                   {row.name}
                 </td>
 
@@ -158,7 +158,7 @@ export default function VerificationPanel() {
                       checked={row[field] as boolean}
                       onChange={() => toggle(row.id, field)}
                       className="w-4 h-4 cursor-pointer"
-                      style={{ accentColor: "#5D3A7A" }}
+                      style={{ accentColor: "#5E8B73" }}
                       aria-label={`${label} verified for ${row.name}`}
                     />
                   </td>
@@ -170,8 +170,8 @@ export default function VerificationPanel() {
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 hover:opacity-90 focus:outline-none"
                     style={
                       row.assured
-                        ? { background: "#d4a574", color: "#1a3a52" }
-                        : { background: "rgba(197,210,220,0.4)", color: "#5F7080" }
+                        ? { background: "#C4975A", color: "#1C1F2A" }
+                        : { background: "rgba(232,226,216,0.4)", color: "#7A6E64" }
                     }
                     aria-pressed={row.assured}
                     aria-label={`Toggle Assured for ${row.name}`}
@@ -190,8 +190,8 @@ export default function VerificationPanel() {
                     onChange={(e) => setDate(row.id, e.target.value)}
                     className="text-xs rounded-lg px-2 py-1.5 focus:outline-none"
                     style={{
-                      border: "0.5px solid rgba(143,160,176,0.4)",
-                      color: "#3F5E2C",
+                      border: "1px solid #E8E2D8",
+                      color: "#5A4E44",
                       background: "white",
                     }}
                     aria-label={`Verified date for ${row.name}`}

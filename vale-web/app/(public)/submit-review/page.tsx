@@ -33,10 +33,10 @@ function validate(form: FormState): FieldErrors {
 }
 
 const inputBase: React.CSSProperties = {
-  background: "#F5F1E8",
-  border: "0.5px solid rgba(143,160,176,0.5)",
+  background: "#F7F3EE",
+  border: "1px solid #E8E2D8",
   borderRadius: "12px",
-  color: "#3F5E2C",
+  color: "#5A4E44",
   width: "100%",
   padding: "10px 16px",
   fontSize: "14px",
@@ -82,8 +82,8 @@ function SubmitReviewForm() {
 
   const fieldStyle = (field: string, hasError = false): React.CSSProperties => ({
     ...inputBase,
-    border: hasError ? "1.5px solid #E26B5E" : focused === field ? "1.5px solid #8A5FAA" : "0.5px solid rgba(143,160,176,0.5)",
-    boxShadow: focused === field && !hasError ? "0 0 0 3px rgba(138,95,170,0.12)" : "none",
+    border: hasError ? "1.5px solid #E26B5E" : focused === field ? "1.5px solid rgba(94,139,115,0.5)" : "1px solid #E8E2D8",
+    boxShadow: focused === field && !hasError ? "0 0 0 3px rgba(94,139,115,0.12)" : "none",
   });
 
   if (submitted) {
@@ -92,12 +92,12 @@ function SubmitReviewForm() {
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: "rgba(123,168,74,0.12)" }}>
           <CheckCircle className="w-8 h-8" aria-hidden="true" style={{ color: "#7BA84A" }} />
         </div>
-        <h2 className="text-xl font-semibold mb-2" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
+        <h2 className="text-xl font-semibold mb-2" style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}>
           Thank you for sharing
         </h2>
         <p className="text-sm leading-relaxed max-w-sm mx-auto mb-2" style={{ color: "#5F7080" }}>
           Your review for{" "}
-          <strong style={{ color: "#3F5E2C" }}>{selectedFD?.name}</strong> has been submitted. It will appear after a brief verification check.
+          <strong style={{ color: "#5A4E44" }}>{selectedFD?.name}</strong> has been submitted. It will appear after a brief verification check.
         </p>
         <p className="text-xs mb-8" style={{ color: "#5F7080" }}>
           Reviews help other families make informed, confident decisions at a difficult time.
@@ -106,16 +106,16 @@ function SubmitReviewForm() {
           {selectedFD && (
             <Link
               href={`/reviews/${selectedFD.id}`}
-              className="text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-              style={{ background: "#5AAE55" }}
+              className="text-white px-6 py-2.5 rounded-md font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
+              style={{ background: "#1C1F2A" }}
             >
               View all reviews
             </Link>
           )}
           <Link
             href="/search"
-            className="px-6 py-2.5 rounded-full font-semibold text-sm hover:opacity-80 transition-opacity min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-            style={{ border: "0.5px solid rgba(143,160,176,0.5)", color: "#5D3A7A" }}
+            className="px-6 py-2.5 rounded-md font-semibold text-sm hover:opacity-80 transition-opacity min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
+            style={{ border: "1px solid #E8E2D8", color: "#1C1F2A" }}
           >
             Find another funeral director
           </Link>
@@ -127,7 +127,7 @@ function SubmitReviewForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-6">
       <div>
-        <label htmlFor="sr-fd" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
+        <label htmlFor="sr-fd" className="block text-sm font-medium mb-1.5" style={{ color: "#1C1F2A" }}>
           Funeral director <span aria-hidden="true" style={{ color: "#E26B5E" }}>*</span>
         </label>
         <select
@@ -148,7 +148,7 @@ function SubmitReviewForm() {
       </div>
 
       <div>
-        <p className="text-sm font-medium mb-3" style={{ color: "#5D3A7A" }}>
+        <p className="text-sm font-medium mb-3" style={{ color: "#1C1F2A" }}>
           Your ratings <span aria-hidden="true" style={{ color: "#E26B5E" }}>*</span>
         </p>
         <FourFactorSelector
@@ -159,7 +159,7 @@ function SubmitReviewForm() {
       </div>
 
       <div>
-        <label htmlFor="sr-text" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
+        <label htmlFor="sr-text" className="block text-sm font-medium mb-1.5" style={{ color: "#1C1F2A" }}>
           Your review <span className="font-normal" style={{ color: "#5F7080" }}>(optional)</span>
         </label>
         <textarea
@@ -176,7 +176,7 @@ function SubmitReviewForm() {
       </div>
 
       <div>
-        <label htmlFor="sr-name" className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>
+        <label htmlFor="sr-name" className="block text-sm font-medium mb-1.5" style={{ color: "#1C1F2A" }}>
           Your name <span className="font-normal" style={{ color: "#5F7080" }}>(optional)</span>
         </label>
         <input
@@ -197,23 +197,23 @@ function SubmitReviewForm() {
             checked={form.anonymous}
             onChange={(e) => setForm((f) => ({ ...f, anonymous: e.target.checked }))}
             className="w-4 h-4 rounded"
-            style={{ accentColor: "#5D3A7A" }}
+            style={{ accentColor: "#5E8B73" }}
           />
-          <span className="text-sm" style={{ color: "#3F5E2C" }}>Submit anonymously</span>
+          <span className="text-sm" style={{ color: "#5A4E44" }}>Submit anonymously</span>
         </label>
       </div>
 
-      <div className="p-4 rounded-xl" style={{ background: "rgba(197,210,220,0.2)", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+      <div className="p-4 rounded-xl" style={{ background: "rgba(234,242,238,0.2)", border: "1px solid #E8E2D8" }}>
         <p className="text-xs leading-relaxed" style={{ color: "#5F7080" }}>
-          <strong style={{ color: "#5D3A7A" }}>How we verify reviews:</strong> We ask that reviews come from families who have used the funeral director&apos;s services. Your review will be checked before appearing publicly — this usually takes 1–2 working days.
+          <strong style={{ color: "#1C1F2A" }}>How we verify reviews:</strong> We ask that reviews come from families who have used the funeral director&apos;s services. Your review will be checked before appearing publicly — this usually takes 1–2 working days.
         </p>
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full text-white py-3 rounded-full font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px] flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-        style={{ background: "#5AAE55" }}
+        className="w-full text-white py-3 rounded-md font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px] flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
+        style={{ background: "#1C1F2A" }}
       >
         {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
         {loading ? "Submitting…" : "Submit review"}
@@ -224,20 +224,20 @@ function SubmitReviewForm() {
 
 export default function SubmitReviewPage() {
   return (
-    <div className="min-h-screen" style={{ background: "#F5F1E8" }}>
+    <div className="min-h-screen" style={{ background: "#F7F3EE" }}>
       <div className="max-w-xl mx-auto px-6 py-8">
         <Link
           href="/search"
           className="inline-flex items-center gap-1.5 text-sm mb-6 hover:opacity-80 transition-opacity focus:outline-none rounded"
-          style={{ color: "#8A5FAA" }}
+          style={{ color: "#5E8B73" }}
         >
           <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
           Back to search
         </Link>
 
-        <div className="rounded-2xl p-6 sm:p-8" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+        <div className="rounded-xl p-6 sm:p-8" style={{ background: "white", border: "1px solid #E8E2D8" }}>
           <div className="mb-6">
-            <h1 className="text-xl font-semibold mb-1" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
+            <h1 className="text-xl font-semibold mb-1" style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}>
               Leave a review
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: "#5F7080" }}>
@@ -246,7 +246,7 @@ export default function SubmitReviewPage() {
           </div>
           <Suspense fallback={
             <div className="h-64 flex items-center justify-center">
-              <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#8A5FAA", borderTopColor: "transparent" }} />
+              <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#5E8B73", borderTopColor: "transparent" }} />
             </div>
           }>
             <SubmitReviewForm />

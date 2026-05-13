@@ -19,7 +19,7 @@ function StarRating({ rating, size = "md" }: { rating: number; size?: "sm" | "md
   return (
     <span className="inline-flex items-center gap-0.5" aria-hidden="true">
       {[1, 2, 3, 4, 5].map((s) => (
-        <Star key={s} className={sz} style={{ color: s <= Math.round(rating) ? "#E26B5E" : "#C5D2DC", fill: s <= Math.round(rating) ? "#E26B5E" : "#C5D2DC" }} />
+        <Star key={s} className={sz} style={{ color: s <= Math.round(rating) ? "#E26B5E" : "#EAF2EE", fill: s <= Math.round(rating) ? "#E26B5E" : "#EAF2EE" }} />
       ))}
     </span>
   );
@@ -29,25 +29,25 @@ function RatingBar({ star, count, total }: { star: number; count: number; total:
   const pct = total > 0 ? Math.round((count / total) * 100) : 0;
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs w-6 shrink-0 text-right" style={{ color: "#8FA0B0" }}>{star}</span>
+      <span className="text-xs w-6 shrink-0 text-right" style={{ color: "#7A6E64" }}>{star}</span>
       <StarRating rating={star} size="sm" />
-      <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "rgba(197,210,220,0.4)" }}
+      <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "rgba(234,242,238,0.4)" }}
         role="img" aria-label={`${star} star: ${count} review${count !== 1 ? "s" : ""}`}>
-        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: "#5AAE55" }} />
+        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: "#5E8B73" }} />
       </div>
-      <span className="text-xs w-6 shrink-0" style={{ color: "#8FA0B0" }}>{count}</span>
+      <span className="text-xs w-6 shrink-0" style={{ color: "#7A6E64" }}>{count}</span>
     </div>
   );
 }
 
 function ReviewCard({ review }: { review: StoredReview }) {
   return (
-    <article className="p-5 rounded-xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+    <article className="p-5 rounded-xl" style={{ background: "white", border: "1px solid #E8E2D8" }}>
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="min-w-0">
           {review.quoteRequestId && review.status === "booked" && <VerifiedFamilyLabel />}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold text-sm" style={{ color: "#3F5E2C" }}>{review.familyName}</span>
+            <span className="font-semibold text-sm" style={{ color: "#5A4E44" }}>{review.familyName}</span>
             {review.verified ? (
               <span className="flex items-center gap-1 text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#1F4A0E" }}>
                 <CheckCircle className="w-3 h-3" aria-hidden="true" />
@@ -59,14 +59,14 @@ function ReviewCard({ review }: { review: StoredReview }) {
               </span>
             )}
           </div>
-          <time dateTime={review.createdAt} className="text-xs mt-0.5 block" style={{ color: "#8FA0B0" }}>
+          <time dateTime={review.createdAt} className="text-xs mt-0.5 block" style={{ color: "#7A6E64" }}>
             {formatReviewDate(review.createdAt)}
           </time>
         </div>
         <div className="shrink-0"><StarRating rating={review.rating} size="sm" /></div>
       </div>
       {review.text && (
-        <blockquote className="text-sm leading-relaxed" style={{ color: "#3F5E2C" }}>
+        <blockquote className="text-sm leading-relaxed" style={{ color: "#5A4E44" }}>
           &ldquo;{review.text}&rdquo;
         </blockquote>
       )}
@@ -78,8 +78,8 @@ function ReviewCard({ review }: { review: StoredReview }) {
             { label: "Value", value: review.valueRating },
             { label: "Facilities", value: review.facilitiesRating },
           ].filter(({ value }) => value != null).map(({ label, value }) => (
-            <span key={label} className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(212,165,116,0.1)", color: "#5D3A7A", border: "0.5px solid rgba(212,165,116,0.3)" }}>
-              {label} <span style={{ color: "#d4a574", fontWeight: 600 }}>{value}/5</span>
+            <span key={label} className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(212,165,116,0.1)", color: "#1C1F2A", border: "1px solid rgba(212,165,116,0.3)" }}>
+              {label} <span style={{ color: "#C4975A", fontWeight: 600 }}>{value}/5</span>
             </span>
           ))}
         </div>
@@ -103,27 +103,27 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
   const displayed = filterRating === null ? reviews : reviews.filter((r) => r.rating === filterRating);
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F1E8" }}>
-      <div style={{ background: "white", borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}>
-        <div className="max-w-3xl mx-auto px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#8FA0B0" }}>
-          <Link href={`/funeral-directors/${fd_id}`} className="flex items-center gap-1 transition-colors focus:outline-none rounded hover:opacity-80" style={{ color: "#8A5FAA" }}>
+    <div className="min-h-screen" style={{ background: "#F7F3EE" }}>
+      <div style={{ background: "white", borderBottom: "1px solid #E8E2D8" }}>
+        <div className="max-w-3xl mx-auto px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#7A6E64" }}>
+          <Link href={`/funeral-directors/${fd_id}`} className="flex items-center gap-1 transition-colors focus:outline-none rounded hover:opacity-80" style={{ color: "#5E8B73" }}>
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             {fd!.name}
           </Link>
           <span aria-hidden="true">/</span>
-          <span className="font-medium" style={{ color: "#3F5E2C" }}>All reviews</span>
+          <span className="font-medium" style={{ color: "#5A4E44" }}>All reviews</span>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-8">
-        <section aria-label="Rating summary" className="rounded-2xl p-6 mb-6" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
+        <section aria-label="Rating summary" className="rounded-xl p-6 mb-6" style={{ background: "white", border: "1px solid #E8E2D8" }}>
           <div className="flex flex-col sm:flex-row sm:items-start gap-6">
-            <div className="text-center sm:pr-6 shrink-0" style={{ borderRight: "0.5px solid rgba(143,160,176,0.3)" }}>
-              <p className="text-5xl font-bold leading-none mb-2" style={{ color: "#5D3A7A" }}>
+            <div className="text-center sm:pr-6 shrink-0" style={{ borderRight: "1px solid #E8E2D8" }}>
+              <p className="text-5xl font-light leading-none mb-2" style={{ color: "#1C1F2A" }}>
                 {stats.avg > 0 ? stats.avg : "—"}
               </p>
               <StarRating rating={stats.avg} />
-              <p className="text-xs mt-2" style={{ color: "#8FA0B0" }}>{stats.count} review{stats.count !== 1 ? "s" : ""}</p>
+              <p className="text-xs mt-2" style={{ color: "#7A6E64" }}>{stats.count} review{stats.count !== 1 ? "s" : ""}</p>
             </div>
             <div className="flex-1 space-y-2">
               {[5, 4, 3, 2, 1].map((star) => (
@@ -135,14 +135,14 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
 
         <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-medium" style={{ color: "#8FA0B0" }}>Filter:</span>
+            <span className="text-xs font-medium" style={{ color: "#7A6E64" }}>Filter:</span>
             <button
               type="button"
               onClick={() => setFilterRating(null)}
               className="text-xs px-3 py-1.5 rounded-full font-semibold transition-colors min-h-[44px] focus:outline-none"
               style={filterRating === null
-                ? { background: "#5D3A7A", color: "white", border: "none" }
-                : { background: "white", color: "#3F5E2C", border: "0.5px solid rgba(143,160,176,0.3)" }
+                ? { background: "#1C1F2A", color: "white", border: "none" }
+                : { background: "white", color: "#5A4E44", border: "1px solid #E8E2D8" }
               }
             >
               All ({stats.count})
@@ -157,8 +157,8 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
                   onClick={() => setFilterRating(filterRating === star ? null : star)}
                   className="text-xs px-3 py-1.5 rounded-full font-semibold transition-colors min-h-[44px] focus:outline-none"
                   style={filterRating === star
-                    ? { background: "#5D3A7A", color: "white", border: "none" }
-                    : { background: "white", color: "#3F5E2C", border: "0.5px solid rgba(143,160,176,0.3)" }
+                    ? { background: "#1C1F2A", color: "white", border: "none" }
+                    : { background: "white", color: "#5A4E44", border: "1px solid #E8E2D8" }
                   }
                 >
                   {star}★ ({count})
@@ -169,7 +169,7 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
           <Link
             href={`/submit-review?fd=${fd_id}`}
             className="flex items-center gap-1.5 text-sm font-semibold hover:underline focus:outline-none rounded min-h-[44px]"
-            style={{ color: "#8A5FAA" }}
+            style={{ color: "#5E8B73" }}
           >
             <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
             Leave a review
@@ -177,8 +177,8 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
         </div>
 
         {displayed.length === 0 ? (
-          <div className="p-8 text-center rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
-            <p className="text-sm" style={{ color: "#8FA0B0" }}>No reviews at this rating yet.</p>
+          <div className="p-8 text-center rounded-xl" style={{ background: "white", border: "1px solid #E8E2D8" }}>
+            <p className="text-sm" style={{ color: "#7A6E64" }}>No reviews at this rating yet.</p>
           </div>
         ) : (
           <div className="space-y-4" aria-label={`Reviews for ${fd!.name}`} aria-live="polite">

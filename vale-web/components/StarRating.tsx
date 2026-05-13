@@ -16,8 +16,8 @@ export default function StarRating({ rating, size = "md" }: StarRatingProps) {
           aria-hidden="true"
           className={cls}
           style={{
-            color: s <= filled ? "#E26B5E" : "#C5D2DC",
-            fill: s <= filled ? "#E26B5E" : "#C5D2DC",
+            color: s <= filled ? "#E26B5E" : "#EAF2EE",
+            fill: s <= filled ? "#E26B5E" : "#EAF2EE",
           }}
         />
       ))}

@@ -1,43 +1,24 @@
 import Link from "next/link";
-import { CheckCircle, Star, BookOpen, ChevronRight } from "lucide-react";
+import { CheckCircle, MapPin, SlidersHorizontal, ShieldCheck, Phone } from "lucide-react";
 import VideoBackground from "@/components/VideoBackground";
 import HeroSearch from "@/components/HeroSearch";
+import StatsCounter from "@/components/StatsCounter";
 
 const VIDEO_URL =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_083109_283f3553-e28f-428b-a723-d639c617eb2b.mp4";
 
-const VALUE_PROPS = [
-  {
-    number: "01",
-    title: "Real prices, upfront",
-    body: "See actual costs before you commit. No vague estimates — just honest, itemised pricing from every director we list.",
-    detail: "All prices include VAT · CMA transparency compliant",
-  },
-  {
-    number: "02",
-    title: "Verified reviews",
-    body: "Every review is from a family who actually used the service. No anonymous posts, no unverified ratings.",
-    detail: "Reviews moderated and linked to confirmed bookings",
-  },
-  {
-    number: "03",
-    title: "Regulated & verified",
-    body: "Every funeral director is independently verified before listing. Many hold NAFD or SAIF membership.",
-    detail: "Re-verified annually so standards stay high",
-  },
-];
 
 const TESTIMONIALS = [
   {
     quote:
-      "VALE helped us find a funeral director within hours. Seeing the prices upfront meant we could make a decision without the added stress of unexpected costs. I can't recommend it enough.",
+      "Vale helped us find a funeral director within hours. Seeing the prices upfront meant we could make a decision without the added stress of unexpected costs. I can't recommend it enough.",
     author: "Sarah M.",
     role: "Arranged her father's funeral, March 2026",
     featured: true,
   },
   {
     quote:
-      "We were completely overwhelmed. VALE made it simple to compare our options and find someone who truly understood what we wanted for our mum.",
+      "We were completely overwhelmed. Vale made it simple to compare our options and find someone who truly understood what we wanted for our mum.",
     author: "James & Claire R.",
     role: "Arranged their mother's funeral, January 2026",
     featured: false,
@@ -53,12 +34,12 @@ const TESTIMONIALS = [
 
 export default function Home() {
   return (
-    <div style={{ background: "#F5F1E8" }}>
+    <div style={{ background: "#F7F3EE" }}>
 
       {/* ══════════════════════════════════════════════════════════
           HERO — video background + centered copy
       ══════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-screen w-full overflow-hidden" style={{ background: "#F5F1E8" }}>
+      <section className="relative min-h-screen w-full overflow-hidden" style={{ background: "#F7F3EE" }}>
 
         {/* Video layer — starts 300px from top, fills rest */}
         <div className="absolute inset-0 z-0" style={{ top: "300px" }}>
@@ -67,7 +48,7 @@ export default function Home() {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(to bottom, #F5F1E8 0%, transparent 30%, transparent 70%, #F5F1E8 100%)",
+              background: "linear-gradient(to bottom, #F7F3EE 0%, transparent 30%, transparent 70%, #F7F3EE 100%)",
             }}
           />
         </div>
@@ -81,9 +62,9 @@ export default function Home() {
           <div
             className="animate-fade-rise inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-10 text-[11px] font-medium uppercase tracking-[0.13em]"
             style={{
-              border: "0.5px solid rgba(143,160,176,0.5)",
-              background: "rgba(197,210,220,0.3)",
-              color: "#8A5FAA",
+              border: "1px solid #E8E2D8",
+              background: "rgba(234,242,238,0.3)",
+              color: "#5E8B73",
             }}
           >
             <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
@@ -94,15 +75,15 @@ export default function Home() {
           <h1
             className="animate-fade-rise max-w-5xl font-normal"
             style={{
-              fontFamily: "var(--font-instrument-serif)",
-              fontSize: "clamp(44px, 8vw, 96px)",
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(36px, 6vw, 76px)",
               lineHeight: 0.95,
               letterSpacing: "-2.46px",
-              color: "#5D3A7A",
+              color: "#1C1F2A",
             }}
           >
             Choose with care.{" "}
-            <em style={{ color: "#8FA0B0", fontStyle: "italic" }}>
+            <em style={{ color: "#7A6E64", fontStyle: "italic" }}>
               Move forward with confidence.
             </em>
           </h1>
@@ -112,79 +93,180 @@ export default function Home() {
             <HeroSearch />
           </div>
 
-          <p className="animate-fade-rise-delay-2 mt-6 text-xs opacity-60" style={{ color: "#8FA0B0" }}>
+          <p className="animate-fade-rise-delay-2 mt-6 text-xs opacity-60" style={{ color: "#7A6E64" }}>
             No account needed · Prices shown upfront · CMA compliant
           </p>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          VALUE PROPS
+          ABOUT
       ══════════════════════════════════════════════════════════ */}
-      <section className="py-24 md:py-32" style={{ background: "#F5F1E8" }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
-            <div>
-              <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#8A5FAA" }} aria-hidden="true" />
-              <h2
-                style={{
-                  fontFamily: "var(--font-instrument-serif)",
-                  fontSize: "clamp(30px, 4vw, 44px)",
-                  lineHeight: 1.12,
-                  letterSpacing: "-0.025em",
-                  fontWeight: 400,
-                  color: "#5D3A7A",
-                }}
-              >
-                Built around<br className="hidden sm:block" /> the families we serve
-              </h2>
+      <section className="py-16 md:py-24 px-6 md:px-10" style={{ background: "#F7F3EE" }}>
+        <div className="max-w-5xl mx-auto">
+
+          {/* Eyebrow */}
+          <div className="flex items-center gap-2.5 mb-5">
+            <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#5E8B73" }} />
+            <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#5E8B73" }}>
+              About
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h2
+            className="mb-10 max-w-2xl"
+            style={{
+              fontFamily: "var(--font-cormorant), serif",
+              fontSize: "clamp(26px, 3.5vw, 40px)",
+              fontWeight: 400,
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#1C1F2A",
+            }}
+          >
+            Transparency belongs in every part of life —{" "}
+            <em style={{ color: "#5E8B73" }}>including the end of it.</em>
+          </h2>
+
+          {/* Animated stats strip */}
+          <StatsCounter />
+
+          {/* Subheadline + link — right aligned */}
+          <div className="mt-8 flex flex-col items-end text-right">
+            <p
+              className="max-w-sm text-sm leading-relaxed"
+              style={{ fontFamily: "var(--font-lora), serif", fontStyle: "italic", color: "#7A6E64" }}
+            >
+              The UK funeral industry is one of the last markets where you routinely spend thousands of pounds without seeing the price first. Not because it has to be that way. Because, until now, nobody had built the alternative.
+            </p>
+            <Link
+              href="/about"
+              className="mt-3 text-[14px] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+              style={{ fontFamily: "var(--font-lora), serif", fontStyle: "italic", color: "#5E8B73" }}
+            >
+              Read our full story →
+            </Link>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════
+          HOW IT WORKS
+      ══════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden py-20 md:py-28 px-6 md:px-10" style={{ background: "#FFFFFF", borderTop: "1px solid #E8E2D8" }}>
+        {/* Wave layers */}
+        <svg
+          aria-hidden="true"
+          className="absolute pointer-events-none"
+          style={{ bottom: 0, left: 0, width: "100%", height: "340px" }}
+          viewBox="0 0 1440 340"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Back wave — widest, lightest sage */}
+          <path
+            d="M -100,120 C 180,40 380,210 620,130 C 860,50 1060,190 1280,110 C 1380,75 1420,90 1540,80 L 1540,340 L -100,340 Z"
+            fill="rgba(94,139,115,0.07)"
+          />
+          {/* Mid wave — sage-light */}
+          <path
+            d="M -100,175 C 150,95 360,250 600,175 C 840,100 1040,230 1260,160 C 1380,125 1440,140 1540,130 L 1540,340 L -100,340 Z"
+            fill="rgba(234,242,238,0.6)"
+          />
+          {/* Front wave — mist, most defined */}
+          <path
+            d="M -100,225 C 200,165 420,285 660,215 C 900,145 1080,265 1300,195 C 1400,165 1440,178 1540,170 L 1540,340 L -100,340 Z"
+            fill="rgba(232,226,216,0.55)"
+          />
+        </svg>
+        <div className="relative max-w-5xl mx-auto">
+
+          {/* Header */}
+          <div className="mb-14 md:mb-16">
+            <div className="flex items-center gap-2.5 mb-6">
+              <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#5E8B73" }} />
+              <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#5E8B73" }}>
+                How Vale works
+              </span>
             </div>
-            <p className="text-sm leading-relaxed max-w-xs md:text-right md:pb-1" style={{ color: "#8FA0B0" }}>
-              Every feature exists because a real family told us they needed it.
+            <h2
+              className="mb-4 max-w-lg"
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 400,
+                lineHeight: 1.12,
+                letterSpacing: "-0.02em",
+                color: "#1C1F2A",
+              }}
+            >
+              Clarity when you need it most
+            </h2>
+            <p className="text-sm leading-relaxed max-w-md" style={{ color: "#7A6E64" }}>
+              Search, compare, and connect at your own pace — without anyone pushing you towards a decision you&apos;re not ready to make.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 md:items-start">
-            {VALUE_PROPS.map(({ number, title, body, detail }, i) => (
+          {/* 4 step boxes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              {
+                icon: MapPin,
+                title: "Search your area",
+                body: "Enter your postcode to see verified funeral directors nearby. Real prices shown immediately — no calls, no personal details.",
+              },
+              {
+                icon: SlidersHorizontal,
+                title: "Compare providers",
+                body: "Full itemised price lists from every provider. Filter by budget, service type, or specific needs. Compare side by side.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Read verified reviews",
+                body: "Every review is linked to a confirmed arrangement. Honest accounts from real families — no anonymous posts.",
+              },
+              {
+                icon: Phone,
+                title: "Connect when ready",
+                body: "Request a callback, message, or call directly. Shortlist providers and share with family. No time pressure, ever.",
+              },
+            ].map(({ icon: Icon, title, body }) => (
               <div
                 key={title}
-                className="group rounded-2xl p-8 transition-all duration-300"
+                className="flex flex-col px-6 py-7 rounded-xl"
                 style={{
-                  background: "white",
-                  border: "0.5px solid rgba(143,160,176,0.3)",
-                  marginTop: i === 1 ? "32px" : undefined,
+                  background: "#FFFFFF",
+                  border: "1px solid #E8E2D8",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
                 }}
               >
-                <div className="flex items-start justify-between mb-8">
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center"
-                    style={{ background: "rgba(197,210,220,0.4)" }}
-                  >
-                    <div className="w-3 h-3 rounded-full" style={{ background: "#8A5FAA" }} />
-                  </div>
-                  <span
-                    className="font-extrabold select-none"
-                    style={{ fontSize: "52px", lineHeight: 1, letterSpacing: "-0.05em", color: "rgba(143,160,176,0.25)" }}
-                    aria-hidden="true"
-                  >
-                    {number}
-                  </span>
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-6 shrink-0"
+                  style={{ background: "#EAF2EE" }}
+                >
+                  <Icon className="w-5 h-5" style={{ color: "#5E8B73" }} aria-hidden="true" />
                 </div>
-
                 <h3
-                  className="mb-3"
-                  style={{ fontSize: "20px", fontWeight: 500, lineHeight: 1.3, color: "#5D3A7A" }}
+                  className="mb-2"
+                  style={{
+                    fontFamily: "var(--font-cormorant), serif",
+                    fontSize: "19px",
+                    fontWeight: 500,
+                    color: "#1C1F2A",
+                    lineHeight: 1.25,
+                  }}
                 >
                   {title}
                 </h3>
-                <p className="text-sm leading-relaxed mb-7" style={{ color: "#3F5E2C" }}>{body}</p>
-
-                <div className="pt-5" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
-                  <p className="text-xs font-medium" style={{ color: "#8A5FAA" }}>{detail}</p>
-                </div>
+                <p className="text-[13px] leading-[1.65]" style={{ color: "#7A6E64" }}>
+                  {body}
+                </p>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -192,162 +274,81 @@ export default function Home() {
           TESTIMONIALS
       ══════════════════════════════════════════════════════════ */}
       <section
-        className="py-24 md:py-32"
-        style={{ background: "#C5D2DC", borderTop: "0.5px solid rgba(143,160,176,0.3)", borderBottom: "0.5px solid rgba(143,160,176,0.3)" }}
+        className="py-20 md:py-28"
+        style={{ background: "#EAF2EE", borderTop: "1px solid #E8E2D8", borderBottom: "1px solid #E8E2D8" }}
       >
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16">
-            <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#8A5FAA" }} aria-hidden="true" />
-            <h2
-              style={{
-                fontFamily: "var(--font-instrument-serif)",
-                fontSize: "clamp(28px, 4vw, 40px)",
-                lineHeight: 1.15,
-                letterSpacing: "-0.02em",
-                fontWeight: 400,
-                color: "#5D3A7A",
-              }}
-            >
-              Trusted at life&apos;s<br className="hidden sm:block" /> hardest moments
-            </h2>
-          </div>
+        <div className="max-w-6xl mx-auto px-6 md:px-10">
+          <div className="grid md:grid-cols-[2fr_3fr] gap-12 md:gap-16 items-center">
 
-          <div className="grid lg:grid-cols-[1.45fr_1fr] gap-5 items-start">
-            {TESTIMONIALS.filter((t) => t.featured).map(({ quote, author, role }) => (
-              <figure
-                key={author}
-                className="rounded-2xl overflow-hidden flex flex-col"
-                style={{ background: "white", borderLeft: "3px solid #8A5FAA", border: "0.5px solid rgba(143,160,176,0.3)", borderLeftWidth: "3px", borderLeftColor: "#8A5FAA" }}
+            {/* Left — heading + description + CTA */}
+            <div>
+              <div className="w-8 h-[2px] rounded-full mb-6" style={{ background: "#5E8B73" }} aria-hidden="true" />
+              <h2
+                className="mb-5"
+                style={{
+                  fontFamily: "var(--font-cormorant)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  lineHeight: 1.12,
+                  letterSpacing: "-0.02em",
+                  fontWeight: 400,
+                  color: "#1C1F2A",
+                }}
               >
-                <div className="p-9 flex flex-col flex-1">
-                  <div className="flex gap-0.5 mb-5" aria-label="5 stars">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="w-4 h-4" style={{ color: "#8A5FAA", fill: "#8A5FAA" }} aria-hidden="true" />
-                    ))}
-                  </div>
-                  <div
-                    className="mb-2 select-none"
-                    style={{ fontSize: "80px", fontFamily: "Georgia, serif", lineHeight: 0.75, color: "#8A5FAA" }}
-                    aria-hidden="true"
-                  >
-                    &ldquo;
-                  </div>
-                  <blockquote className="flex-1">
-                    <p className="italic leading-relaxed" style={{ fontSize: "18px", lineHeight: 1.75, color: "#3F5E2C" }}>
-                      {quote}
-                    </p>
-                  </blockquote>
-                  <figcaption className="mt-8 pt-6 flex items-center gap-4" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
-                    <div
-                      className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-medium shrink-0"
-                      style={{ background: "rgba(197,210,220,0.5)", color: "#5D3A7A" }}
-                      aria-hidden="true"
-                    >
-                      {author.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm" style={{ color: "#5D3A7A" }}>{author}</p>
-                      <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>{role}</p>
-                    </div>
-                  </figcaption>
-                </div>
-              </figure>
-            ))}
+                Trusted at life&apos;s hardest moments
+              </h2>
+              <p className="text-sm leading-relaxed mb-8" style={{ color: "#7A6E64", maxWidth: "280px" }}>
+                Real families, real experiences. Every review is verified and linked to a confirmed arrangement — no anonymous posts.
+              </p>
+              <Link
+                href="/search"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
+                style={{ background: "#1C1F2A" }}
+              >
+                Read more reviews
+              </Link>
+            </div>
 
-            <div className="flex flex-col gap-5">
-              {TESTIMONIALS.filter((t) => !t.featured).map(({ quote, author, role }) => (
+            {/* Right — 3 cards stacked */}
+            <div className="flex flex-col gap-4">
+              {TESTIMONIALS.map(({ quote, author, role }) => (
                 <figure
                   key={author}
-                  className="rounded-2xl p-7 transition-all duration-200"
-                  style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+                  className="flex items-start gap-5 rounded-xl px-6 py-5"
+                  style={{ background: "white", border: "1px solid #E8E2D8" }}
                 >
-                  <div className="flex gap-0.5 mb-4" aria-label="5 stars">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="w-3.5 h-3.5" style={{ color: "#8A5FAA", fill: "#8A5FAA" }} aria-hidden="true" />
-                    ))}
+                  {/* Avatar */}
+                  <div
+                    className="shrink-0 w-11 h-11 rounded-full flex items-center justify-center text-sm font-medium mt-0.5"
+                    style={{ background: "#EAF2EE", color: "#1C1F2A" }}
+                    aria-hidden="true"
+                  >
+                    {author.charAt(0)}
                   </div>
-                  <blockquote>
-                    <p className="text-sm leading-relaxed italic" style={{ color: "#3F5E2C" }}>
-                      &ldquo;{quote}&rdquo;
-                    </p>
-                  </blockquote>
-                  <figcaption className="mt-5 pt-4 flex items-center gap-3" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium shrink-0"
-                      style={{ background: "rgba(197,210,220,0.5)", color: "#5D3A7A" }}
+                      className="select-none leading-none mb-2"
+                      style={{ fontSize: "36px", fontFamily: "Georgia, serif", color: "#5E8B73", lineHeight: 1 }}
                       aria-hidden="true"
                     >
-                      {author.charAt(0)}
+                      &ldquo;
                     </div>
-                    <div>
-                      <p className="text-sm font-medium" style={{ color: "#5D3A7A" }}>{author}</p>
-                      <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>{role}</p>
-                    </div>
-                  </figcaption>
+                    <blockquote>
+                      <p className="text-sm leading-relaxed" style={{ color: "#5A4E44" }}>
+                        {quote}
+                      </p>
+                    </blockquote>
+                    <figcaption className="mt-3">
+                      <span className="text-xs font-medium" style={{ color: "#5E8B73" }}>— </span>
+                      <span className="text-xs font-medium" style={{ color: "#1C1F2A" }}>{author}</span>
+                      <span className="text-xs ml-1.5" style={{ color: "#7A6E64" }}>{role}</span>
+                    </figcaption>
+                  </div>
                 </figure>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          VAULT PROMO
-      ══════════════════════════════════════════════════════════ */}
-      <section className="py-24" style={{ background: "#F5F1E8" }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div
-            className="rounded-3xl relative overflow-hidden px-8 py-14 md:px-16 md:py-16"
-            style={{ background: "#5D3A7A" }}
-          >
-            {/* Subtle dot pattern */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)",
-                backgroundSize: "28px 28px",
-              }}
-              aria-hidden="true"
-            />
-            <div className="relative grid md:grid-cols-[1fr_auto] gap-10 items-center">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] mb-4" style={{ color: "#C5D2DC" }}>
-                  VALE Vault — Free pre-planning
-                </p>
-                <h2
-                  className="mb-5"
-                  style={{
-                    fontFamily: "var(--font-instrument-serif)",
-                    color: "white",
-                    fontSize: "clamp(26px, 3.5vw, 40px)",
-                    lineHeight: 1.18,
-                    letterSpacing: "-0.025em",
-                    fontWeight: 400,
-                  }}
-                >
-                  The kindest thing you can do
-                  <br className="hidden md:block" /> for the people you love.
-                </h2>
-                <p className="leading-relaxed max-w-lg" style={{ fontSize: "15px", color: "rgba(197,210,220,0.85)" }}>
-                  Record your wishes — service type, music, readings, practical
-                  details. Share with your family so they never have to guess
-                  when it matters most.
-                </p>
-              </div>
-              <div className="shrink-0 flex flex-col items-start md:items-center gap-3">
-                <Link
-                  href="/vault/login"
-                  className="inline-flex items-center gap-2.5 px-7 py-4 rounded-xl font-medium text-[15px] hover:scale-[1.03] active:scale-[0.98] transition-transform min-h-[52px] whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
-                  style={{ background: "#5AAE55", color: "white" }}
-                >
-                  <BookOpen className="w-4 h-4" aria-hidden="true" />
-                  Start your Vault — it&apos;s free
-                </Link>
-                <p className="text-xs opacity-70" style={{ color: "#C5D2DC" }}>
-                  Private · Secure · Takes 10 minutes
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -355,14 +356,24 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════
           FINAL CTA
       ══════════════════════════════════════════════════════════ */}
-      <section className="py-28 md:py-36 text-center" style={{ background: "#F5F1E8" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="w-12 h-[2px] rounded-full mx-auto mb-10" style={{ background: "#8A5FAA" }} aria-hidden="true" />
+      <section className="relative overflow-hidden py-28 md:py-36 text-center px-6" style={{ background: "#1C1F2A" }}>
+        {/* Dot pattern */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="relative max-w-3xl mx-auto">
+          <div className="w-12 h-[2px] rounded-full mx-auto mb-10" style={{ background: "#5E8B73" }} aria-hidden="true" />
           <h2
             className="mb-6"
             style={{
-              fontFamily: "var(--font-instrument-serif)",
-              color: "#5D3A7A",
+              fontFamily: "var(--font-cormorant)",
+              color: "#FFFFFF",
               fontSize: "clamp(32px, 5vw, 54px)",
               lineHeight: 1.08,
               letterSpacing: "-0.03em",
@@ -371,12 +382,12 @@ export default function Home() {
           >
             Find a funeral director
             <br />
-            <em style={{ color: "#8A5FAA" }}>you can trust.</em>
+            <em style={{ color: "#5E8B73" }}>you can trust.</em>
           </h2>
 
           <p
             className="mb-12 leading-relaxed max-w-md mx-auto"
-            style={{ fontSize: "17px", color: "#8FA0B0" }}
+            style={{ fontSize: "17px", color: "rgba(234,242,238,0.65)" }}
           >
             Search by postcode and compare prices, reviews, and services from
             verified funeral directors across the UK.
@@ -385,26 +396,14 @@ export default function Home() {
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/search"
-              className="inline-flex items-center gap-2.5 rounded-xl px-10 py-4 font-medium text-[16px] text-white hover:scale-[1.03] active:scale-[0.98] transition-transform min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-              style={{ background: "#5AAE55" }}
+              className="inline-flex items-center gap-2.5 rounded-md px-10 py-4 font-medium text-[16px] hover:scale-[1.03] active:scale-[0.98] transition-transform min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1F2A]"
+              style={{ background: "#5E8B73", color: "#FFFFFF" }}
             >
               Search funeral directors
             </Link>
-            <Link
-              href="/search"
-              className="inline-flex items-center gap-2.5 rounded-xl px-10 py-4 font-medium text-[16px] transition-colors min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-              style={{
-                border: "0.5px solid rgba(143,160,176,0.5)",
-                color: "#5D3A7A",
-                background: "rgba(197,210,220,0.25)",
-              }}
-            >
-              Browse all directors
-              <ChevronRight className="w-4 h-4" aria-hidden="true" />
-            </Link>
           </div>
 
-          <p className="text-xs mt-10 opacity-50" style={{ color: "#8FA0B0" }}>
+          <p className="text-xs mt-10" style={{ color: "rgba(234,242,238,0.35)" }}>
             No account needed · Free to use · Prices shown upfront
           </p>
         </div>

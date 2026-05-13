@@ -178,7 +178,7 @@ function ProgressDots({ current }: { current: number }) {
           style={{
             width: i === current ? "20px" : "8px",
             height: "8px",
-            background: i < current ? "#7BA84A" : i === current ? "#5D3A7A" : "rgba(143,160,176,0.4)",
+            background: i < current ? "#5E8B73" : i === current ? "#1C1F2A" : "rgba(232,226,216,0.6)",
           }}
         />
       ))}
@@ -193,13 +193,13 @@ const inputBase =
 
 const inputStyle = {
   background: "white",
-  border: "0.5px solid rgba(143,160,176,0.5)",
-  color: "#3F5E2C",
+  border: "1px solid #E8E2D8",
+  color: "#5A4E44",
 };
 
 const inputFocusStyle = {
-  border: "0.5px solid #8A5FAA",
-  boxShadow: "0 0 0 3px rgba(138,95,170,0.15)",
+  border: "1.5px solid rgba(94,139,115,0.5)",
+  boxShadow: "0 0 0 3px rgba(94,139,115,0.12)",
 };
 
 function VaultInput({
@@ -337,10 +337,10 @@ function VaultStartContent() {
 
   if (loading || !vault) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F1E8" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F7F3EE" }}>
         <div
           className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: "#5D3A7A", borderTopColor: "transparent" }}
+          style={{ borderColor: "#1C1F2A", borderTopColor: "transparent" }}
         />
       </div>
     );
@@ -351,27 +351,25 @@ function VaultStartContent() {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ background: "#F5F1E8" }}
+      style={{ background: "#F7F3EE" }}
     >
       {/* Minimal chrome */}
       <header className="flex items-center justify-between px-6 py-5">
         <Link
           href="/"
-          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] rounded"
-          aria-label="VALE homepage"
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+          aria-label="Vale homepage"
         >
           <span
             className="text-2xl tracking-tight"
-            style={{ fontFamily: "var(--font-instrument-serif)", color: "#5D3A7A" }}
-          >
-            VALE
-          </span>
+            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 600, color: "#1C1F2A" }}
+          >Vale<span style={{ color: "#5E8B73" }}>.</span></span>
         </Link>
         <button
           type="button"
           onClick={handleSaveExit}
-          className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA]"
-          style={{ color: "#8FA0B0" }}
+          className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73]"
+          style={{ color: "#7A6E64" }}
         >
           <Save className="w-4 h-4" aria-hidden="true" />
           Save &amp; exit
@@ -396,15 +394,15 @@ function VaultStartContent() {
           <h1
             className="mb-3 font-normal"
             style={{
-              fontFamily: "var(--font-instrument-serif)",
+              fontFamily: "var(--font-cormorant)",
               fontSize: "clamp(28px, 5vw, 44px)",
               lineHeight: 1.1,
-              color: "#5D3A7A",
+              color: "#1C1F2A",
             }}
           >
             {cfg.question}
           </h1>
-          <p className="mb-8 text-sm leading-relaxed" style={{ color: "#8FA0B0" }}>
+          <p className="mb-8 text-sm leading-relaxed" style={{ color: "#7A6E64" }}>
             {cfg.subtitle}
             {!cfg.required && <span className="ml-2 opacity-70">(optional)</span>}
           </p>
@@ -443,7 +441,7 @@ function VaultStartContent() {
               className="w-full px-5 py-4 rounded-xl text-base focus:outline-none transition-colors resize-none"
               style={{ ...inputStyle, minHeight: "140px" }}
               onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-              onBlur={(e) => { e.target.style.boxShadow = ""; e.target.style.border = "0.5px solid rgba(143,160,176,0.5)"; }}
+              onBlur={(e) => { e.target.style.boxShadow = ""; e.target.style.border = "1px solid #E8E2D8"; }}
             />
           )}
 
@@ -473,15 +471,15 @@ function VaultStartContent() {
                       key={value}
                       className="flex items-center gap-4 px-5 py-4 rounded-xl cursor-pointer transition-all"
                       style={{
-                        background: checked ? "rgba(93,58,122,0.08)" : "white",
-                        border: checked ? "1.5px solid #8A5FAA" : "0.5px solid rgba(143,160,176,0.4)",
+                        background: checked ? "rgba(28,31,42,0.05)" : "white",
+                        border: checked ? "1.5px solid rgba(94,139,115,0.5)" : "1px solid #E8E2D8",
                       }}
                     >
                       <div
                         className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
                         style={{
-                          border: checked ? "none" : "1.5px solid rgba(143,160,176,0.6)",
-                          background: checked ? "#5D3A7A" : "transparent",
+                          border: checked ? "none" : "1.5px solid rgba(232,226,216,0.8)",
+                          background: checked ? "#1C1F2A" : "transparent",
                         }}
                       >
                         {checked && <div className="w-2 h-2 rounded-full bg-white" />}
@@ -494,7 +492,7 @@ function VaultStartContent() {
                         onChange={() => update(cfg.field, value as VaultData[typeof cfg.field])}
                         className="sr-only"
                       />
-                      <span className="text-sm font-medium" style={{ color: checked ? "#5D3A7A" : "#3F5E2C" }}>
+                      <span className="text-sm font-medium" style={{ color: checked ? "#1C1F2A" : "#5A4E44" }}>
                         {label}
                       </span>
                     </label>
@@ -507,7 +505,7 @@ function VaultStartContent() {
           {cfg.type === "insurance" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: "#5D3A7A" }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: "#1C1F2A" }}>
                   Insurance provider
                 </label>
                 <VaultInput
@@ -518,7 +516,7 @@ function VaultStartContent() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: "#5D3A7A" }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: "#1C1F2A" }}>
                   Policy number
                 </label>
                 <VaultInput
@@ -534,7 +532,7 @@ function VaultStartContent() {
           {cfg.type === "solicitor" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: "#5D3A7A" }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: "#1C1F2A" }}>
                   Solicitor&apos;s name
                 </label>
                 <VaultInput
@@ -545,7 +543,7 @@ function VaultStartContent() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: "#5D3A7A" }}>
+                <label className="block text-sm font-medium mb-2" style={{ color: "#1C1F2A" }}>
                   Solicitor&apos;s phone
                 </label>
                 <VaultInput
@@ -561,27 +559,27 @@ function VaultStartContent() {
 
           {cfg.type === "documents" && (
             <div className="space-y-4">
-              <p className="text-xs rounded-xl px-4 py-3 mb-2" style={{ background: "rgba(197,210,220,0.4)", color: "#3F5E2C" }}>
+              <p className="text-xs rounded-xl px-4 py-3 mb-2" style={{ background: "rgba(234,242,238,0.4)", color: "#5A4E44" }}>
                 Files are stored securely in your Vault. Max 5 MB per file. PDF, Word, JPEG, PNG accepted.
               </p>
               {DOC_SLOTS.map((slot) => {
                 const doc = vault.documents.find((d) => d.id === slot.id);
                 return (
-                  <div key={slot.id} className="rounded-xl p-4" style={{ border: "0.5px solid rgba(143,160,176,0.4)", background: "white" }}>
-                    <p className="text-sm font-medium mb-0.5" style={{ color: "#5D3A7A" }}>{slot.label}</p>
-                    <p className="text-xs mb-3" style={{ color: "#8FA0B0" }}>{slot.hint}</p>
+                  <div key={slot.id} className="rounded-xl p-4" style={{ border: "1px solid #E8E2D8", background: "white" }}>
+                    <p className="text-sm font-medium mb-0.5" style={{ color: "#1C1F2A" }}>{slot.label}</p>
+                    <p className="text-xs mb-3" style={{ color: "#7A6E64" }}>{slot.hint}</p>
                     {doc ? (
-                      <div className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5" style={{ background: "rgba(123,168,74,0.1)", border: "0.5px solid rgba(123,168,74,0.4)" }}>
+                      <div className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5" style={{ background: "rgba(123,168,74,0.1)", border: "1px solid rgba(123,168,74,0.4)" }}>
                         <div className="min-w-0">
                           <p className="text-sm font-medium truncate" style={{ color: "#638B3B" }}>{doc.fileName}</p>
-                          <p className="text-xs" style={{ color: "#8FA0B0" }}>Uploaded {new Date(doc.uploadedAt).toLocaleDateString("en-GB")}</p>
+                          <p className="text-xs" style={{ color: "#7A6E64" }}>Uploaded {new Date(doc.uploadedAt).toLocaleDateString("en-GB")}</p>
                         </div>
                         <button
                           type="button"
                           onClick={() => removeDoc(slot.id)}
                           aria-label={`Remove ${slot.label}`}
                           className="w-10 h-10 flex items-center justify-center rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E26B5E]"
-                          style={{ color: "#8FA0B0" }}
+                          style={{ color: "#7A6E64" }}
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -590,10 +588,10 @@ function VaultStartContent() {
                       <label
                         htmlFor={`file-${slot.id}`}
                         className="flex items-center gap-3 rounded-xl px-4 py-4 cursor-pointer transition-colors"
-                        style={{ border: "1.5px dashed rgba(143,160,176,0.5)" }}
+                        style={{ border: "1.5px dashed rgba(232,226,216,0.8)" }}
                       >
-                        <Upload className="w-5 h-5 shrink-0" style={{ color: "#8FA0B0" }} aria-hidden="true" />
-                        <span className="text-sm" style={{ color: "#8FA0B0" }}>Choose a file to upload</span>
+                        <Upload className="w-5 h-5 shrink-0" style={{ color: "#7A6E64" }} aria-hidden="true" />
+                        <span className="text-sm" style={{ color: "#7A6E64" }}>Choose a file to upload</span>
                         <input
                           id={`file-${slot.id}`}
                           type="file"
@@ -630,8 +628,8 @@ function VaultStartContent() {
           <button
             type="button"
             onClick={advance}
-            className="w-full rounded-full py-5 text-base font-medium text-white hover:scale-[1.03] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-            style={{ background: "#5AAE55", maxWidth: "320px" }}
+            className="w-full rounded-md py-5 text-base font-medium text-white hover:opacity-90 active:scale-[0.98] transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
+            style={{ background: "#1C1F2A", maxWidth: "320px" }}
           >
             {screen >= TOTAL - 1 ? (
               <span className="flex items-center justify-center gap-2">
@@ -647,8 +645,8 @@ function VaultStartContent() {
             <button
               type="button"
               onClick={goBack}
-              className="flex items-center gap-1.5 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] rounded"
-              style={{ color: "#8FA0B0" }}
+              className="flex items-center gap-1.5 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+              style={{ color: "#7A6E64" }}
             >
               <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               Back
@@ -664,10 +662,10 @@ export default function VaultStartPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F1E8" }}>
+        <div className="min-h-screen flex items-center justify-center" style={{ background: "#F7F3EE" }}>
           <div
             className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: "#5D3A7A", borderTopColor: "transparent" }}
+            style={{ borderColor: "#1C1F2A", borderTopColor: "transparent" }}
           />
         </div>
       }
