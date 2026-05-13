@@ -47,15 +47,15 @@ export default function MapView({ directors }: MapViewProps) {
         <Marker key={fd.id} position={[fd.latitude, fd.longitude]}>
           <Popup>
             <div className="min-w-[180px]">
-              <p className="font-semibold text-sm mb-0.5" style={{ color: "#5D3A7A" }}>{fd.name}</p>
-              <p className="text-xs mb-2" style={{ color: "#8FA0B0" }}>{fd.city}</p>
-              <p className="text-sm font-bold mb-2" style={{ color: "#5D3A7A" }}>
+              <p className="font-semibold text-sm mb-0.5" style={{ color: "#1C1F2A" }}>{fd.name}</p>
+              <p className="text-xs mb-2" style={{ color: "#7A6E64" }}>{fd.city}</p>
+              <p className="text-sm font-semibold mb-2" style={{ color: "#1C1F2A" }}>
                 From £{getLowestPrice(fd).toLocaleString()}
               </p>
               <Link
                 href={`/funeral-directors/${fd.id}`}
-                className="block text-center text-white text-xs font-semibold px-3 py-1.5 rounded-full hover:opacity-90 transition-opacity"
-                style={{ background: "#5AAE55" }}
+                className="block text-center text-white text-xs font-semibold px-3 py-1.5 rounded-md hover:opacity-90 transition-opacity"
+                style={{ background: "#1C1F2A" }}
               >
                 View profile
               </Link>

@@ -60,20 +60,20 @@ export default function HoursEditor() {
     <div>
       <div className="flex items-start justify-between gap-4 mb-5">
         <div>
-          <h2 className="text-base font-semibold mb-0.5" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
+          <h2 className="text-base font-semibold mb-0.5" style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}>
             Opening hours
           </h2>
-          <p className="text-xs" style={{ color: "#8FA0B0" }}>
+          <p className="text-xs" style={{ color: "#7A6E64" }}>
             Set when your office is staffed. Families see this on your profile.
           </p>
         </div>
         <button
           type="button"
           onClick={save}
-          className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full min-h-[44px] shrink-0 transition-all hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
+          className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-md min-h-[44px] shrink-0 transition-all hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
           style={saved
             ? { background: "rgba(123,168,74,0.15)", color: "#5A8A30" }
-            : { background: "#5D3A7A", color: "white" }
+            : { background: "#1C1F2A", color: "white" }
           }
         >
           <Save className="w-3.5 h-3.5" aria-hidden="true" />
@@ -84,18 +84,18 @@ export default function HoursEditor() {
       {/* 24/7 toggle */}
       <label
         className="flex items-center gap-3 p-4 rounded-xl mb-5 cursor-pointer select-none"
-        style={{ background: "rgba(212,165,116,0.08)", border: "0.5px solid rgba(212,165,116,0.3)" }}
+        style={{ background: "rgba(212,165,116,0.08)", border: "1px solid rgba(212,165,116,0.3)" }}
       >
         <input
           type="checkbox"
           checked={hours.availability24hr ?? false}
           onChange={(e) => setHours((h) => ({ ...h, availability24hr: e.target.checked }))}
           className="w-4 h-4 rounded shrink-0"
-          style={{ accentColor: "#d4a574" }}
+          style={{ accentColor: "#C4975A" }}
         />
         <div>
-          <p className="text-sm font-semibold" style={{ color: "#5D3A7A" }}>Available 24 hours, 7 days a week</p>
-          <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>
+          <p className="text-sm font-semibold" style={{ color: "#1C1F2A" }}>Available 24 hours, 7 days a week</p>
+          <p className="text-xs mt-0.5" style={{ color: "#7A6E64" }}>
             Shows a 24/7 badge on your profile — families can call at any time
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function HoursEditor() {
       {/* Day schedule */}
       {!hours.availability24hr && (
         <div className="mb-6">
-          <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#3F5E2C" }}>
+          <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#5A4E44" }}>
             Office hours
           </p>
           <div className="space-y-2">
@@ -118,9 +118,9 @@ export default function HoursEditor() {
                       checked={d.open}
                       onChange={(e) => setDay(key, { open: e.target.checked })}
                       className="w-4 h-4 rounded"
-                      style={{ accentColor: "#5D3A7A" }}
+                      style={{ accentColor: "#5E8B73" }}
                     />
-                    <span className="text-sm" style={{ color: "#3F5E2C" }}>{label}</span>
+                    <span className="text-sm" style={{ color: "#5A4E44" }}>{label}</span>
                   </label>
                   {d.open ? (
                     <div className="flex items-center gap-2">
@@ -128,16 +128,16 @@ export default function HoursEditor() {
                         type="time"
                         value={d.from ?? "09:00"}
                         onChange={(e) => setDay(key, { from: e.target.value })}
-                        className="text-sm rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#8A5FAA]"
-                        style={{ background: "#F5F1E8", border: "0.5px solid rgba(143,160,176,0.4)", color: "#3F5E2C", minHeight: "36px" }}
+                        className="text-sm rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#5E8B73]"
+                        style={{ background: "#F7F3EE", border: "1px solid #E8E2D8", color: "#5A4E44", minHeight: "36px" }}
                       />
                       <span className="text-xs" style={{ color: "#5F7080" }}>to</span>
                       <input
                         type="time"
                         value={d.to ?? "17:00"}
                         onChange={(e) => setDay(key, { to: e.target.value })}
-                        className="text-sm rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#8A5FAA]"
-                        style={{ background: "#F5F1E8", border: "0.5px solid rgba(143,160,176,0.4)", color: "#3F5E2C", minHeight: "36px" }}
+                        className="text-sm rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#5E8B73]"
+                        style={{ background: "#F7F3EE", border: "1px solid #E8E2D8", color: "#5A4E44", minHeight: "36px" }}
                       />
                     </div>
                   ) : (
@@ -151,29 +151,29 @@ export default function HoursEditor() {
       )}
 
       {/* OOH section */}
-      <div className="pt-5" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
-        <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#3F5E2C" }}>
+      <div className="pt-5" style={{ borderTop: "1px solid #E8E2D8" }}>
+        <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#5A4E44" }}>
           Out-of-hours contact
         </p>
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>Phone number</label>
+            <label className="block text-sm font-medium mb-1.5" style={{ color: "#1C1F2A" }}>Phone number</label>
             <input
               type="tel"
               value={hours.oohPhone ?? ""}
               onChange={(e) => setHours((h) => ({ ...h, oohPhone: e.target.value }))}
               placeholder="e.g. 020 7946 0958"
               className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none"
-              style={{ background: "#F5F1E8", border: "0.5px solid rgba(143,160,176,0.4)", color: "#3F5E2C", minHeight: "44px" }}
+              style={{ background: "#F7F3EE", border: "1px solid #E8E2D8", color: "#5A4E44", minHeight: "44px" }}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: "#5D3A7A" }}>Typical response time</label>
+            <label className="block text-sm font-medium mb-1.5" style={{ color: "#1C1F2A" }}>Typical response time</label>
             <select
               value={hours.oohResponseHours ?? ""}
               onChange={(e) => setHours((h) => ({ ...h, oohResponseHours: Number(e.target.value) || undefined }))}
               className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none"
-              style={{ background: "#F5F1E8", border: "0.5px solid rgba(143,160,176,0.4)", color: "#3F5E2C", minHeight: "44px" }}
+              style={{ background: "#F7F3EE", border: "1px solid #E8E2D8", color: "#5A4E44", minHeight: "44px" }}
             >
               <option value="">Select…</option>
               {OOH_OPTIONS.map((n) => (

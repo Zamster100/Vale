@@ -102,8 +102,8 @@ export default function DashboardPage() {
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F1E8" }}>
-        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#5D3A7A", borderTopColor: "transparent" }} aria-label="Loading dashboard" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F7F3EE" }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#1C1F2A", borderTopColor: "transparent" }} aria-label="Loading dashboard" />
       </div>
     );
   }
@@ -122,13 +122,16 @@ export default function DashboardPage() {
   const displayName = profile?.businessName || user?.email?.split("@")[0] || "Your business";
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#F5F1E8" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#F7F3EE" }}>
       {/* Admin nav */}
-      <header className="sticky top-0 z-50" style={{ background: "#5D3A7A", borderBottom: "0.5px solid rgba(93,58,122,0.3)" }}>
+      <header className="sticky top-0 z-50" style={{ background: "#1C1F2A", borderBottom: "1px solid rgba(28,31,42,0.3)" }}>
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/" aria-label="VALE public site" className="flex items-center gap-2 focus:outline-none rounded">
-              <span className="text-xl tracking-tight text-white" style={{ fontFamily: "var(--font-instrument-serif)" }}>VALE</span>
+            <Link href="/" aria-label="Vale public site" className="flex items-center gap-2 focus:outline-none rounded">
+              <span
+                className="text-xl tracking-tight"
+                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 600, color: "white" }}
+              >Vale<span style={{ color: "#5E8B73" }}>.</span></span>
             </Link>
             <span className="hidden sm:inline" style={{ color: "rgba(255,255,255,0.3)" }} aria-hidden="true">|</span>
             <span className="text-sm hidden sm:inline" style={{ color: "rgba(255,255,255,0.7)" }}>{displayName}</span>
@@ -176,16 +179,16 @@ export default function DashboardPage() {
       <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-8">
         {/* Page header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold mb-1" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>Dashboard</h1>
-          <p className="text-sm" style={{ color: "#8FA0B0" }}>
-            Here&apos;s how {displayName} is performing on VALE this week.
+          <h1 className="text-2xl font-semibold mb-1" style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}>Dashboard</h1>
+          <p className="text-sm" style={{ color: "#7A6E64" }}>
+            Here&apos;s how {displayName} is performing on Vale this week.
           </p>
         </div>
 
         {/* Tabs */}
         <div
           className="flex items-center gap-1 mb-8 p-1 rounded-xl w-fit"
-          style={{ background: "rgba(197,210,220,0.3)", border: "0.5px solid rgba(143,160,176,0.3)" }}
+          style={{ background: "rgba(234,242,238,0.3)", border: "1px solid #E8E2D8" }}
           role="tablist"
           aria-label="Dashboard sections"
         >
@@ -202,8 +205,8 @@ export default function DashboardPage() {
               className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-lg font-medium transition-all duration-150 focus:outline-none min-h-[36px]"
               style={
                 activeTab === id
-                  ? { background: "#5D3A7A", color: "white" }
-                  : { color: "#8FA0B0" }
+                  ? { background: "#1C1F2A", color: "white" }
+                  : { color: "#7A6E64" }
               }
             >
               <Icon className="w-3.5 h-3.5" aria-hidden="true" />
@@ -215,8 +218,8 @@ export default function DashboardPage() {
         {/* Gallery & Team tab panel */}
         {activeTab === "gallery-team" && (
           <div
-            className="p-6 rounded-2xl"
-            style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+            className="p-6 rounded-xl"
+            style={{ background: "white", border: "1px solid #E8E2D8" }}
           >
             <GalleryTeamManager />
           </div>
@@ -225,8 +228,8 @@ export default function DashboardPage() {
         {/* Hours tab panel */}
         {activeTab === "hours" && (
           <div
-            className="p-6 rounded-2xl"
-            style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+            className="p-6 rounded-xl"
+            style={{ background: "white", border: "1px solid #E8E2D8" }}
           >
             <HoursEditor />
           </div>
@@ -236,7 +239,7 @@ export default function DashboardPage() {
           <>
         {/* Fetch error banner */}
         {fetchError && (
-          <div role="alert" className="mb-6 px-4 py-3 rounded-xl flex items-center justify-between gap-4" style={{ background: "rgba(226,107,94,0.08)", border: "0.5px solid rgba(226,107,94,0.3)" }}>
+          <div role="alert" className="mb-6 px-4 py-3 rounded-xl flex items-center justify-between gap-4" style={{ background: "rgba(226,107,94,0.08)", border: "1px solid rgba(226,107,94,0.3)" }}>
             <p className="text-sm" style={{ color: "#C95548" }}>
               Could not load quote requests. Check your connection and try again.
             </p>
@@ -295,7 +298,7 @@ export default function DashboardPage() {
 
         {/* Analytics section */}
         <section aria-label="Analytics" className="mb-8">
-          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#8FA0B0" }}>Analytics</p>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#7A6E64" }}>Analytics</p>
           <div className="grid sm:grid-cols-2 gap-4">
             {dataLoading ? (
               <>
@@ -325,7 +328,7 @@ export default function DashboardPage() {
             {dataLoading ? (
               <div className="space-y-3">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="h-6 w-36 rounded animate-pulse" style={{ background: "rgba(197,210,220,0.4)" }} />
+                  <div className="h-6 w-36 rounded animate-pulse" style={{ background: "rgba(234,242,238,0.4)" }} />
                 </div>
                 {Array.from({ length: 3 }).map((_, i) => <SkeletonFeedItem key={i} />)}
               </div>
@@ -337,18 +340,18 @@ export default function DashboardPage() {
           {/* Sidebar — 1/3 width */}
           <aside className="space-y-5" aria-label="Insights and benchmarks">
             {/* Benchmark */}
-            <section className="p-5 rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
-              <h2 className="text-base font-semibold mb-4" style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}>
+            <section className="p-5 rounded-xl" style={{ background: "white", border: "1px solid #E8E2D8" }}>
+              <h2 className="text-base font-semibold mb-4" style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}>
                 How you compare
               </h2>
-              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#8FA0B0" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#7A6E64" }}>
                 vs. {mockBenchmark.city} average
               </p>
 
               {/* Price comparison */}
               <div className="mb-5">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-medium" style={{ color: "#3F5E2C" }}>Avg. price</span>
+                  <span className="text-sm font-medium" style={{ color: "#5A4E44" }}>Avg. price</span>
                   <div className="flex items-center gap-1 text-sm font-semibold" style={{ color: "#7BA84A" }}>
                     <TrendingDown className="w-3.5 h-3.5" aria-hidden="true" />
                     {priceDiff > 0 ? "Lower" : "Higher"}
@@ -356,16 +359,16 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex items-end gap-3 mb-1">
                   <div className="flex-1">
-                    <p className="text-xs mb-1" style={{ color: "#8FA0B0" }}>You</p>
-                    <div className="h-3 rounded-full" style={{ width: `${(mockBenchmark.yourAvgPrice / mockBenchmark.areaAvgPrice) * 100}%`, background: "#5D3A7A" }} aria-hidden="true" />
-                    <p className="text-sm font-bold mt-1" style={{ color: "#5D3A7A" }}>
+                    <p className="text-xs mb-1" style={{ color: "#7A6E64" }}>You</p>
+                    <div className="h-3 rounded-full" style={{ width: `${(mockBenchmark.yourAvgPrice / mockBenchmark.areaAvgPrice) * 100}%`, background: "#1C1F2A" }} aria-hidden="true" />
+                    <p className="text-sm font-bold mt-1" style={{ color: "#1C1F2A" }}>
                       £{mockBenchmark.yourAvgPrice.toLocaleString()}
                     </p>
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs mb-1" style={{ color: "#8FA0B0" }}>Area avg</p>
-                    <div className="h-3 rounded-full w-full" style={{ background: "rgba(197,210,220,0.4)" }} aria-hidden="true" />
-                    <p className="text-sm font-bold mt-1" style={{ color: "#8FA0B0" }}>
+                    <p className="text-xs mb-1" style={{ color: "#7A6E64" }}>Area avg</p>
+                    <div className="h-3 rounded-full w-full" style={{ background: "rgba(234,242,238,0.4)" }} aria-hidden="true" />
+                    <p className="text-sm font-bold mt-1" style={{ color: "#7A6E64" }}>
                       £{mockBenchmark.areaAvgPrice.toLocaleString()}
                     </p>
                   </div>
@@ -376,7 +379,7 @@ export default function DashboardPage() {
               {/* Rating comparison */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-medium" style={{ color: "#3F5E2C" }}>Rating</span>
+                  <span className="text-sm font-medium" style={{ color: "#5A4E44" }}>Rating</span>
                   <div className="flex items-center gap-1 text-sm font-semibold" style={{ color: "#7BA84A" }}>
                     <TrendingUp className="w-3.5 h-3.5" aria-hidden="true" />
                     Higher
@@ -384,23 +387,23 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: "#5D3A7A" }}>{mockBenchmark.yourRating}</div>
+                    <div className="text-2xl font-light" style={{ color: "#1C1F2A" }}>{mockBenchmark.yourRating}</div>
                     <div className="flex justify-center mt-0.5" aria-label={`Your rating: ${mockBenchmark.yourRating} out of 5`}>
                       {[1,2,3,4,5].map((s) => (
-                        <Star key={s} className="w-3 h-3" style={{ color: s <= Math.round(mockBenchmark.yourRating) ? "#E26B5E" : "#C5D2DC", fill: s <= Math.round(mockBenchmark.yourRating) ? "#E26B5E" : "#C5D2DC" }} aria-hidden="true" />
+                        <Star key={s} className="w-3 h-3" style={{ color: s <= Math.round(mockBenchmark.yourRating) ? "#E26B5E" : "#EAF2EE", fill: s <= Math.round(mockBenchmark.yourRating) ? "#E26B5E" : "#EAF2EE" }} aria-hidden="true" />
                       ))}
                     </div>
-                    <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>You</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#7A6E64" }}>You</p>
                   </div>
-                  <div className="flex-1 h-px" style={{ background: "rgba(197,210,220,0.4)" }} aria-hidden="true" />
+                  <div className="flex-1 h-px" style={{ background: "rgba(234,242,238,0.4)" }} aria-hidden="true" />
                   <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: "#8FA0B0" }}>{mockBenchmark.areaAvgRating}</div>
+                    <div className="text-2xl font-light" style={{ color: "#7A6E64" }}>{mockBenchmark.areaAvgRating}</div>
                     <div className="flex justify-center mt-0.5" aria-label={`Area average: ${mockBenchmark.areaAvgRating} out of 5`}>
                       {[1,2,3,4,5].map((s) => (
-                        <Star key={s} className="w-3 h-3" style={{ color: s <= Math.round(mockBenchmark.areaAvgRating) ? "#E26B5E" : "#C5D2DC", fill: s <= Math.round(mockBenchmark.areaAvgRating) ? "#E26B5E" : "#C5D2DC" }} aria-hidden="true" />
+                        <Star key={s} className="w-3 h-3" style={{ color: s <= Math.round(mockBenchmark.areaAvgRating) ? "#E26B5E" : "#EAF2EE", fill: s <= Math.round(mockBenchmark.areaAvgRating) ? "#E26B5E" : "#EAF2EE" }} aria-hidden="true" />
                       ))}
                     </div>
-                    <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>Area avg</p>
+                    <p className="text-xs mt-0.5" style={{ color: "#7A6E64" }}>Area avg</p>
                   </div>
                 </div>
                 <p className="text-xs font-semibold mt-2" style={{ color: "#7BA84A" }}>
@@ -410,7 +413,7 @@ export default function DashboardPage() {
             </section>
 
             {/* Assured upgrade CTA */}
-            <section className="p-5 rounded-2xl text-white" style={{ background: "#5D3A7A" }}>
+            <section className="p-5 rounded-xl text-white" style={{ background: "#1C1F2A" }}>
               <div className="flex items-start gap-3 mb-3">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(226,107,94,0.25)" }} aria-hidden="true">
                   <Star className="w-4 h-4" style={{ color: "#E26B5E", fill: "#E26B5E" }} />
@@ -437,16 +440,16 @@ export default function DashboardPage() {
               </ul>
               <button
                 type="button"
-                className="w-full text-white py-2.5 rounded-full font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] focus:outline-none"
-                style={{ background: "#5AAE55" }}
+                className="w-full text-white py-2.5 rounded-md font-semibold text-sm hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
+                style={{ background: "#5E8B73" }}
               >
                 Learn about Assured — £79/month
               </button>
             </section>
 
             {/* Quick stats */}
-            <section className="p-5 rounded-2xl" style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}>
-              <h2 className="text-sm font-semibold mb-4" style={{ color: "#5D3A7A" }}>This week at a glance</h2>
+            <section className="p-5 rounded-xl" style={{ background: "white", border: "1px solid #E8E2D8" }}>
+              <h2 className="text-sm font-semibold mb-4" style={{ color: "#1C1F2A" }}>This week at a glance</h2>
               <dl className="space-y-3">
                 {[
                   { label: "Families contacted", value: metrics.contactedRequests },
@@ -455,8 +458,8 @@ export default function DashboardPage() {
                   { label: "Profile views today", value: Math.round(mockMetrics.profileViewsThisWeek / 7) },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex items-center justify-between">
-                    <dt className="text-sm" style={{ color: "#8FA0B0" }}>{label}</dt>
-                    <dd className="text-sm font-bold" style={{ color: "#5D3A7A" }}>{value}</dd>
+                    <dt className="text-sm" style={{ color: "#7A6E64" }}>{label}</dt>
+                    <dd className="text-sm font-semibold" style={{ color: "#1C1F2A" }}>{value}</dd>
                   </div>
                 ))}
               </dl>

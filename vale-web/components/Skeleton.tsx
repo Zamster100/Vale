@@ -2,7 +2,7 @@ function Pulse({ className, style }: { className: string; style?: React.CSSPrope
   return (
     <div
       className={`animate-pulse rounded ${className}`}
-      style={{ background: "rgba(197,210,220,0.4)", ...style }}
+      style={{ background: "rgba(234,242,238,0.4)", ...style }}
       aria-hidden="true"
     />
   );
@@ -10,8 +10,8 @@ function Pulse({ className, style }: { className: string; style?: React.CSSPrope
 
 const card = {
   background: "white",
-  border: "0.5px solid rgba(143,160,176,0.3)",
-  borderRadius: "16px",
+  border: "1px solid #E8E2D8",
+  borderRadius: "12px",
 };
 
 export function SkeletonMetricCard() {

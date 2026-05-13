@@ -11,10 +11,10 @@ const SIGNUP_KEY = "vale_resource_signups";
 const DOWNLOAD_KEY = "vale_pdf_downloads";
 
 const SECTIONS = [
-  { title: "Before contacting a funeral director", count: 7, color: "#5D3A7A" },
-  { title: "First 24–48 hours", count: 8, color: "#3F5E2C" },
-  { title: "Planning the service", count: 9, color: "#1a3a52" },
-  { title: "After the service", count: 8, color: "#8A5FAA" },
+  { title: "Before contacting a funeral director", count: 7, color: "#1C1F2A" },
+  { title: "First 24–48 hours", count: 8, color: "#5A4E44" },
+  { title: "Planning the service", count: 9, color: "#1C1F2A" },
+  { title: "After the service", count: 8, color: "#5E8B73" },
 ];
 
 const CHECKLIST: ChecklistSection[] = [
@@ -83,12 +83,12 @@ async function generatePDF(name: string, email: string): Promise<void> {
   const CW = W - MARGIN * 2;
 
   const addHeader = () => {
-    doc.setFillColor(93, 58, 122);
+    doc.setFillColor(28, 31, 42);
     doc.rect(0, 0, W, 20, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    doc.text("VALE", MARGIN, 13);
+    doc.text("Vale", MARGIN, 13);
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     doc.text("Funeral Planning Checklist", MARGIN + 18, 13);
@@ -96,13 +96,13 @@ async function generatePDF(name: string, email: string): Promise<void> {
   };
 
   const addFooter = (p: number) => {
-    doc.setFillColor(93, 58, 122);
+    doc.setFillColor(28, 31, 42);
     doc.rect(0, H - 12, W, 12, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(7.5);
     doc.setFont("helvetica", "normal");
     doc.text(
-      "VALE  |  vale.co.uk  |  Helping families navigate one of life’s hardest moments.",
+      "Vale  |  vale.co.uk  |  Helping families navigate one of life’s hardest moments.",
       MARGIN,
       H - 4.5
     );
@@ -110,16 +110,16 @@ async function generatePDF(name: string, email: string): Promise<void> {
   };
 
   const drawCheckbox = (x: number, y: number) => {
-    doc.setDrawColor(138, 95, 170);
+    doc.setDrawColor(94, 139, 115);
     doc.setLineWidth(0.3);
     doc.rect(x, y - 3.2, 3.5, 3.5, "S");
   };
 
   const renderSection = (section: ChecklistSection, startY: number): number => {
     let y = startY;
-    doc.setFillColor(237, 229, 245);
+    doc.setFillColor(234, 242, 238);
     doc.rect(MARGIN, y, CW, 7, "F");
-    doc.setTextColor(93, 58, 122);
+    doc.setTextColor(28, 31, 42);
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
     doc.text(section.title.replace(/^Section \d+: /, ""), MARGIN + 3, y + 4.8);
@@ -128,7 +128,7 @@ async function generatePDF(name: string, email: string): Promise<void> {
     doc.setFont("helvetica", "normal");
     section.items.forEach((item) => {
       drawCheckbox(MARGIN, y);
-      doc.setTextColor(63, 94, 44);
+      doc.setTextColor(90, 78, 68);
       doc.setFontSize(9);
       const lines = doc.splitTextToSize(item, CW - 8);
       doc.text(lines, MARGIN + 6, y);
@@ -138,11 +138,11 @@ async function generatePDF(name: string, email: string): Promise<void> {
     if (section.notes) {
       y += 3;
       section.notes.forEach((note) => {
-        doc.setTextColor(143, 160, 176);
+        doc.setTextColor(122, 110, 100);
         doc.setFontSize(8.5);
         doc.text(note, MARGIN + 6, y);
         const noteW = doc.getTextWidth(note);
-        doc.setDrawColor(197, 210, 220);
+        doc.setDrawColor(232, 226, 216);
         doc.setLineWidth(0.3);
         doc.line(MARGIN + 6 + noteW + 2, y + 0.5, MARGIN + CW, y + 0.5);
         y += 7;
@@ -171,12 +171,12 @@ async function generatePDF(name: string, email: string): Promise<void> {
   doc.text(subtitleLines, MARGIN, y);
   y += subtitleLines.length * 4.5 + 4;
 
-  doc.setFillColor(138, 95, 170);
+  doc.setFillColor(94, 139, 115);
   doc.rect(MARGIN, y, CW, 0.5, "F");
   y += 6;
 
   if (name.trim()) {
-    doc.setTextColor(93, 58, 122);
+    doc.setTextColor(28, 31, 42);
     doc.setFontSize(8.5);
     doc.setFont("helvetica", "italic");
     doc.text(`Prepared for ${name.trim()}`, MARGIN, y);
@@ -196,14 +196,14 @@ async function generatePDF(name: string, email: string): Promise<void> {
 
   // Disclaimer
   y += 4;
-  doc.setFillColor(245, 241, 232);
+  doc.setFillColor(247, 243, 238);
   doc.rect(MARGIN, y, CW, 24, "F");
   doc.setTextColor(95, 112, 128);
   doc.setFontSize(7.5);
   doc.setFont("helvetica", "italic");
   const disclaimer =
     "This checklist is intended as general guidance only and does not constitute legal, financial, or professional advice. " +
-    "Requirements may vary in Scotland and Northern Ireland. VALE recommends consulting a qualified solicitor regarding probate and estate matters. " +
+    "Requirements may vary in Scotland and Northern Ireland. Vale recommends consulting a qualified solicitor regarding probate and estate matters. " +
     "For bereavement support, contact Cruse Bereavement Care at cruse.org.uk.";
   const disclaimerLines = doc.splitTextToSize(disclaimer, CW - 6) as string[];
   doc.text(disclaimerLines, MARGIN + 3, y + 5);
@@ -284,16 +284,16 @@ export default function ResourcesPage() {
   const firstName = name.split(" ")[0];
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F1E8" }}>
+    <div className="min-h-screen" style={{ background: "#F7F3EE" }}>
       {/* Hero */}
-      <section style={{ background: "#5D3A7A" }}>
+      <section style={{ background: "#1C1F2A" }}>
         <div className="max-w-4xl mx-auto px-6 py-16 text-center">
           <div
             className="animate-fade-rise inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-[11px] font-medium uppercase tracking-[0.13em]"
             style={{
-              border: "0.5px solid rgba(197,210,220,0.3)",
-              background: "rgba(197,210,220,0.15)",
-              color: "#C5D2DC",
+              border: "1px solid rgba(232,226,216,0.3)",
+              background: "rgba(232,226,216,0.15)",
+              color: "#EAF2EE",
             }}
           >
             <FileText className="w-3.5 h-3.5" aria-hidden="true" />
@@ -302,7 +302,7 @@ export default function ResourcesPage() {
           <h1
             className="animate-fade-rise mb-5"
             style={{
-              fontFamily: "var(--font-instrument-serif)",
+              fontFamily: "var(--font-cormorant)",
               fontSize: "clamp(38px, 6vw, 64px)",
               lineHeight: 1.08,
               letterSpacing: "-0.025em",
@@ -311,11 +311,11 @@ export default function ResourcesPage() {
           >
             Funeral Planning
             <br />
-            <em style={{ color: "#C5D2DC", fontStyle: "italic" }}>Checklist</em>
+            <em style={{ color: "#EAF2EE", fontStyle: "italic" }}>Checklist</em>
           </h1>
           <p
             className="animate-fade-rise-delay text-base sm:text-lg max-w-xl mx-auto leading-relaxed"
-            style={{ color: "rgba(197,210,220,0.85)" }}
+            style={{ color: "rgba(232,226,216,0.85)" }}
           >
             A clear, compassionate guide to help families navigate every step —
             from the first hours to settling the estate.
@@ -328,21 +328,21 @@ export default function ResourcesPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           {/* Left: What's inside */}
           <div>
-            <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#8A5FAA" }} aria-hidden="true" />
+            <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#5E8B73" }} aria-hidden="true" />
             <h2
               className="mb-3"
               style={{
-                fontFamily: "var(--font-instrument-serif)",
+                fontFamily: "var(--font-cormorant)",
                 fontSize: "clamp(24px, 3vw, 36px)",
                 lineHeight: 1.15,
                 letterSpacing: "-0.02em",
                 fontWeight: 400,
-                color: "#5D3A7A",
+                color: "#1C1F2A",
               }}
             >
               What&apos;s inside
             </h2>
-            <p className="text-sm mb-8 leading-relaxed" style={{ color: "#8FA0B0" }}>
+            <p className="text-sm mb-8 leading-relaxed" style={{ color: "#7A6E64" }}>
               32 practical steps across 4 clear sections — written with funeral
               directors, bereavement counsellors, and families in mind.
             </p>
@@ -350,17 +350,17 @@ export default function ResourcesPage() {
               {SECTIONS.map((s, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 p-5 rounded-2xl transition-all duration-200"
+                  className="flex items-start gap-3 p-5 rounded-xl transition-all duration-200"
                   style={{
                     background: "white",
-                    border: "0.5px solid rgba(143,160,176,0.3)",
+                    border: "1px solid #E8E2D8",
                   }}
                 >
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold"
                     style={{
-                      background: "rgba(138,95,170,0.12)",
-                      color: "#8A5FAA",
+                      background: "rgba(94,139,115,0.12)",
+                      color: "#5E8B73",
                     }}
                     aria-hidden="true"
                   >
@@ -369,11 +369,11 @@ export default function ResourcesPage() {
                   <div>
                     <p
                       className="text-sm font-semibold"
-                      style={{ color: "#5D3A7A" }}
+                      style={{ color: "#1C1F2A" }}
                     >
                       {s.title}
                     </p>
-                    <p className="text-xs mt-0.5" style={{ color: "#8FA0B0" }}>
+                    <p className="text-xs mt-0.5" style={{ color: "#7A6E64" }}>
                       {s.count} steps
                     </p>
                   </div>
@@ -382,7 +382,7 @@ export default function ResourcesPage() {
             </div>
 
             {/* Trust signals */}
-            <div className="flex flex-wrap gap-5 mt-8 pt-6" style={{ borderTop: "0.5px solid rgba(143,160,176,0.3)" }}>
+            <div className="flex flex-wrap gap-5 mt-8 pt-6" style={{ borderTop: "1px solid #E8E2D8" }}>
               {[
                 { icon: Shield, text: "No spam, ever" },
                 { icon: CheckCircle, text: "Free download" },
@@ -391,11 +391,11 @@ export default function ResourcesPage() {
                 <div
                   key={text}
                   className="flex items-center gap-1.5 text-xs font-medium"
-                  style={{ color: "#8FA0B0" }}
+                  style={{ color: "#7A6E64" }}
                 >
                   <Icon
                     className="w-3.5 h-3.5"
-                    style={{ color: "#8A5FAA" }}
+                    style={{ color: "#5E8B73" }}
                     aria-hidden="true"
                   />
                   {text}
@@ -406,10 +406,10 @@ export default function ResourcesPage() {
 
           {/* Right: Signup / Download */}
           <div
-            className="rounded-2xl p-7"
+            className="rounded-xl p-7"
             style={{
               background: "white",
-              border: "0.5px solid rgba(143,160,176,0.3)",
+              border: "1px solid #E8E2D8",
             }}
           >
             {!submitted ? (
@@ -417,16 +417,16 @@ export default function ResourcesPage() {
                 <h2
                   className="mb-1"
                   style={{
-                    fontFamily: "var(--font-instrument-serif)",
+                    fontFamily: "var(--font-cormorant)",
                     fontSize: "clamp(20px, 2vw, 26px)",
                     lineHeight: 1.2,
                     fontWeight: 400,
-                    color: "#5D3A7A",
+                    color: "#1C1F2A",
                   }}
                 >
                   Get your free guide
                 </h2>
-                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#8FA0B0" }}>
+                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#7A6E64" }}>
                   Enter your details below. We&apos;ll never share your
                   information.
                 </p>
@@ -436,7 +436,7 @@ export default function ResourcesPage() {
                       <label
                         htmlFor="res-name"
                         className="block text-sm font-medium mb-1.5"
-                        style={{ color: "#5D3A7A" }}
+                        style={{ color: "#1C1F2A" }}
                       >
                         Your name
                       </label>
@@ -450,11 +450,11 @@ export default function ResourcesPage() {
                         }}
                         autoComplete="name"
                         placeholder="e.g. Sarah Thompson"
-                        className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-1"
+                        className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-1"
                         style={{
-                          background: "#F5F1E8",
-                          border: "0.5px solid rgba(143,160,176,0.4)",
-                          color: "#3F5E2C",
+                          background: "#F7F3EE",
+                          border: "1px solid #E8E2D8",
+                          color: "#5A4E44",
                           minHeight: "44px",
                         }}
                       />
@@ -463,7 +463,7 @@ export default function ResourcesPage() {
                       <label
                         htmlFor="res-email"
                         className="block text-sm font-medium mb-1.5"
-                        style={{ color: "#5D3A7A" }}
+                        style={{ color: "#1C1F2A" }}
                       >
                         Email address
                       </label>
@@ -477,11 +477,11 @@ export default function ResourcesPage() {
                         }}
                         autoComplete="email"
                         placeholder="e.g. sarah@example.com"
-                        className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-1"
+                        className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-1"
                         style={{
-                          background: "#F5F1E8",
-                          border: "0.5px solid rgba(143,160,176,0.4)",
-                          color: "#3F5E2C",
+                          background: "#F7F3EE",
+                          border: "1px solid #E8E2D8",
+                          color: "#5A4E44",
                           minHeight: "44px",
                         }}
                       />
@@ -498,8 +498,8 @@ export default function ResourcesPage() {
                   )}
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
-                    style={{ background: "#5AAE55", color: "white" }}
+                    className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
+                    style={{ background: "#1C1F2A", color: "white" }}
                   >
                     <FileText className="w-4 h-4" aria-hidden="true" />
                     Get your free guide
@@ -514,36 +514,36 @@ export default function ResourcesPage() {
                 >
                   <CheckCircle
                     className="w-7 h-7"
-                    style={{ color: "#5AAE55" }}
+                    style={{ color: "#5E8B73" }}
                     aria-hidden="true"
                   />
                 </div>
                 <h2
                   className="mb-1"
                   style={{
-                    fontFamily: "var(--font-instrument-serif)",
+                    fontFamily: "var(--font-cormorant)",
                     fontSize: "clamp(20px, 2vw, 26px)",
                     lineHeight: 1.2,
                     fontWeight: 400,
-                    color: "#5D3A7A",
+                    color: "#1C1F2A",
                   }}
                 >
                   {firstName ? `Thank you, ${firstName}.` : "Thank you."}
                 </h2>
-                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#8FA0B0" }}>
+                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#7A6E64" }}>
                   Your checklist is ready to download.
                 </p>
                 <button
                   type="button"
                   onClick={handleDownload}
                   disabled={downloading}
-                  className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2 disabled:opacity-60 disabled:scale-100"
-                  style={{ background: "#5AAE55", color: "white" }}
+                  className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2 disabled:opacity-60 disabled:scale-100"
+                  style={{ background: "#1C1F2A", color: "white" }}
                 >
                   <Download className="w-4 h-4" aria-hidden="true" />
                   {downloading ? "Generating…" : "Download PDF"}
                 </button>
-                <p className="text-xs mt-3" style={{ color: "#8FA0B0" }}>
+                <p className="text-xs mt-3" style={{ color: "#7A6E64" }}>
                   Opens as a PDF in your downloads folder.
                 </p>
               </div>
@@ -554,25 +554,25 @@ export default function ResourcesPage() {
 
       {/* Checklist preview */}
       <section className="max-w-5xl mx-auto px-6 pb-28">
-        <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#8A5FAA" }} aria-hidden="true" />
+        <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#5E8B73" }} aria-hidden="true" />
         <h2
           className="mb-2"
           style={{
-            fontFamily: "var(--font-instrument-serif)",
+            fontFamily: "var(--font-cormorant)",
             fontSize: "clamp(22px, 2.5vw, 30px)",
             lineHeight: 1.2,
             fontWeight: 400,
-            color: "#5D3A7A",
+            color: "#1C1F2A",
           }}
         >
           A look inside
         </h2>
-        <p className="text-sm mb-8 leading-relaxed" style={{ color: "#8FA0B0" }}>
+        <p className="text-sm mb-8 leading-relaxed" style={{ color: "#7A6E64" }}>
           The first few steps from each section — the full guide covers all 32.
         </p>
         <div
-          className="rounded-2xl overflow-hidden"
-          style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+          className="rounded-xl overflow-hidden"
+          style={{ background: "white", border: "1px solid #E8E2D8" }}
         >
           {CHECKLIST.map((section, si) => (
             <div
@@ -580,20 +580,20 @@ export default function ResourcesPage() {
               style={{
                 borderBottom:
                   si < CHECKLIST.length - 1
-                    ? "0.5px solid rgba(143,160,176,0.2)"
+                    ? "1px solid #E8E2D8"
                     : "none",
               }}
             >
               {/* Section header */}
               <div
                 className="px-6 py-4 flex items-center gap-3"
-                style={{ background: si % 2 === 0 ? "white" : "#F5F1E8" }}
+                style={{ background: si % 2 === 0 ? "white" : "#F7F3EE" }}
               >
                 <div
                   className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
                   style={{
-                    background: "rgba(138,95,170,0.12)",
-                    color: "#8A5FAA",
+                    background: "rgba(94,139,115,0.12)",
+                    color: "#5E8B73",
                   }}
                   aria-hidden="true"
                 >
@@ -601,13 +601,13 @@ export default function ResourcesPage() {
                 </div>
                 <span
                   className="text-sm font-semibold"
-                  style={{ color: "#5D3A7A" }}
+                  style={{ color: "#1C1F2A" }}
                 >
                   {section.title.replace(/^Section \d+: /, "")}
                 </span>
                 <span
                   className="ml-auto text-xs font-medium"
-                  style={{ color: "#8FA0B0" }}
+                  style={{ color: "#7A6E64" }}
                 >
                   {section.items.length} steps
                 </span>
@@ -616,7 +616,7 @@ export default function ResourcesPage() {
               {/* Preview items */}
               <div
                 className="px-6 pb-5"
-                style={{ background: si % 2 === 0 ? "white" : "#F5F1E8" }}
+                style={{ background: si % 2 === 0 ? "white" : "#F7F3EE" }}
               >
                 {section.items.slice(0, 3).map((item, ii) => (
                   <div
@@ -625,10 +625,10 @@ export default function ResourcesPage() {
                   >
                     <div
                       className="w-3.5 h-3.5 border rounded-sm mt-0.5 shrink-0"
-                      style={{ borderColor: "rgba(138,95,170,0.35)" }}
+                      style={{ borderColor: "rgba(94,139,115,0.35)" }}
                       aria-hidden="true"
                     />
-                    <span className="text-sm leading-relaxed" style={{ color: "#3F5E2C" }}>
+                    <span className="text-sm leading-relaxed" style={{ color: "#5A4E44" }}>
                       {item}
                     </span>
                   </div>
@@ -636,7 +636,7 @@ export default function ResourcesPage() {
                 {section.items.length > 3 && (
                   <p
                     className="text-xs mt-2 pl-6 font-medium"
-                    style={{ color: "#8A5FAA" }}
+                    style={{ color: "#5E8B73" }}
                   >
                     + {section.items.length - 3} more steps in the full guide
                   </p>

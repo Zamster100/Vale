@@ -107,15 +107,15 @@ export default function HeroSearch() {
           style={{
             background: "white",
             borderRadius: open ? "20px 20px 0 0" : "9999px",
-            border: focused ? "1.5px solid rgba(138,95,170,0.5)" : "1.5px solid rgba(143,160,176,0.25)",
+            border: focused ? "1.5px solid rgba(94,139,115,0.5)" : "1.5px solid rgba(232,226,216,0.25)",
             boxShadow: focused
-              ? "0 4px 32px rgba(93,58,122,0.12)"
-              : "0 2px 16px rgba(93,58,122,0.07)",
+              ? "0 4px 32px rgba(28,31,42,0.12)"
+              : "0 2px 16px rgba(28,31,42,0.07)",
           }}
         >
           {/* Search icon */}
           <div className="pl-5 pr-3 shrink-0" aria-hidden="true">
-            <Search className="w-5 h-5" style={{ color: "#8A5FAA" }} />
+            <Search className="w-5 h-5" style={{ color: "#5E8B73" }} />
           </div>
 
           {/* Input */}
@@ -129,7 +129,7 @@ export default function HeroSearch() {
             onKeyDown={handleKeyDown}
             placeholder="Search for funeral homes — address, postcode…"
             className="flex-1 py-5 text-base bg-transparent outline-none min-w-0"
-            style={{ color: "#3F5E2C" }}
+            style={{ color: "#5A4E44" }}
             aria-label="Search for funeral directors by address or postcode"
             aria-expanded={open}
             aria-autocomplete="list"
@@ -144,14 +144,14 @@ export default function HeroSearch() {
               onClick={() => { setValue(""); inputRef.current?.focus(); }}
               className="p-2 mr-1 rounded-full hover:opacity-60 transition-opacity focus:outline-none shrink-0"
               aria-label="Clear search"
-              style={{ color: "#8FA0B0" }}
+              style={{ color: "#7A6E64" }}
             >
               <X className="w-4 h-4" />
             </button>
           )}
 
           {/* Divider */}
-          <div className="w-px h-6 shrink-0 mx-1" style={{ background: "rgba(143,160,176,0.3)" }} aria-hidden="true" />
+          <div className="w-px h-6 shrink-0 mx-1" style={{ background: "rgba(232,226,216,0.3)" }} aria-hidden="true" />
 
           {/* Use my location */}
           <button
@@ -159,7 +159,7 @@ export default function HeroSearch() {
             onClick={handleLocate}
             disabled={locating}
             className="flex items-center gap-1.5 px-4 py-5 text-sm font-medium shrink-0 hover:opacity-75 transition-opacity focus:outline-none disabled:opacity-50"
-            style={{ color: "#8A5FAA" }}
+            style={{ color: "#5E8B73" }}
             aria-label="Use my current location"
           >
             {locating
@@ -169,13 +169,13 @@ export default function HeroSearch() {
           </button>
 
           {/* Divider */}
-          <div className="w-px h-6 shrink-0 mx-1" style={{ background: "rgba(143,160,176,0.3)" }} aria-hidden="true" />
+          <div className="w-px h-6 shrink-0 mx-1" style={{ background: "rgba(232,226,216,0.3)" }} aria-hidden="true" />
 
           {/* Search button */}
           <button
             type="submit"
-            className="m-2 px-6 py-3 rounded-full font-semibold text-sm text-white hover:scale-[1.03] active:scale-[0.97] transition-transform focus:outline-none shrink-0 min-h-[44px]"
-            style={{ background: "#5AAE55" }}
+            className="m-2 px-6 py-3 rounded-md font-semibold text-sm text-white hover:scale-[1.03] active:scale-[0.97] transition-transform focus:outline-none shrink-0 min-h-[44px]"
+            style={{ background: "#1C1F2A" }}
             aria-label="Search"
           >
             Search
@@ -192,9 +192,9 @@ export default function HeroSearch() {
           style={{
             background: "white",
             borderRadius: "0 0 20px 20px",
-            border: "1.5px solid rgba(138,95,170,0.5)",
+            border: "1.5px solid rgba(94,139,115,0.5)",
             borderTop: "none",
-            boxShadow: "0 8px 32px rgba(93,58,122,0.12)",
+            boxShadow: "0 8px 32px rgba(28,31,42,0.12)",
           }}
         >
           {suggestions.map((s, i) => (
@@ -207,20 +207,20 @@ export default function HeroSearch() {
               onMouseEnter={() => setActiveIndex(i)}
               className="flex items-center gap-3 px-5 py-3 cursor-pointer transition-colors"
               style={{
-                background: i === activeIndex ? "rgba(138,95,170,0.06)" : "transparent",
-                borderTop: i > 0 ? "0.5px solid rgba(197,210,220,0.4)" : "none",
+                background: i === activeIndex ? "rgba(94,139,115,0.06)" : "transparent",
+                borderTop: i > 0 ? "1px solid #E8E2D8" : "none",
               }}
             >
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-                style={{ background: "rgba(197,210,220,0.4)" }}
+                style={{ background: "rgba(234,242,238,0.4)" }}
                 aria-hidden="true"
               >
-                <MapPin className="w-3.5 h-3.5" style={{ color: "#8A5FAA" }} />
+                <MapPin className="w-3.5 h-3.5" style={{ color: "#5E8B73" }} />
               </div>
               <div>
-                <p className="text-sm font-medium" style={{ color: "#3F5E2C" }}>{s.label}</p>
-                <p className="text-xs" style={{ color: "#8FA0B0" }}>{s.sublabel}</p>
+                <p className="text-sm font-medium" style={{ color: "#5A4E44" }}>{s.label}</p>
+                <p className="text-xs" style={{ color: "#7A6E64" }}>{s.sublabel}</p>
               </div>
             </li>
           ))}
@@ -232,9 +232,9 @@ export default function HeroSearch() {
               className="flex items-center gap-3 px-5 py-3 cursor-pointer transition-colors"
               style={{
                 background: "transparent",
-                borderTop: "0.5px solid rgba(197,210,220,0.4)",
+                borderTop: "1px solid #E8E2D8",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(138,95,170,0.06)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(94,139,115,0.06)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               <div
@@ -244,8 +244,8 @@ export default function HeroSearch() {
               >
                 <Search className="w-3.5 h-3.5" style={{ color: "#E26B5E" }} />
               </div>
-              <p className="text-sm font-medium" style={{ color: "#3F5E2C" }}>
-                Search for &ldquo;<span style={{ color: "#5D3A7A" }}>{value}</span>&rdquo;
+              <p className="text-sm font-medium" style={{ color: "#5A4E44" }}>
+                Search for &ldquo;<span style={{ color: "#1C1F2A" }}>{value}</span>&rdquo;
               </p>
             </li>
           )}

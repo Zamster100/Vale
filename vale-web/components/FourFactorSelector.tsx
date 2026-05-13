@@ -36,7 +36,7 @@ function FactorRow({
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-4">
       <div className="min-w-0 sm:flex-1">
-        <p className="text-sm font-medium" style={{ color: "#5D3A7A" }}>{label}</p>
+        <p className="text-sm font-medium" style={{ color: "#1C1F2A" }}>{label}</p>
         <p className="text-xs leading-tight mt-0.5" style={{ color: "#5F7080" }}>{hint}</p>
       </div>
       <div className="flex flex-col items-start sm:items-end shrink-0 gap-0.5">
@@ -54,20 +54,20 @@ function FactorRow({
               onFocus={() => setHover(s)}
               onBlur={() => setHover(0)}
               className="p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 min-h-[44px] min-w-[44px] flex items-center justify-center transition-transform hover:scale-110"
-              style={{ ["--tw-ring-color" as string]: "#8A5FAA" }}
+              style={{ ["--tw-ring-color" as string]: "#5E8B73" }}
             >
               <Star
                 aria-hidden="true"
                 className="w-6 h-6 transition-colors"
                 style={{
-                  color: s <= active ? "#d4a574" : "rgba(197,210,220,0.8)",
-                  fill: s <= active ? "#d4a574" : "rgba(197,210,220,0.8)",
+                  color: s <= active ? "#C4975A" : "rgba(234,242,238,0.8)",
+                  fill: s <= active ? "#C4975A" : "rgba(234,242,238,0.8)",
                 }}
               />
             </button>
           ))}
         </div>
-        <p className="text-xs min-h-[16px]" style={{ color: "#8A5FAA" }} aria-live="polite">
+        <p className="text-xs min-h-[16px]" style={{ color: "#5E8B73" }} aria-live="polite">
           {active > 0 ? LABELS[active] : ""}
         </p>
       </div>

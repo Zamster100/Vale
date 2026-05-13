@@ -7,24 +7,28 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-inter);
-  --font-display: var(--font-instrument-serif);
+  --font-serif: var(--font-cormorant);
+  --font-display: var(--font-cormorant);
+  --font-lead: var(--font-lora);
 
-  /* VALE Brand Colors */
-  --color-vale-blue: #1a3a52;
-  --color-vale-blue-dark: #0f2438;
-  --color-vale-gold: #d4a574;
-  --color-vale-gold-dark: #c29560;
-  --color-vale-gray: #6b7280;
-  --color-vale-bg: #f9fafb;
-  --color-vale-text: #111827;
-  --color-vale-border: #e5e7eb;
-  --color-vale-gold-tint: #faf6f1;
-  --color-vale-success: #059669;
-  --color-vale-error: #dc2626;
+  /* Vale brand colours */
+  --color-ink: #1C1F2A;
+  --color-sage: #5E8B73;
+  --color-sage-light: #EAF2EE;
+  --color-gold: #C4975A;
+  --color-gold-light: #FDF6EC;
+  --color-terracotta: #A0745A;
+  --color-cream: #F7F3EE;
+  --color-warm: #FAF8F4;
+  --color-mist: #E8E2D8;
+  --color-stone: #8B7E70;
+  --color-vale-text: #3A3228;
+  --color-vale-muted: #7A6E64;
+  --color-vale-body: #5A4E44;
 
+  /* shadcn semantic tokens */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -64,38 +68,38 @@
 }
 
 :root {
-  --background: #F5F1E8;
-  --foreground: #111827;
-  --card: #ffffff;
-  --card-foreground: #111827;
-  --popover: #ffffff;
-  --popover-foreground: #111827;
-  --primary: #1a3a52;
-  --primary-foreground: #ffffff;
-  --secondary: #f3f4f6;
-  --secondary-foreground: #6b7280;
-  --muted: #f3f4f6;
-  --muted-foreground: #6b7280;
-  --accent: #faf6f1;
-  --accent-foreground: #1a3a52;
+  --background: #F7F3EE;
+  --foreground: #3A3228;
+  --card: #FFFFFF;
+  --card-foreground: #1C1F2A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1C1F2A;
+  --primary: #1C1F2A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FAF8F4;
+  --secondary-foreground: #7A6E64;
+  --muted: #E8E2D8;
+  --muted-foreground: #7A6E64;
+  --accent: #5E8B73;
+  --accent-foreground: #FFFFFF;
   --destructive: #dc2626;
-  --border: #e5e7eb;
-  --input: #e5e7eb;
-  --ring: #d4a574;
-  --radius: 0.375rem;
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: #f9fafb;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #1a3a52;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #faf6f1;
-  --sidebar-accent-foreground: #1a3a52;
-  --sidebar-border: #e5e7eb;
-  --sidebar-ring: #d4a574;
+  --border: #E8E2D8;
+  --input: #E8E2D8;
+  --ring: #5E8B73;
+  --radius: 0.5rem;
+  --chart-1: #5E8B73;
+  --chart-2: #C4975A;
+  --chart-3: #A0745A;
+  --chart-4: #8B7E70;
+  --chart-5: #1C1F2A;
+  --sidebar: #FAF8F4;
+  --sidebar-foreground: #3A3228;
+  --sidebar-primary: #1C1F2A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EAF2EE;
+  --sidebar-accent-foreground: #5E8B73;
+  --sidebar-border: #E8E2D8;
+  --sidebar-ring: #5E8B73;
 }
 
 @layer base {
@@ -103,30 +107,47 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    @apply bg-background;
+    font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.75;
+    font-weight: 300;
+    color: #5A4E44;
   }
   h1 {
-    font-size: 32px;
-    font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: #5D3A7A;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #1C1F2A;
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-style: italic;
+    color: #A0745A;
+    font-weight: 300;
   }
   h2 {
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-    color: #5D3A7A;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #1C1F2A;
+    margin-bottom: 16px;
+  }
+  h2 em {
+    font-style: italic;
+    color: #5E8B73;
+    font-weight: 400;
   }
   h3 {
-    font-size: 18px;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-size: 26px;
     font-weight: 500;
-    line-height: 1.4;
-    color: #5D3A7A;
+    line-height: 1.3;
+    color: #1C1F2A;
+    margin-bottom: 12px;
   }
 }
 
@@ -134,7 +155,6 @@
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes question-enter {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }

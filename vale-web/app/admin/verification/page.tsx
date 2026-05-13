@@ -19,10 +19,10 @@ export default function VerificationPage() {
 
   if (!checked) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F5F1E8" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F7F3EE" }}>
         <div
           className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin"
-          style={{ borderColor: "#5D3A7A", borderTopColor: "transparent" }}
+          style={{ borderColor: "#1C1F2A", borderTopColor: "transparent" }}
           aria-label="Loading"
         />
       </div>
@@ -30,20 +30,20 @@ export default function VerificationPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F5F1E8" }}>
+    <div className="min-h-screen" style={{ background: "#F7F3EE" }}>
       <header
         className="sticky top-0 z-50"
-        style={{ background: "#5D3A7A", borderBottom: "0.5px solid rgba(93,58,122,0.3)" }}
+        style={{ background: "#1C1F2A", borderBottom: "1px solid rgba(28,31,42,0.3)" }}
       >
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="text-xl tracking-tight text-white focus:outline-none rounded"
-              style={{ fontFamily: "var(--font-instrument-serif)" }}
-              aria-label="VALE home"
+              className="text-xl tracking-tight focus:outline-none rounded"
+              style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, color: "white" }}
+              aria-label="Vale home"
             >
-              VALE
+              Vale<span style={{ color: "#5E8B73" }}>.</span>
             </Link>
             <span style={{ color: "rgba(255,255,255,0.3)" }} aria-hidden="true">|</span>
             <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
@@ -70,24 +70,24 @@ export default function VerificationPage() {
               border: "1.5px solid rgba(212,165,116,0.4)",
             }}
           >
-            <ShieldCheck className="w-5 h-5" style={{ color: "#d4a574" }} aria-hidden="true" />
+            <ShieldCheck className="w-5 h-5" style={{ color: "#C4975A" }} aria-hidden="true" />
           </div>
           <div>
             <h1
               className="text-xl font-semibold"
-              style={{ color: "#5D3A7A", fontFamily: "var(--font-instrument-serif)" }}
+              style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}
             >
-              VALE Verification Panel
+              Vale Verification Panel
             </h1>
             <p className="text-sm" style={{ color: "#5F7080" }}>
-              Accreditation and Assured status management · VALE admin only
+              Accreditation and Assured status management · Vale admin only
             </p>
           </div>
         </div>
 
         <div
-          className="p-6 rounded-2xl"
-          style={{ background: "white", border: "0.5px solid rgba(143,160,176,0.3)" }}
+          className="p-6 rounded-xl"
+          style={{ background: "white", border: "1px solid #E8E2D8" }}
         >
           <VerificationPanel />
         </div>

@@ -14,8 +14,8 @@ const CATEGORY_LABELS: Record<PhotoCategory, string> = {
 
 const card = {
   background: "white",
-  border: "0.5px solid rgba(143,160,176,0.3)",
-  borderRadius: "16px",
+  border: "1px solid #E8E2D8",
+  borderRadius: "12px",
 };
 
 export default function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
@@ -78,7 +78,7 @@ export default function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
   return (
     <>
       <section style={card} className="p-6" aria-label="Photo gallery">
-        <h2 className="text-lg font-semibold mb-1" style={{ color: "#5D3A7A" }}>
+        <h2 className="text-lg font-semibold mb-1" style={{ color: "#1C1F2A" }}>
           Gallery
         </h2>
         <p className="text-sm mb-5" style={{ color: "#5F7080" }}>
@@ -90,11 +90,11 @@ export default function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
             <button
               key={photo.id}
               onClick={() => setLightboxIndex(idx)}
-              className="group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8A5FAA] focus-visible:ring-offset-2"
+              className="group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
               style={{
                 aspectRatio: "4/3",
                 borderRadius: "10px",
-                background: "rgba(197,210,220,0.3)",
+                background: "rgba(234,242,238,0.3)",
                 display: "block",
                 width: "100%",
               }}
@@ -111,7 +111,7 @@ export default function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
               {/* hover tint */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                style={{ background: "rgba(93,58,122,0.18)" }}
+                style={{ background: "rgba(28,31,42,0.18)" }}
                 aria-hidden="true"
               />
 
@@ -124,7 +124,7 @@ export default function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
                   className="w-7 h-7 rounded-full flex items-center justify-center"
                   style={{ background: "rgba(255,255,255,0.92)" }}
                 >
-                  <ZoomIn className="w-3.5 h-3.5" style={{ color: "#5D3A7A" }} />
+                  <ZoomIn className="w-3.5 h-3.5" style={{ color: "#1C1F2A" }} />
                 </div>
               </div>
 
@@ -132,7 +132,7 @@ export default function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
               <div className="absolute top-2 left-2 z-10">
                 <span
                   className="text-xs px-2 py-0.5 rounded-full font-medium"
-                  style={{ background: "rgba(255,255,255,0.88)", color: "#5D3A7A" }}
+                  style={{ background: "rgba(255,255,255,0.88)", color: "#1C1F2A" }}
                 >
                   {CATEGORY_LABELS[photo.category]}
                 </span>
