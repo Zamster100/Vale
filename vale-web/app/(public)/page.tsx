@@ -3,6 +3,7 @@ import { CheckCircle } from "lucide-react";
 import VideoBackground from "@/components/VideoBackground";
 import HeroSearch from "@/components/HeroSearch";
 import HowItWorks from "@/components/HowItWorks";
+import VersionToggle from "@/components/VersionToggle";
 
 const STATS = [
   { value: "1,200+", label: "Verified providers" },
@@ -42,6 +43,7 @@ const TESTIMONIALS = [
 export default function Home() {
   return (
     <div style={{ background: "#F7F3EE" }}>
+      <VersionToggle />
 
       {/* ══════════════════════════════════════════════════════════
           HERO — video background + centered copy
