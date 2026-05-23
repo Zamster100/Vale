@@ -408,7 +408,7 @@ function SearchPageInner() {
         className="sticky top-16 z-40"
         style={{ background: "white", borderBottom: "1px solid #E8E2D8" }}
       >
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
           {/* Search bar */}
           <form
@@ -562,7 +562,7 @@ function SearchPageInner() {
       </div>
 
       {/* ════════════════ Two-column layout ════════════════ */}
-      <div className="max-w-[1440px] mx-auto flex items-start">
+      <div className="max-w-7xl mx-auto flex items-start">
 
         {/* ── Results column ── */}
         <div

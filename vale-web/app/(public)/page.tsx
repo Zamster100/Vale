@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { CheckCircle, MapPin, SlidersHorizontal, ShieldCheck, Phone } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import VideoBackground from "@/components/VideoBackground";
 import HeroSearch from "@/components/HeroSearch";
+import HowItWorks from "@/components/HowItWorks";
 
 const STATS = [
   { value: "1,200+", label: "Verified providers" },
@@ -266,63 +267,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 4 step boxes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              {
-                icon: MapPin,
-                title: "Search your area",
-                body: "Enter your postcode to see verified funeral directors nearby. Real prices shown immediately — no calls, no personal details.",
-              },
-              {
-                icon: SlidersHorizontal,
-                title: "Compare providers",
-                body: "Full itemised price lists from every provider. Filter by budget, service type, or specific needs. Compare side by side.",
-              },
-              {
-                icon: ShieldCheck,
-                title: "Read verified reviews",
-                body: "Every review is linked to a confirmed arrangement. Honest accounts from real families — no anonymous posts.",
-              },
-              {
-                icon: Phone,
-                title: "Connect when ready",
-                body: "Request a callback, message, or call directly. Shortlist providers and share with family. No time pressure, ever.",
-              },
-            ].map(({ icon: Icon, title, body }) => (
-              <div
-                key={title}
-                className="flex flex-col px-6 py-7 rounded-xl"
-                style={{
-                  background: "#FFFFFF",
-                  border: "1px solid #E8E2D8",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
-                }}
-              >
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-6 shrink-0"
-                  style={{ background: "#EAF2EE" }}
-                >
-                  <Icon className="w-5 h-5" style={{ color: "#5E8B73" }} aria-hidden="true" />
-                </div>
-                <h3
-                  className="mb-2"
-                  style={{
-                    fontFamily: "var(--font-cormorant), serif",
-                    fontSize: "19px",
-                    fontWeight: 500,
-                    color: "#1C1F2A",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {title}
-                </h3>
-                <p className="text-[13px] leading-[1.65]" style={{ color: "#7A6E64" }}>
-                  {body}
-                </p>
-              </div>
-            ))}
-          </div>
+          {/* 4 step boxes — animated entrance via HowItWorks component */}
+          <HowItWorks />
 
         </div>
       </section>

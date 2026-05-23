@@ -126,7 +126,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
 
       {/* ════════════ Breadcrumb ════════════ */}
       <nav aria-label="Breadcrumb" style={{ background: "white", borderBottom: "1px solid #E8E2D8" }}>
-        <ol className="max-w-[1440px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#5F7080" }}>
+        <ol className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#5F7080" }}>
           <li>
             <Link
               href="/search"
@@ -145,7 +145,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
       </nav>
 
       {/* ════════════ Hero Photo Grid ════════════ */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 pt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
         {heroImages.length >= 2 ? (
           /* 3-panel grid: 1 large left + 2 stacked right */
           <div
@@ -226,7 +226,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
       </div>
 
       {/* ════════════ Name / Badges / Rating ════════════ */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 pt-6 pb-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
         {/* Badge row */}
         <div className="flex items-center gap-2 flex-wrap mb-3">
           {fd.assured && <ValeAssuredBadge />}
@@ -281,7 +281,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
       </div>
 
       {/* ════════════ Two-column layout ════════════ */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <div className="lg:grid lg:grid-cols-3 lg:gap-8 flex flex-col gap-6">
 
           {/* ──────────── MAIN CONTENT (left 2/3) ──────────── */}
