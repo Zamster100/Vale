@@ -2,7 +2,13 @@ import Link from "next/link";
 import { CheckCircle, MapPin, SlidersHorizontal, ShieldCheck, Phone } from "lucide-react";
 import VideoBackground from "@/components/VideoBackground";
 import HeroSearch from "@/components/HeroSearch";
-import StatsCounter from "@/components/StatsCounter";
+
+const STATS = [
+  { value: "1,200+", label: "Verified providers" },
+  { value: "4.9/5",  label: "Family satisfaction" },
+  { value: "£1,895", label: "Avg. saving found" },
+  { value: "0",      label: "Hidden charges ever" },
+];
 
 const VIDEO_URL =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_083109_283f3553-e28f-428b-a723-d639c617eb2b.mp4";
@@ -100,55 +106,106 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          ABOUT
+          WHO WE ARE
       ══════════════════════════════════════════════════════════ */}
       <section className="py-16 md:py-24 px-6 md:px-10" style={{ background: "#F7F3EE" }}>
         <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
 
-          {/* Eyebrow */}
-          <div className="flex items-center gap-2.5 mb-5">
-            <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#5E8B73" }} />
-            <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#5E8B73" }}>
-              About
-            </span>
+            {/* LEFT — text */}
+            <div>
+              <div className="flex items-center gap-2.5 mb-6">
+                <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#5E8B73" }} />
+                <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#5E8B73" }}>
+                  Who we are
+                </span>
+              </div>
+              <h2
+                className="mb-5"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontSize: "clamp(26px, 3.5vw, 42px)",
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.02em",
+                  color: "#1C1F2A",
+                }}
+              >
+                Founded in London.{" "}
+                <em style={{ color: "#5E8B73", fontStyle: "italic" }}>Built for families.</em>
+              </h2>
+              <p
+                className="mb-4 leading-relaxed"
+                style={{
+                  fontFamily: "var(--font-lora), serif",
+                  fontStyle: "italic",
+                  fontSize: "15px",
+                  color: "#3A3228",
+                }}
+              >
+                Vale was founded in London in 2026 by a team that had experienced the confusion of arranging a funeral at first hand and refused to accept that it had to be that way.
+              </p>
+              <p className="mb-4 text-sm leading-relaxed" style={{ color: "#5A4E44" }}>
+                We are backed by investors who share our belief that transparency in this market is not just a business opportunity — it is a social necessity.
+              </p>
+              <p className="mb-7 text-sm leading-relaxed" style={{ color: "#5A4E44" }}>
+                We are members of the Good Business Charter. All Vale advisors complete professional bereavement awareness training. Our data is independently audited quarterly.
+              </p>
+              <Link
+                href="/about"
+                className="text-[14px] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+                style={{ fontFamily: "var(--font-lora), serif", fontStyle: "italic", color: "#5E8B73" }}
+              >
+                Read our full story →
+              </Link>
+            </div>
+
+            {/* RIGHT — stats 2×2 grid */}
+            <div>
+              <div className="flex items-center gap-2.5 mb-8">
+                <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#5E8B73" }} />
+                <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#5E8B73" }}>
+                  Vale in numbers
+                </span>
+              </div>
+              <div
+                className="grid grid-cols-2 rounded-xl overflow-hidden"
+                style={{ border: "1px solid #E8E2D8" }}
+              >
+                {STATS.map(({ value, label }, i) => (
+                  <div
+                    key={label}
+                    className="flex flex-col items-center justify-center px-4 py-10"
+                    style={{
+                      borderRight:  i % 2 === 0 ? "1px solid #E8E2D8" : undefined,
+                      borderBottom: i < 2        ? "1px solid #E8E2D8" : undefined,
+                      background: "white",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "var(--font-cormorant), serif",
+                        fontSize: "38px",
+                        fontWeight: 300,
+                        lineHeight: 1,
+                        color: "#1C1F2A",
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {value}
+                    </div>
+                    <div
+                      className="text-[10px] mt-2.5 tracking-[0.08em] uppercase text-center"
+                      style={{ color: "#7A6E64" }}
+                    >
+                      {label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
-
-          {/* Headline */}
-          <h2
-            className="mb-10 max-w-2xl"
-            style={{
-              fontFamily: "var(--font-cormorant), serif",
-              fontSize: "clamp(26px, 3.5vw, 40px)",
-              fontWeight: 400,
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-              color: "#1C1F2A",
-            }}
-          >
-            Transparency belongs in every part of life —{" "}
-            <em style={{ color: "#5E8B73" }}>including the end of it.</em>
-          </h2>
-
-          {/* Animated stats strip */}
-          <StatsCounter />
-
-          {/* Subheadline + link — right aligned */}
-          <div className="mt-8 flex flex-col items-end text-right">
-            <p
-              className="max-w-sm text-sm leading-relaxed"
-              style={{ fontFamily: "var(--font-lora), serif", fontStyle: "italic", color: "#7A6E64" }}
-            >
-              The UK funeral industry is one of the last markets where you routinely spend thousands of pounds without seeing the price first. Not because it has to be that way. Because, until now, nobody had built the alternative.
-            </p>
-            <Link
-              href="/about"
-              className="mt-3 text-[14px] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
-              style={{ fontFamily: "var(--font-lora), serif", fontStyle: "italic", color: "#5E8B73" }}
-            >
-              Read our full story →
-            </Link>
-          </div>
-
         </div>
       </section>
 
@@ -354,9 +411,9 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          FINAL CTA
+          FINAL CTA — split: families left / directors right
       ══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden py-28 md:py-36 text-center px-6" style={{ background: "#1C1F2A" }}>
+      <section className="relative overflow-hidden" style={{ background: "#1C1F2A" }}>
         {/* Dot pattern */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -367,45 +424,119 @@ export default function Home() {
           aria-hidden="true"
         />
 
-        <div className="relative max-w-3xl mx-auto">
-          <div className="w-12 h-[2px] rounded-full mx-auto mb-10" style={{ background: "#5E8B73" }} aria-hidden="true" />
-          <h2
-            className="mb-6"
-            style={{
-              fontFamily: "var(--font-cormorant)",
-              color: "#FFFFFF",
-              fontSize: "clamp(32px, 5vw, 54px)",
-              lineHeight: 1.08,
-              letterSpacing: "-0.03em",
-              fontWeight: 400,
-            }}
-          >
-            Find a funeral director
-            <br />
-            <em style={{ color: "#5E8B73" }}>you can trust.</em>
-          </h2>
+        <div className="relative max-w-6xl mx-auto grid md:grid-cols-2">
 
-          <p
-            className="mb-12 leading-relaxed max-w-md mx-auto"
-            style={{ fontSize: "17px", color: "rgba(234,242,238,0.65)" }}
+          {/* ── LEFT — For families ── */}
+          <div
+            className="px-8 md:px-14 py-24 md:py-32"
+            style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
           >
-            Search by postcode and compare prices, reviews, and services from
-            verified funeral directors across the UK.
-          </p>
+            {/* Eyebrow */}
+            <div className="flex items-center gap-2.5 mb-8">
+              <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#5E8B73" }} />
+              <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#5E8B73" }}>
+                For families
+              </span>
+            </div>
 
-          <div className="flex flex-wrap gap-4 justify-center">
+            <h2
+              className="mb-5"
+              style={{
+                fontFamily: "var(--font-cormorant)",
+                color: "#FFFFFF",
+                fontSize: "clamp(30px, 3.5vw, 48px)",
+                lineHeight: 1.08,
+                letterSpacing: "-0.02em",
+                fontWeight: 400,
+              }}
+            >
+              Find a funeral director{" "}
+              <em style={{ color: "#5E8B73" }}>you can trust.</em>
+            </h2>
+
+            <p
+              className="mb-10 leading-relaxed max-w-sm"
+              style={{ fontSize: "15px", color: "rgba(234,242,238,0.6)" }}
+            >
+              Search by postcode and compare prices, reviews, and services from
+              verified funeral directors across the UK. No account needed, no pressure, ever.
+            </p>
+
             <Link
               href="/search"
-              className="inline-flex items-center gap-2.5 rounded-md px-10 py-4 font-medium text-[16px] hover:scale-[1.03] active:scale-[0.98] transition-transform min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1F2A]"
-              style={{ background: "#5E8B73", color: "#FFFFFF" }}
+              className="inline-flex items-center gap-2.5 rounded-md px-8 py-3.5 font-medium text-[15px] hover:scale-[1.03] active:scale-[0.98] transition-transform min-h-[52px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1F2A]"
+              style={{
+                background: "rgba(94,139,115,0.12)",
+                color: "#5E8B73",
+                border: "1px solid rgba(94,139,115,0.35)",
+              }}
             >
-              Search funeral directors
+              Search funeral directors →
             </Link>
+
+            <p className="text-xs mt-6" style={{ color: "rgba(234,242,238,0.3)" }}>
+              Free to use · Prices shown upfront · CMA compliant
+            </p>
           </div>
 
-          <p className="text-xs mt-10" style={{ color: "rgba(234,242,238,0.35)" }}>
-            No account needed · Free to use · Prices shown upfront
-          </p>
+          {/* Vertical divider — desktop only */}
+          <div
+            className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+            aria-hidden="true"
+          />
+
+          {/* ── RIGHT — For funeral directors ── */}
+          <div className="px-8 md:px-14 py-24 md:py-32">
+            {/* Eyebrow */}
+            <div className="flex items-center gap-2.5 mb-8">
+              <span aria-hidden className="inline-block w-6 h-px" style={{ background: "#C4975A" }} />
+              <span className="text-[11px] tracking-[0.2em] uppercase font-medium" style={{ color: "#C4975A" }}>
+                For funeral directors
+              </span>
+            </div>
+
+            <h2
+              className="mb-5"
+              style={{
+                fontFamily: "var(--font-cormorant)",
+                color: "#FFFFFF",
+                fontSize: "clamp(30px, 3.5vw, 48px)",
+                lineHeight: 1.08,
+                letterSpacing: "-0.02em",
+                fontWeight: 400,
+              }}
+            >
+              Reach the families already{" "}
+              <em style={{ color: "#C4975A" }}>searching for you.</em>
+            </h2>
+
+            <p
+              className="mb-10 leading-relaxed max-w-sm"
+              style={{ fontSize: "15px", color: "rgba(234,242,238,0.6)" }}
+            >
+              Reach the 24,000 families searching for a funeral director
+              every month. Your pricing shown upfront, reviews verified, and every
+              enquiry already informed.
+            </p>
+
+            <Link
+              href="/for-funeral-directors"
+              className="inline-flex items-center gap-2.5 rounded-md px-8 py-3.5 font-medium text-[15px] hover:scale-[1.03] active:scale-[0.98] transition-transform min-h-[52px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4975A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1C1F2A]"
+              style={{
+                background: "rgba(196,151,90,0.12)",
+                color: "#C4975A",
+                border: "1px solid rgba(196,151,90,0.35)",
+              }}
+            >
+              List your funeral home →
+            </Link>
+
+            <p className="text-xs mt-6" style={{ color: "rgba(234,242,238,0.3)" }}>
+              No long-term contracts · Set up in minutes · Cancel any time
+            </p>
+          </div>
+
         </div>
       </section>
     </div>

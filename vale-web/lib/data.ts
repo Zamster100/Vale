@@ -79,6 +79,7 @@ export interface FuneralDirector {
   iccmVerified?: boolean;
   verifiedAt?: string;
   hours?: OpeningHours;
+  heroImage?: string;
 }
 
 export const funeralDirectors: FuneralDirector[] = [
