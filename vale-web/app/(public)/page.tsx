@@ -225,11 +225,12 @@ export default function Home() {
 
           {/* Search card */}
           <div
-            className="rounded-2xl mx-auto max-w-2xl"
+            className="rounded-2xl mx-auto w-full"
             style={{
+              maxWidth: "840px",
               background: "#FFFFFF",
               boxShadow: "0 8px 40px rgba(100,100,200,0.16)",
-              padding: "16px",
+              padding: "10px 12px",
             }}
           >
             <HomeSearchBar />
