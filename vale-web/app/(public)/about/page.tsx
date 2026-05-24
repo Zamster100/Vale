@@ -304,7 +304,7 @@ export default function AboutPage() {
                     style={{
                       borderRight:  i % 2 === 0 ? `1px solid ${BDR}` : undefined,
                       borderBottom: i < 2       ? `1px solid ${BDR}` : undefined,
-                      background:   i % 2 === 0 ? "#F4F4FD" : LAV,
+                      background:   [LAV, PINK, MINT, YEL][i],
                     }}
                   >
                     <div
