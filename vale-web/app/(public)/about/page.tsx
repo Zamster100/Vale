@@ -83,7 +83,13 @@ export default function AboutPage() {
       {/* ══════════════ HERO ══════════════ */}
       <section
         className="relative overflow-hidden px-6 md:px-10 pt-20 pb-28 md:pt-28 md:pb-36"
-        style={{ background: "linear-gradient(135deg, #D2D3FC 50%, #FBD2FC 50%)" }}
+        style={{
+          background: "#F4F4FF",
+          backgroundImage: [
+            "radial-gradient(ellipse at 10% 0%, rgba(180,182,246,0.9) 0%, transparent 55%)",
+            "radial-gradient(ellipse at 90% 0%, rgba(251,210,252,0.85) 0%, transparent 55%)",
+          ].join(", "),
+        }}
       >
         {/* Dot texture */}
         <div
@@ -223,7 +229,16 @@ export default function AboutPage() {
       </section>
 
       {/* ══════════════ VALUES ══════════════ */}
-      <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "linear-gradient(135deg, #D3FCD2 50%, #D2D3FC 50%)" }}>
+      <section
+        className="py-20 md:py-28 px-6 md:px-10"
+        style={{
+          background: "#F4FFF4",
+          backgroundImage: [
+            "radial-gradient(ellipse at 10% 0%, rgba(196,245,196,0.9) 0%, transparent 55%)",
+            "radial-gradient(ellipse at 90% 0%, rgba(180,182,246,0.8) 0%, transparent 55%)",
+          ].join(", "),
+        }}
+      >
         <div className="max-w-5xl mx-auto">
           <SectionLabel>Our values</SectionLabel>
 
