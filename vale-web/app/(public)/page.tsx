@@ -885,19 +885,10 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          FINAL CTA BAND — mint + pink blended gradient
+          FINAL CTA BAND — full-height, no background
       ══════════════════════════════════════════════════════ */}
-      <section
-        className="relative overflow-hidden"
-        style={{
-          background: "#F4FDF4",
-          backgroundImage: [
-            "radial-gradient(ellipse at 10% 50%, rgba(196,245,196,0.9) 0%, transparent 55%)",
-            "radial-gradient(ellipse at 90% 50%, rgba(251,210,252,0.85) 0%, transparent 55%)",
-          ].join(", "),
-        }}
-      >
-        <div className="max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28">
+      <section className="min-h-screen flex items-center">
+        <div className="w-full max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28">
 
           {/* Two CTAs side by side with vertical divider */}
           <div className="flex flex-col md:flex-row items-stretch gap-0">
