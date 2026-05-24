@@ -89,8 +89,8 @@ function SubmitReviewForm() {
   if (submitted) {
     return (
       <div className="py-16 text-center">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: "rgba(123,168,74,0.12)" }}>
-          <CheckCircle className="w-8 h-8" aria-hidden="true" style={{ color: "#7BA84A" }} />
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: "#D2D3FC" }}>
+          <CheckCircle className="w-8 h-8" aria-hidden="true" style={{ color: "#6B6DE8" }} />
         </div>
         <h2 className="text-xl font-semibold mb-2" style={{ color: "#1A1A2E", fontFamily: "var(--font-open-sans)" }}>
           Thank you for sharing
@@ -107,7 +107,7 @@ function SubmitReviewForm() {
             <Link
               href={`/reviews/${selectedFD.id}`}
               className="text-white px-6 py-2.5 rounded-md font-semibold text-sm hover:scale-[1.03] transition-transform min-h-[44px] inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2"
-              style={{ background: "#1A1A2E" }}
+              style={{ background: "#6B6DE8" }}
             >
               View all reviews
             </Link>
@@ -213,7 +213,7 @@ function SubmitReviewForm() {
         type="submit"
         disabled={loading}
         className="w-full text-white py-3 rounded-md font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px] flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2"
-        style={{ background: "#1A1A2E" }}
+        style={{ background: "#6B6DE8" }}
       >
         {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
         {loading ? "Submitting…" : "Submit review"}

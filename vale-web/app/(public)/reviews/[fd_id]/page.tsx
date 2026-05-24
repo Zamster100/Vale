@@ -19,7 +19,7 @@ function StarRating({ rating, size = "md" }: { rating: number; size?: "sm" | "md
   return (
     <span className="inline-flex items-center gap-0.5" aria-hidden="true">
       {[1, 2, 3, 4, 5].map((s) => (
-        <Star key={s} className={sz} style={{ color: s <= Math.round(rating) ? "#E26B5E" : "#D2D3FC", fill: s <= Math.round(rating) ? "#E26B5E" : "#D2D3FC" }} />
+        <Star key={s} className={sz} style={{ color: s <= Math.round(rating) ? "#C45EC4" : "#D2D3FC", fill: s <= Math.round(rating) ? "#C45EC4" : "#D2D3FC" }} />
       ))}
     </span>
   );
@@ -49,7 +49,7 @@ function ReviewCard({ review }: { review: StoredReview }) {
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-semibold text-sm" style={{ color: "#5C5C7A" }}>{review.familyName}</span>
             {review.verified ? (
-              <span className="flex items-center gap-1 text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,168,74,0.15)", color: "#1F4A0E" }}>
+              <span className="flex items-center gap-1 text-xs font-semibold px-1.5 py-0.5 rounded-full" style={{ background: "#D2D3FC", color: "#6B6DE8" }}>
                 <CheckCircle className="w-3 h-3" aria-hidden="true" />
                 Verified
               </span>
@@ -78,7 +78,7 @@ function ReviewCard({ review }: { review: StoredReview }) {
             { label: "Value", value: review.valueRating },
             { label: "Facilities", value: review.facilitiesRating },
           ].filter(({ value }) => value != null).map(({ label, value }) => (
-            <span key={label} className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(212,165,116,0.1)", color: "#1A1A2E", border: "1px solid rgba(212,165,116,0.3)" }}>
+            <span key={label} className="text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(210,211,252,0.25)", color: "#1A1A2E", border: "1px solid rgba(107,109,232,0.25)" }}>
               {label} <span style={{ color: "#C45EC4", fontWeight: 600 }}>{value}/5</span>
             </span>
           ))}
@@ -141,7 +141,7 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
               onClick={() => setFilterRating(null)}
               className="text-xs px-3 py-1.5 rounded-full font-semibold transition-colors min-h-[44px] focus:outline-none"
               style={filterRating === null
-                ? { background: "#1A1A2E", color: "white", border: "none" }
+                ? { background: "#6B6DE8", color: "white", border: "none" }
                 : { background: "white", color: "#5C5C7A", border: "1px solid #E8E8F4" }
               }
             >
@@ -157,7 +157,7 @@ export default function ReviewsPage({ params }: { params: Promise<{ fd_id: strin
                   onClick={() => setFilterRating(filterRating === star ? null : star)}
                   className="text-xs px-3 py-1.5 rounded-full font-semibold transition-colors min-h-[44px] focus:outline-none"
                   style={filterRating === star
-                    ? { background: "#1A1A2E", color: "white", border: "none" }
+                    ? { background: "#6B6DE8", color: "white", border: "none" }
                     : { background: "white", color: "#5C5C7A", border: "1px solid #E8E8F4" }
                   }
                 >
