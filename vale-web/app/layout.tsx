@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Lora, DM_Sans } from "next/font/google";
+import { Cormorant_Garamond, Lora, DM_Sans, Open_Sans } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -25,6 +25,13 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const openSans = Open_Sans({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Vale",
   description:
@@ -39,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${lora.variable} ${dmSans.variable} h-full`}
+      className={`${cormorant.variable} ${lora.variable} ${dmSans.variable} ${openSans.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>

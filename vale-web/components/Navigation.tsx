@@ -3,30 +3,25 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search, Building2 } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
+const OS = "var(--font-open-sans), -apple-system, sans-serif";
 
 const NAV_LINKS = [
-  { href: "/search",                 label: "Find a director",       icon: Search,    match: ["/search", "/funeral-directors"] },
-  { href: "/resources",              label: "Guides",                icon: Search,    match: ["/resources"] },
-  { href: "/for-funeral-directors",  label: "For funeral directors", icon: Building2, match: ["/for-funeral-directors", "/admin"] },
-  { href: "/about",                  label: "About",                 icon: Building2, match: ["/about"] },
+  { href: "/search",                label: "Find a director",       match: ["/search", "/funeral-directors"] },
+  { href: "/resources",             label: "Guides",                match: ["/resources"] },
+  { href: "/for-funeral-directors", label: "For funeral directors", match: ["/for-funeral-directors", "/admin"] },
+  { href: "/about",                 label: "About",                 match: ["/about"] },
 ] as const;
 
 export default function Navigation() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const openBtnRef = useRef<HTMLButtonElement>(null);
 
   const isActive = (match: readonly string[]) =>
     match.some((m) => pathname?.startsWith(m));
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -56,53 +51,82 @@ export default function Navigation() {
 
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
-  const dark = scrolled;
-
   return (
     <>
       <header
-        className="sticky top-0 z-50 transition-colors duration-300"
+        className="sticky top-0 z-50"
         style={{
-          background: dark ? "#1C1F2A" : "#F7F3EE",
-          borderBottom: dark ? "1px solid rgba(255,255,255,0.08)" : "1px solid #E8E2D8",
+          background: "#FFFFFF",
+          borderBottom: "1px solid #EBEBF5",
+          boxShadow: "0 1px 0 #EBEBF5",
         }}
       >
-        <div className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 py-0 flex items-center justify-between" style={{ height: "64px" }}>
+
           {/* Logo */}
           <Link
             href="/"
-            className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2 rounded"
-            style={{ ["--tw-ring-offset-color" as string]: dark ? "#1C1F2A" : "#F7F3EE" }}
+            className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8] rounded"
             aria-label="Vale — go to homepage"
           >
             <span
-              className="text-2xl tracking-wide transition-colors duration-300"
-              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 600, color: dark ? "#FFFFFF" : "#1C1F2A" }}
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                fontWeight: 600,
+                fontSize: "26px",
+                color: "#1A1A2E",
+                letterSpacing: "0.01em",
+              }}
             >
-              Vale<span style={{ color: "#5E8B73" }}>.</span>
+              Vale<span style={{ color: "#8486E8" }}>.</span>
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {NAV_LINKS.map(({ href, label, match }) => (
+          {/* Desktop nav links */}
+          <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
+            {NAV_LINKS.slice(0, 3).map(({ href, label, match }) => (
               <Link
                 key={href}
                 href={href}
-                className="px-3 py-2 rounded text-sm min-h-[44px] inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-1 transition-colors duration-300"
+                className="px-4 py-2 rounded-lg text-sm min-h-[40px] inline-flex items-center transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
                 style={{
-                  color: dark
-                    ? (isActive(match) ? "#FFFFFF" : "rgba(234,242,238,0.6)")
-                    : (isActive(match) ? "#1C1F2A" : "#7A6E64"),
-                  background: isActive(match)
-                    ? (dark ? "rgba(255,255,255,0.08)" : "rgba(28,31,42,0.08)")
-                    : "transparent",
+                  fontFamily: OS,
+                  fontWeight: isActive(match) ? 600 : 400,
+                  color: isActive(match) ? "#1A1A2E" : "#5C5C7A",
+                  background: isActive(match) ? "#EEF0FF" : "transparent",
                 }}
               >
                 {label}
               </Link>
             ))}
           </nav>
+
+          {/* Desktop right: About + CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/about"
+              className="px-4 py-2 rounded-lg text-sm inline-flex items-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
+              style={{
+                fontFamily: OS,
+                fontWeight: isActive(["/about"]) ? 600 : 400,
+                color: isActive(["/about"]) ? "#1A1A2E" : "#5C5C7A",
+              }}
+            >
+              About
+            </Link>
+            <Link
+              href="/search"
+              className="inline-flex items-center gap-2 rounded-full text-sm font-semibold px-5 py-2.5 hover:opacity-90 active:scale-[0.97] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
+              style={{
+                fontFamily: OS,
+                background: "#6B6DE8",
+                color: "#FFFFFF",
+                fontWeight: 700,
+              }}
+            >
+              Find a director
+            </Link>
+          </div>
 
           {/* Mobile hamburger */}
           <button
@@ -112,8 +136,8 @@ export default function Navigation() {
             aria-label="Open navigation menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className="md:hidden w-11 h-11 flex items-center justify-center rounded transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73]"
-            style={{ color: dark ? "rgba(234,242,238,0.8)" : "#1C1F2A" }}
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
+            style={{ color: "#1A1A2E" }}
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -124,13 +148,13 @@ export default function Navigation() {
       {menuOpen && (
         <div
           className="fixed inset-0 z-[60] md:hidden"
-          style={{ background: "rgba(28,31,42,0.2)" }}
+          style={{ background: "rgba(26,26,46,0.25)" }}
           aria-hidden="true"
           onClick={() => setMenuOpen(false)}
         />
       )}
 
-      {/* Mobile drawer — always dark for consistency */}
+      {/* Mobile drawer */}
       <div
         id="mobile-menu"
         ref={menuRef}
@@ -140,62 +164,58 @@ export default function Navigation() {
         className={`fixed top-0 right-0 z-[70] h-full w-72 flex flex-col transition-transform duration-200 ease-out md:hidden ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{ background: "#1C1F2A", borderLeft: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ background: "#FFFFFF", borderLeft: "1px solid #EBEBF5" }}
       >
         {/* Drawer header */}
         <div
-          className="flex items-center justify-between px-6 py-6 shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+          className="flex items-center justify-between px-5 py-4 shrink-0"
+          style={{ borderBottom: "1px solid #EBEBF5" }}
         >
-          <Link
-            href="/"
-            className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
-            aria-label="Vale — go to homepage"
-          >
+          <Link href="/" aria-label="Vale — go to homepage">
             <span
-              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 600, color: "#FFFFFF" }}
-              className="text-2xl tracking-wide"
+              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 600, fontSize: "24px", color: "#1A1A2E" }}
             >
-              Vale<span style={{ color: "#5E8B73" }}>.</span>
+              Vale<span style={{ color: "#8486E8" }}>.</span>
             </span>
           </Link>
           <button
             type="button"
             onClick={() => { setMenuOpen(false); openBtnRef.current?.focus(); }}
             aria-label="Close navigation menu"
-            className="w-11 h-11 flex items-center justify-center rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73]"
-            style={{ color: "rgba(234,242,238,0.5)" }}
+            className="w-10 h-10 flex items-center justify-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
+            style={{ color: "#5C5C7A" }}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Drawer links */}
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto" aria-label="Mobile navigation">
-          {NAV_LINKS.map(({ href, label, icon: Icon, match }) => (
+        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto" aria-label="Mobile navigation">
+          {NAV_LINKS.map(({ href, label, match }) => (
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73]"
+              className="flex items-center px-4 py-3 rounded-xl text-sm min-h-[48px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
               style={{
-                color: isActive(match) ? "#FFFFFF" : "rgba(234,242,238,0.6)",
-                background: isActive(match) ? "rgba(255,255,255,0.08)" : "transparent",
+                fontFamily: OS,
+                fontWeight: isActive(match) ? 600 : 400,
+                color: isActive(match) ? "#1A1A2E" : "#5C5C7A",
+                background: isActive(match) ? "#EEF0FF" : "transparent",
               }}
             >
-              <Icon className="w-4 h-4 shrink-0" style={{ color: "rgba(94,139,115,0.8)" }} aria-hidden="true" />
               {label}
             </Link>
           ))}
         </nav>
 
         {/* Drawer CTA */}
-        <div className="px-4 pb-6 pt-4 shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="px-4 pb-6 pt-3 shrink-0" style={{ borderTop: "1px solid #EBEBF5" }}>
           <Link
             href="/search"
-            className="flex items-center justify-center w-full py-3 rounded-md font-medium text-sm min-h-[48px] hover:scale-[1.03] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] focus-visible:ring-offset-2"
-            style={{ background: "#5E8B73", color: "#FFFFFF" }}
+            className="flex items-center justify-center w-full py-3 rounded-full font-bold text-sm min-h-[48px] transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8486E8]"
+            style={{ fontFamily: OS, background: "#6B6DE8", color: "#FFFFFF" }}
           >
-            Begin Journey
+            Find a director
           </Link>
         </div>
       </div>
