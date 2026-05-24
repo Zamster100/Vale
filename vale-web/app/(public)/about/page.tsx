@@ -83,25 +83,14 @@ export default function AboutPage() {
       {/* ══════════════ HERO ══════════════ */}
       <section
         className="relative overflow-hidden px-6 md:px-10 pt-20 pb-28 md:pt-28 md:pb-36"
-        style={{ background: LAV }}
+        style={{ background: "linear-gradient(135deg, #D2D3FC 50%, #FBD2FC 50%)" }}
       >
         {/* Dot texture */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(107,109,232,0.18) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(circle, rgba(107,109,232,0.12) 1px, transparent 1px)",
             backgroundSize: "26px 26px",
-          }}
-          aria-hidden="true"
-        />
-        {/* Pink glow blob */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            top: "-120px", right: "-120px",
-            width: "520px", height: "520px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(196,94,196,0.2) 0%, transparent 65%)",
           }}
           aria-hidden="true"
         />
@@ -194,8 +183,8 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Right — industry stats */}
-            <div className="grid grid-cols-1 gap-4">
+            {/* Right — industry stats, top-padded to align with the h2 headline */}
+            <div className="grid grid-cols-1 gap-4 md:pt-[52px]">
               {INDUSTRY_STATS.map(({ icon: Icon, value, label }) => (
                 <div
                   key={value}
@@ -234,7 +223,7 @@ export default function AboutPage() {
       </section>
 
       {/* ══════════════ VALUES ══════════════ */}
-      <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: MINT }}>
+      <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "linear-gradient(135deg, #D3FCD2 50%, #D2D3FC 50%)" }}>
         <div className="max-w-5xl mx-auto">
           <SectionLabel>Our values</SectionLabel>
 
@@ -360,48 +349,6 @@ export default function AboutPage() {
               </p>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════ TEAM PLACEHOLDER ══════════════ */}
-      <section className="py-20 md:py-24 px-6 md:px-10" style={{ background: YEL }}>
-        <div className="max-w-5xl mx-auto">
-          <SectionLabel>The team</SectionLabel>
-
-          <h2
-            className="mb-3 max-w-md"
-            style={{
-              fontFamily:    OS,
-              fontSize:      "clamp(26px, 3vw, 40px)",
-              fontWeight:    700,
-              lineHeight:    1.12,
-              letterSpacing: "-0.02em",
-              color:         DARK,
-            }}
-          >
-            The people behind Vale
-          </h2>
-          <p className="text-sm mb-10 max-w-md" style={{ color: MED }}>
-            We&apos;ll be sharing more about the team shortly.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="rounded-2xl p-6 flex flex-col items-center text-center"
-                style={{ background: "#FFFFFF", border: `1px solid ${BDR}` }}
-              >
-                <div
-                  className="w-16 h-16 rounded-full mb-4"
-                  style={{ background: LAV }}
-                  aria-hidden="true"
-                />
-                <div className="w-20 h-3 rounded-full mb-2" style={{ background: BDR }} aria-hidden="true" />
-                <div className="w-14 h-2.5 rounded-full" style={{ background: BDR }} aria-hidden="true" />
-              </div>
-            ))}
           </div>
         </div>
       </section>
