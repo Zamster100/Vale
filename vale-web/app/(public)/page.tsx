@@ -885,36 +885,44 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          FINAL CTA BAND — mint bg, split layout
+          FINAL CTA BAND — mint + pink blended gradient
       ══════════════════════════════════════════════════════ */}
-      <section style={{ background: MINT }}>
-        <div className="max-w-5xl mx-auto px-6 md:px-10 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-10 md:gap-16">
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background: "#F4FDF4",
+          backgroundImage: [
+            "radial-gradient(ellipse at 10% 50%, rgba(196,245,196,0.9) 0%, transparent 55%)",
+            "radial-gradient(ellipse at 90% 50%, rgba(251,210,252,0.85) 0%, transparent 55%)",
+          ].join(", "),
+        }}
+      >
+        <div className="max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28">
 
-            {/* Left — need help now */}
-            <div
-              className="rounded-2xl p-8 flex flex-col"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 24px rgba(50,180,50,0.1)" }}
-            >
+          {/* Two CTAs side by side with vertical divider */}
+          <div className="flex flex-col md:flex-row items-stretch gap-0">
+
+            {/* Left — Find a funeral home */}
+            <div className="flex-1 flex flex-col items-start justify-center px-0 md:pr-12 py-8 md:py-0">
               <span
                 className="inline-block rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide mb-5 w-fit"
                 style={{ background: MINT, color: MINT_BTN }}
               >
-                Need help now
+                For families
               </span>
               <h2
                 className="mb-3"
-                style={{ fontFamily: OS, fontWeight: 700, fontSize: "clamp(22px,3vw,30px)", color: DARK, lineHeight: 1.2 }}
+                style={{ fontFamily: OS, fontWeight: 800, fontSize: "clamp(24px,3vw,36px)", color: DARK, lineHeight: 1.15 }}
               >
-                Find a funeral director today
+                Find a funeral home
               </h2>
-              <p className="flex-1 mb-6" style={{ fontSize: "15px", color: MED, lineHeight: 1.65 }}>
-                Search verified providers near you. See real prices. Compare and connect — no
-                account needed, no pressure, ever.
+              <p className="mb-7" style={{ fontSize: "15px", color: MED, lineHeight: 1.65, maxWidth: "360px" }}>
+                Search verified providers near you. See real prices, read genuine family
+                reviews, and connect — no account needed, no pressure, ever.
               </p>
               <Link
                 href="/search"
-                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
                 style={{ background: MINT_BTN, color: "#FFFFFF" }}
               >
                 Search funeral directors
@@ -922,36 +930,47 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Right — planning ahead */}
+            {/* Vertical divider */}
             <div
-              className="rounded-2xl p-8 flex flex-col"
-              style={{ background: "#FFFFFF", boxShadow: "0 4px 24px rgba(50,180,50,0.1)" }}
-            >
+              className="hidden md:block self-stretch shrink-0"
+              style={{ width: "1px", background: "rgba(26,26,46,0.1)" }}
+              aria-hidden="true"
+            />
+            {/* Horizontal divider on mobile */}
+            <div
+              className="block md:hidden"
+              style={{ height: "1px", background: "rgba(26,26,46,0.1)", margin: "8px 0" }}
+              aria-hidden="true"
+            />
+
+            {/* Right — List your funeral home */}
+            <div className="flex-1 flex flex-col items-start justify-center px-0 md:pl-12 py-8 md:py-0">
               <span
                 className="inline-block rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide mb-5 w-fit"
-                style={{ background: YEL, color: "#806000" }}
+                style={{ background: PINK, color: "#C45EC4" }}
               >
-                Planning ahead
+                For directors
               </span>
               <h2
                 className="mb-3"
-                style={{ fontFamily: OS, fontWeight: 700, fontSize: "clamp(22px,3vw,30px)", color: DARK, lineHeight: 1.2 }}
+                style={{ fontFamily: OS, fontWeight: 800, fontSize: "clamp(24px,3vw,36px)", color: DARK, lineHeight: 1.15 }}
               >
-                Give your family certainty
+                List your funeral home
               </h2>
-              <p className="flex-1 mb-6" style={{ fontSize: "15px", color: MED, lineHeight: 1.65 }}>
-                Start your Vale Vault — store your wishes, documents, and messages. Share with
-                loved ones. Free, private, and yours forever.
+              <p className="mb-7" style={{ fontSize: "15px", color: MED, lineHeight: 1.65, maxWidth: "360px" }}>
+                Join 1,200+ verified providers on the UK&apos;s most trusted funeral
+                director platform. Transparent, CMA-compliant, and free to list.
               </p>
               <Link
-                href="/vault/start"
-                className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
-                style={{ background: "#806000", color: "#FFFFFF" }}
+                href="/for-funeral-directors"
+                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
+                style={{ background: "#C45EC4", color: "#FFFFFF" }}
               >
-                Start your vault — free
+                Get listed today
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
+
           </div>
         </div>
       </section>
