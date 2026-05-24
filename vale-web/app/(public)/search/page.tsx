@@ -129,8 +129,8 @@ function FDCard({
         {/* ── Image panel — wider + taller ── */}
         <Link
           href={`/funeral-directors/${fd.id}`}
-          className="relative sm:w-72 lg:w-80 h-64 sm:h-auto shrink-0 block overflow-hidden"
-          style={{ background: "#D2D3FC" }}
+          className="relative w-full sm:w-1/2 h-64 sm:h-auto shrink-0 block overflow-hidden"
+          style={{ background: "#D2D3FC", minHeight: "260px" }}
           tabIndex={-1}
           aria-hidden="true"
         >
