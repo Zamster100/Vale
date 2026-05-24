@@ -9,7 +9,6 @@ const OS = "var(--font-open-sans), -apple-system, sans-serif";
 
 const NAV_LINKS = [
   { href: "/search",                label: "Find a director",       match: ["/search", "/funeral-directors"] },
-  { href: "/resources",             label: "Guides",                match: ["/resources"] },
   { href: "/for-funeral-directors", label: "For funeral directors", match: ["/for-funeral-directors", "/admin"] },
   { href: "/about",                 label: "About",                 match: ["/about"] },
 ] as const;
@@ -84,7 +83,7 @@ export default function Navigation() {
 
           {/* Desktop nav links */}
           <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
-            {NAV_LINKS.slice(0, 3).map(({ href, label, match }) => (
+            {NAV_LINKS.slice(0, 2).map(({ href, label, match }) => (
               <Link
                 key={href}
                 href={href}
