@@ -374,7 +374,7 @@ function SearchPageInner() {
       >
         <div
           className="mx-auto px-6 md:px-10"
-          style={{ maxWidth: "1280px" }}
+          style={{ maxWidth: "1152px" }}
         >
           {/* ── Header row: headline left · Share right ── */}
           <div className="flex items-start justify-between gap-8 mb-10">
@@ -579,7 +579,7 @@ function SearchPageInner() {
       {/* ══════════════ Result count + location heading ══════════════ */}
       <div
         className="mx-auto px-6 md:px-10 py-5"
-        style={{ maxWidth: "1280px" }}
+        style={{ maxWidth: "1152px" }}
       >
         <p className="text-sm" style={{ color: "#5C5C7A" }} aria-live="polite" aria-atomic="true">
           Showing{" "}
@@ -641,7 +641,7 @@ function SearchPageInner() {
       {/* ══════════════ TWO-COLUMN LAYOUT ══════════════ */}
       <div
         className="mx-auto flex items-start"
-        style={{ maxWidth: "1280px" }}
+        style={{ maxWidth: "1152px" }}
       >
         {/* ── Results column ── */}
         <div

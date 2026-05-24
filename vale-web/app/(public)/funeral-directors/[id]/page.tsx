@@ -137,7 +137,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
 
       {/* ════════════ Breadcrumb ════════════ */}
       <nav aria-label="Breadcrumb" style={{ background: "white", borderBottom: `1px solid ${BDR}` }}>
-        <ol className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: MED }}>
+        <ol className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: MED }}>
           <li>
             <Link
               href="/search"
@@ -156,7 +156,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
       </nav>
 
       {/* ════════════ Two-column layout (starts right after breadcrumb, Lottie-style) ════════════ */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-10">
         <div className="lg:grid lg:grid-cols-3 lg:gap-8 flex flex-col gap-6">
 
           {/* ──────────── MAIN CONTENT (left 2/3) ──────────── */}
