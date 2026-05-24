@@ -10,7 +10,7 @@ export default function MetricCard({ label, value, subtext, trend, accent }: Met
   const trendColor =
     trend?.direction === "up" ? "#7BA84A"
     : trend?.direction === "down" ? "#E26B5E"
-    : "#7A6E64";
+    : "#5C5C7A";
 
   const trendArrow = trend?.direction === "up" ? "↑" : trend?.direction === "down" ? "↓" : "→";
 
@@ -19,12 +19,12 @@ export default function MetricCard({ label, value, subtext, trend, accent }: Met
       className="rounded-xl p-6"
       style={{
         background: "white",
-        border: accent ? "1.5px solid rgba(226,107,94,0.4)" : "1px solid #E8E2D8",
+        border: accent ? "1.5px solid rgba(226,107,94,0.4)" : "1px solid #E8E8F4",
       }}
     >
-      <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "#7A6E64" }}>{label}</p>
-      <p className="text-3xl font-light leading-none mb-1" style={{ color: "#1C1F2A" }}>{value}</p>
-      {subtext && <p className="text-sm mt-1" style={{ color: "#7A6E64" }}>{subtext}</p>}
+      <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "#5C5C7A" }}>{label}</p>
+      <p className="text-3xl font-light leading-none mb-1" style={{ color: "#1A1A2E" }}>{value}</p>
+      {subtext && <p className="text-sm mt-1" style={{ color: "#5C5C7A" }}>{subtext}</p>}
       {trend && (
         <p className="text-xs font-semibold mt-2" style={{ color: trendColor }}>
           {trendArrow} {trend.label}

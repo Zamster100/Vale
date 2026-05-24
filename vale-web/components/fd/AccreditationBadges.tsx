@@ -40,7 +40,7 @@ export default function AccreditationBadges({ fd }: Props) {
     <div>
       <p
         className="text-xs font-semibold uppercase tracking-wider mb-3"
-        style={{ color: "#5A4E44" }}
+        style={{ color: "#5C5C7A" }}
       >
         Professional memberships
       </p>
@@ -60,11 +60,11 @@ export default function AccreditationBadges({ fd }: Props) {
               }}
               aria-hidden="true"
             >
-              <Icon className="w-5 h-5" style={{ color: "#C4975A" }} />
+              <Icon className="w-5 h-5" style={{ color: "#C45EC4" }} />
             </div>
             <span
               className="text-xs font-semibold uppercase tracking-wide text-center leading-tight"
-              style={{ color: "#1C1F2A" }}
+              style={{ color: "#1A1A2E" }}
               aria-label={name}
             >
               {abbr}

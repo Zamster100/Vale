@@ -65,10 +65,10 @@ function getOpenStatus(fd: FuneralDirector): { open: boolean; label: string } {
 const MapView = dynamic(() => import("@/components/search/MapView"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex items-center justify-center" style={{ background: "#EAF2EE" }}>
+    <div className="w-full h-full flex items-center justify-center" style={{ background: "#D2D3FC" }}>
       <div
         className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
-        style={{ borderColor: "#5E8B73", borderTopColor: "transparent" }}
+        style={{ borderColor: "#6B6DE8", borderTopColor: "transparent" }}
       />
     </div>
   ),
@@ -94,7 +94,7 @@ function StarRating({ rating, size = "md" }: { rating: number; size?: "sm" | "md
 
 const section = {
   background: "white",
-  border: "1px solid #E8E2D8",
+  border: "1px solid #E8E8F4",
   borderRadius: "16px",
 };
 
@@ -122,25 +122,25 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
     galleryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
-    <div className="min-h-screen" style={{ background: "#F7F3EE" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
 
       {/* ════════════ Breadcrumb ════════════ */}
-      <nav aria-label="Breadcrumb" style={{ background: "white", borderBottom: "1px solid #E8E2D8" }}>
+      <nav aria-label="Breadcrumb" style={{ background: "white", borderBottom: "1px solid #E8E8F4" }}>
         <ol className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: "#5F7080" }}>
           <li>
             <Link
               href="/search"
               className="flex items-center gap-1 hover:underline focus:outline-none focus-visible:ring-2 rounded"
-              style={{ color: "#5E8B73" }}
+              style={{ color: "#6B6DE8" }}
             >
               <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
               Search results
             </Link>
           </li>
           <li aria-hidden="true"><ChevronRight className="w-3.5 h-3.5" /></li>
-          <li><span style={{ color: "#7A6E64" }}>{fd.city}</span></li>
+          <li><span style={{ color: "#5C5C7A" }}>{fd.city}</span></li>
           <li aria-hidden="true"><ChevronRight className="w-3.5 h-3.5" /></li>
-          <li aria-current="page" className="font-medium truncate" style={{ color: "#5A4E44" }}>{fd.name}</li>
+          <li aria-current="page" className="font-medium truncate" style={{ color: "#5C5C7A" }}>{fd.name}</li>
         </ol>
       </nav>
 
@@ -172,7 +172,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <button
                   onClick={scrollToGallery}
                   className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold shadow-md hover:opacity-95 transition-opacity"
-                  style={{ background: "rgba(255,255,255,0.92)", color: "#1C1F2A", backdropFilter: "blur(4px)" }}
+                  style={{ background: "rgba(255,255,255,0.92)", color: "#1A1A2E", backdropFilter: "blur(4px)" }}
                 >
                   <LayoutGrid className="w-4 h-4" aria-hidden="true" />
                   Show all {gallery.length} photos
@@ -257,7 +257,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
         {/* Name */}
         <h1
           className="text-3xl sm:text-4xl mb-3"
-          style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant), serif", fontWeight: 600 }}
+          style={{ color: "#1A1A2E", fontFamily: "var(--font-open-sans), sans-serif", fontWeight: 600 }}
         >
           {fd.name}
         </h1>
@@ -269,7 +269,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             aria-label={`${fd.rating} out of 5 stars from ${fd.reviewCount} reviews`}
           >
             <StarRating rating={fd.rating} />
-            <span className="text-sm font-semibold" style={{ color: "#1C1F2A" }}>{fd.rating}</span>
+            <span className="text-sm font-semibold" style={{ color: "#1A1A2E" }}>{fd.rating}</span>
             <span className="text-sm" style={{ color: "#5F7080" }}>({fd.reviewCount} verified reviews)</span>
           </div>
           <span aria-hidden="true" className="text-[#D9D3CC]">·</span>
@@ -289,7 +289,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
 
             {/* ── Overview ── */}
             <section style={section} className="p-6" aria-labelledby="overview-heading">
-              <h2 id="overview-heading" className="text-xl mb-3" style={{ color: "#1C1F2A" }}>
+              <h2 id="overview-heading" className="text-xl mb-3" style={{ color: "#1A1A2E" }}>
                 Overview
               </h2>
               <p className="text-sm leading-relaxed mb-6" style={{ color: "#5F7080" }}>
@@ -299,35 +299,35 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               {/* Key stats grid */}
               <div
                 className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-5"
-                style={{ borderTop: "1px solid #E8E2D8" }}
+                style={{ borderTop: "1px solid #E8E8F4" }}
               >
                 <div className="text-center">
-                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1C1F2A" }}>
+                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1A1A2E" }}>
                     {fd.rating}
                   </p>
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>Overall rating</p>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>Overall rating</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1C1F2A" }}>
+                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1A1A2E" }}>
                     {fd.reviewCount}
                   </p>
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>Verified reviews</p>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>Verified reviews</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1C1F2A" }}>
+                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1A1A2E" }}>
                     {uniqueServices.length}
                   </p>
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>Services offered</p>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>Services offered</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1C1F2A" }}>
+                  <p className="text-2xl font-bold mb-0.5" style={{ color: "#1A1A2E" }}>
                     {fd.hours?.availability24hr
                       ? "24/7"
                       : fd.hours?.oohResponseHours
                       ? `${fd.hours.oohResponseHours}h`
                       : "—"}
                   </p>
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>
                     {fd.hours?.availability24hr ? "Availability" : "Response time"}
                   </p>
                 </div>
@@ -339,7 +339,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   <span
                     key={svc}
                     className="px-3 py-1 rounded-full text-xs font-medium"
-                    style={{ background: "#EAF2EE", color: "#3D6B52" }}
+                    style={{ background: "#D2D3FC", color: "#6B6DE8" }}
                   >
                     {SERVICE_TYPE_LABELS[svc] ?? svc}
                   </span>
@@ -347,10 +347,10 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               </div>
 
               {/* Contact at a glance */}
-              <div className="flex flex-wrap gap-4 text-sm pt-4" style={{ borderTop: "1px solid #E8E2D8" }}>
+              <div className="flex flex-wrap gap-4 text-sm pt-4" style={{ borderTop: "1px solid #E8E8F4" }}>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: "#5F7080" }} />
-                  <a href={`tel:${fd.phone}`} className="hover:underline" style={{ color: "#5E8B73" }}>
+                  <a href={`tel:${fd.phone}`} className="hover:underline" style={{ color: "#6B6DE8" }}>
                     {fd.phone}
                   </a>
                 </div>
@@ -361,7 +361,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline truncate"
-                    style={{ color: "#5E8B73" }}
+                    style={{ color: "#6B6DE8" }}
                   >
                     {fd.website}
                   </a>
@@ -370,7 +370,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
 
               {/* Accreditations */}
               {(fd.nafdVerified || fd.saifVerified || fd.bifdVerified || fd.iccmVerified) && (
-                <div className="mt-4 pt-4" style={{ borderTop: "1px solid #E8E2D8" }}>
+                <div className="mt-4 pt-4" style={{ borderTop: "1px solid #E8E8F4" }}>
                   <AccreditationBadges fd={fd} />
                 </div>
               )}
@@ -382,7 +382,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               aria-labelledby="pricing-heading"
             >
               {/* Header bar */}
-              <div className="px-6 py-5" style={{ background: "#1C1F2A" }}>
+              <div className="px-6 py-5" style={{ background: "#1A1A2E" }}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h2 id="pricing-heading" className="text-white text-lg font-semibold">
@@ -405,7 +405,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr style={{ background: "#F7F3EE", borderBottom: "1px solid #E8E2D8" }}>
+                    <tr style={{ background: "#FAFAFA", borderBottom: "1px solid #E8E8F4" }}>
                       {["Service", "Type", "Price", "What's included"].map((h, i) => (
                         <th
                           key={h}
@@ -426,13 +426,13 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           style={{
                             background: isBest
                               ? "rgba(94,139,115,0.05)"
-                              : i % 2 === 0 ? "white" : "#F7F3EE",
-                            borderBottom: "1px solid #E8E2D8",
+                              : i % 2 === 0 ? "white" : "#FAFAFA",
+                            borderBottom: "1px solid #E8E8F4",
                           }}
                         >
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-2">
-                              <span className="font-medium" style={{ color: "#5A4E44" }}>
+                              <span className="font-medium" style={{ color: "#5C5C7A" }}>
                                 {item.service}
                               </span>
                               {isBest && (
@@ -452,8 +452,8 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                             <span
                               className="inline-block font-bold px-3 py-1 rounded-full"
                               style={isBest
-                                ? { background: "rgba(94,139,115,0.12)", color: "#1C1F2A" }
-                                : { background: "rgba(234,242,238,0.3)", color: "#1C1F2A" }
+                                ? { background: "rgba(94,139,115,0.12)", color: "#1A1A2E" }
+                                : { background: "rgba(234,242,238,0.3)", color: "#1A1A2E" }
                               }
                             >
                               £{item.price.toLocaleString()}
@@ -470,7 +470,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               </div>
 
               {/* Mobile price cards */}
-              <div className="md:hidden" style={{ borderTop: "1px solid #E8E2D8" }}>
+              <div className="md:hidden" style={{ borderTop: "1px solid #E8E8F4" }}>
                 {fd.prices.map((item, i) => {
                   const isBest = item.price === lowestPrice;
                   return (
@@ -479,13 +479,13 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                       className="px-5 py-4"
                       style={{
                         background: isBest ? "rgba(94,139,115,0.05)" : "white",
-                        borderBottom: "1px solid #E8E2D8",
+                        borderBottom: "1px solid #E8E8F4",
                       }}
                     >
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-semibold text-sm" style={{ color: "#5A4E44" }}>
+                            <span className="font-semibold text-sm" style={{ color: "#5C5C7A" }}>
                               {item.service}
                             </span>
                             {isBest && (
@@ -504,8 +504,8 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                         <span
                           className="font-bold px-3 py-1 rounded-full shrink-0"
                           style={isBest
-                            ? { background: "rgba(94,139,115,0.12)", color: "#1C1F2A" }
-                            : { background: "rgba(234,242,238,0.3)", color: "#1C1F2A" }
+                            ? { background: "rgba(94,139,115,0.12)", color: "#1A1A2E" }
+                            : { background: "rgba(234,242,238,0.3)", color: "#1A1A2E" }
                           }
                         >
                           £{item.price.toLocaleString()}
@@ -519,7 +519,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 })}
               </div>
 
-              <div className="px-6 py-3" style={{ borderTop: "1px solid #E8E2D8", background: "#F7F3EE" }}>
+              <div className="px-6 py-3" style={{ borderTop: "1px solid #E8E8F4", background: "#FAFAFA" }}>
                 <p className="text-xs" style={{ color: "#5F7080" }}>
                   Prices are CMA compliant. All costs shown include VAT. Last verified by Vale.
                 </p>
@@ -533,7 +533,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             <section style={section} className="p-6" aria-labelledby="reviews-heading">
               <div className="flex items-start justify-between gap-4 mb-5">
                 <div>
-                  <h2 id="reviews-heading" className="text-xl mb-1" style={{ color: "#1C1F2A" }}>
+                  <h2 id="reviews-heading" className="text-xl mb-1" style={{ color: "#1A1A2E" }}>
                     Reviews
                   </h2>
                   <div
@@ -541,7 +541,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     aria-label={`${fd.rating} out of 5 stars`}
                   >
                     <StarRating rating={fd.rating} />
-                    <span className="text-sm font-semibold" style={{ color: "#1C1F2A" }}>
+                    <span className="text-sm font-semibold" style={{ color: "#1A1A2E" }}>
                       {fd.rating}
                     </span>
                     <span className="text-sm" style={{ color: "#5F7080" }}>
@@ -552,7 +552,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <Link
                   href={`/submit-review?fd=${fd.id}`}
                   className="hidden sm:flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full hover:opacity-80 transition-opacity shrink-0 min-h-[44px] focus:outline-none"
-                  style={{ border: "1px solid #E8E2D8", color: "#1C1F2A" }}
+                  style={{ border: "1px solid #E8E8F4", color: "#1A1A2E" }}
                 >
                   <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
                   Leave a review
@@ -560,7 +560,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               </div>
 
               {/* Star distribution */}
-              <div className="space-y-1.5 mb-6 pb-6" style={{ borderBottom: "1px solid #E8E2D8" }}>
+              <div className="space-y-1.5 mb-6 pb-6" style={{ borderBottom: "1px solid #E8E8F4" }}>
                 {[5, 4, 3, 2, 1].map((star) => {
                   const count = fd.reviews.filter((r) => r.rating === star).length;
                   const pct = fd.reviews.length > 0
@@ -578,7 +578,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                       >
                         <div
                           className="h-full rounded-full transition-all duration-500"
-                          style={{ width: `${pct}%`, background: "#5E8B73" }}
+                          style={{ width: `${pct}%`, background: "#6B6DE8" }}
                           aria-hidden="true"
                         />
                       </div>
@@ -603,7 +603,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   <article
                     key={i}
                     className="p-4 rounded-xl"
-                    style={{ border: "1px solid #E8E2D8" }}
+                    style={{ border: "1px solid #E8E8F4" }}
                   >
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div>
@@ -611,7 +611,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           <VerifiedFamilyLabel />
                         )}
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-semibold text-sm" style={{ color: "#5A4E44" }}>
+                          <span className="font-semibold text-sm" style={{ color: "#5C5C7A" }}>
                             {review.name}
                           </span>
                           {review.verified && (
@@ -636,7 +636,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     </div>
                     <blockquote
                       className="text-sm leading-relaxed"
-                      style={{ color: "#5A4E44" }}
+                      style={{ color: "#5C5C7A" }}
                     >
                       &ldquo;{review.text}&rdquo;
                     </blockquote>
@@ -658,12 +658,12 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                               className="text-xs px-2 py-0.5 rounded-full"
                               style={{
                                 background: "rgba(212,165,116,0.1)",
-                                color: "#1C1F2A",
+                                color: "#1A1A2E",
                                 border: "1px solid rgba(212,165,116,0.3)",
                               }}
                             >
                               {label}{" "}
-                              <span style={{ color: "#C4975A", fontWeight: 600 }}>
+                              <span style={{ color: "#C45EC4", fontWeight: 600 }}>
                                 {value}/5
                               </span>
                             </span>
@@ -676,12 +676,12 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
 
               <div
                 className="mt-5 pt-5 flex items-center justify-between"
-                style={{ borderTop: "1px solid #E8E2D8" }}
+                style={{ borderTop: "1px solid #E8E8F4" }}
               >
                 <Link
                   href={`/reviews/${fd.id}`}
                   className="text-sm font-semibold hover:underline flex items-center gap-1 focus:outline-none rounded min-h-[44px]"
-                  style={{ color: "#5E8B73" }}
+                  style={{ color: "#6B6DE8" }}
                 >
                   View all {fd.reviewCount} reviews
                   <ChevronRight className="w-4 h-4" aria-hidden="true" />
@@ -689,7 +689,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <Link
                   href={`/submit-review?fd=${fd.id}`}
                   className="sm:hidden flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
-                  style={{ border: "1px solid #E8E2D8", color: "#1C1F2A" }}
+                  style={{ border: "1px solid #E8E8F4", color: "#1A1A2E" }}
                 >
                   <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
                   Leave a review
@@ -712,8 +712,8 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               style={{ ...section, overflow: "hidden" }}
               aria-labelledby="location-heading"
             >
-              <div className="px-6 py-5" style={{ borderBottom: "1px solid #E8E2D8" }}>
-                <h2 id="location-heading" className="text-xl mb-0.5" style={{ color: "#1C1F2A" }}>
+              <div className="px-6 py-5" style={{ borderBottom: "1px solid #E8E8F4" }}>
+                <h2 id="location-heading" className="text-xl mb-0.5" style={{ color: "#1A1A2E" }}>
                   Location
                 </h2>
                 <p className="text-sm" style={{ color: "#5F7080" }}>
@@ -727,7 +727,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <a
                   href={`tel:${fd.phone}`}
                   className="flex items-center gap-2 text-sm hover:underline"
-                  style={{ color: "#5E8B73" }}
+                  style={{ color: "#6B6DE8" }}
                 >
                   <Phone className="w-3.5 h-3.5" aria-hidden="true" />
                   {fd.phone}
@@ -737,7 +737,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm hover:underline"
-                  style={{ color: "#5E8B73" }}
+                  style={{ color: "#6B6DE8" }}
                 >
                   <Globe className="w-3.5 h-3.5" aria-hidden="true" />
                   {fd.website}
@@ -753,7 +753,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             <div style={section} className="p-6">
               <h3
                 className="font-semibold text-base mb-0.5"
-                style={{ color: "#1C1F2A" }}
+                style={{ color: "#1A1A2E" }}
               >
                 Contact {fd.name}
               </h3>
@@ -762,7 +762,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               {fd.hours?.oohResponseHours ? (
                 <p
                   className="text-xs mb-4 flex items-center gap-1.5"
-                  style={{ color: "#7A6E64" }}
+                  style={{ color: "#5C5C7A" }}
                 >
                   <Clock className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                   Typically replies within{" "}
@@ -771,7 +771,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     : `${fd.hours.oohResponseHours} hours`}
                 </p>
               ) : (
-                <p className="text-xs mb-4" style={{ color: "#7A6E64" }}>
+                <p className="text-xs mb-4" style={{ color: "#5C5C7A" }}>
                   Responds to enquiries promptly
                 </p>
               )}
@@ -779,7 +779,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               {/* Price from */}
               <div
                 className="mb-5 px-4 py-4 rounded-xl"
-                style={{ background: "#F7F3EE", border: "1px solid #E8E2D8" }}
+                style={{ background: "#FAFAFA", border: "1px solid #E8E8F4" }}
               >
                 <p
                   className="text-[10px] font-semibold uppercase tracking-[0.1em] mb-0.5"
@@ -787,10 +787,10 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 >
                   Services from
                 </p>
-                <p className="text-3xl font-bold leading-none" style={{ color: "#1C1F2A" }}>
+                <p className="text-3xl font-bold leading-none" style={{ color: "#1A1A2E" }}>
                   £{lowestPrice.toLocaleString()}
                 </p>
-                <p className="text-xs mt-1" style={{ color: "#7A6E64" }}>
+                <p className="text-xs mt-1" style={{ color: "#5C5C7A" }}>
                   All prices include VAT
                 </p>
               </div>
@@ -799,7 +799,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <button
                 onClick={() => setQuoteOpen(true)}
                 className="w-full py-3.5 rounded-xl text-white font-semibold text-sm mb-3 hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                style={{ background: "#1C1F2A" }}
+                style={{ background: "#1A1A2E" }}
               >
                 Request a quote
               </button>
@@ -808,7 +808,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <a
                 href={`tel:${fd.phone}`}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold mb-3 hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
-                style={{ border: "1px solid #E8E2D8", color: "#1C1F2A" }}
+                style={{ border: "1px solid #E8E8F4", color: "#1A1A2E" }}
               >
                 <Phone className="w-4 h-4" aria-hidden="true" />
                 Call {fd.phone}
@@ -818,7 +818,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <Link
                 href={`/submit-review?fd=${fd.id}`}
                 className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
-                style={{ color: "#5E8B73" }}
+                style={{ color: "#6B6DE8" }}
               >
                 <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
                 Submit a review
@@ -833,7 +833,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               >
                 <h3
                   className="text-xs font-semibold uppercase tracking-wider mb-3"
-                  style={{ color: "#1C1F2A" }}
+                  style={{ color: "#1A1A2E" }}
                 >
                   Availability
                 </h3>
@@ -843,19 +843,19 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     style={{ background: openStatus.open ? "#7BA84A" : "#E26B5E" }}
                     aria-hidden="true"
                   />
-                  <span className="text-sm font-medium" style={{ color: "#1C1F2A" }}>
+                  <span className="text-sm font-medium" style={{ color: "#1A1A2E" }}>
                     {openStatus.label}
                   </span>
                 </div>
                 {fd.hours.availability24hr && (
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>
                     24/7 service — available at any hour, day or night.
                   </p>
                 )}
                 {fd.hours.oohPhone && !fd.hours.availability24hr && (
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>
                     Out-of-hours:{" "}
-                    <a href={`tel:${fd.hours.oohPhone}`} className="hover:underline" style={{ color: "#5E8B73" }}>
+                    <a href={`tel:${fd.hours.oohPhone}`} className="hover:underline" style={{ color: "#6B6DE8" }}>
                       {fd.hours.oohPhone}
                     </a>
                   </p>
@@ -866,9 +866,9 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             {/* ── Trust signals ── */}
             <div
               className="p-5 space-y-3 rounded-2xl"
-              style={{ background: "rgba(234,242,238,0.3)", border: "1px solid #E8E2D8" }}
+              style={{ background: "rgba(234,242,238,0.3)", border: "1px solid #E8E8F4" }}
             >
-              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#1C1F2A" }}>
+              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#1A1A2E" }}>
                 Why trust this listing
               </p>
               <div className="space-y-2.5 text-sm">
@@ -881,11 +881,11 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                     ? ["Member of a professional trade body"]
                     : []),
                 ].map((text, i) => (
-                  <div key={i} className="flex items-center gap-2.5" style={{ color: "#5A4E44" }}>
+                  <div key={i} className="flex items-center gap-2.5" style={{ color: "#5C5C7A" }}>
                     <CheckCircle
                       className="w-4 h-4 shrink-0"
                       aria-hidden="true"
-                      style={{ color: "#5E8B73" }}
+                      style={{ color: "#6B6DE8" }}
                     />
                     {text}
                   </div>
@@ -897,7 +897,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             <div style={section} className="p-5">
               <p
                 className="text-xs font-semibold uppercase tracking-wider mb-3"
-                style={{ color: "#1C1F2A" }}
+                style={{ color: "#1A1A2E" }}
               >
                 Price summary
               </p>
@@ -911,19 +911,19 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   >
                     <span
                       className="truncate pr-3"
-                      style={{ color: isBest ? "#1C1F2A" : "#5A4E44", fontWeight: isBest ? 600 : 400 }}
+                      style={{ color: isBest ? "#1A1A2E" : "#5C5C7A", fontWeight: isBest ? 600 : 400 }}
                     >
                       {item.service}
                     </span>
-                    <span className="font-bold shrink-0" style={{ color: "#1C1F2A" }}>
+                    <span className="font-bold shrink-0" style={{ color: "#1A1A2E" }}>
                       £{item.price.toLocaleString()}
                     </span>
                   </div>
                 );
               })}
-              <p className="text-xs mt-3" style={{ color: "#7A6E64" }}>
+              <p className="text-xs mt-3" style={{ color: "#5C5C7A" }}>
                 From{" "}
-                <span className="font-semibold" style={{ color: "#1C1F2A" }}>
+                <span className="font-semibold" style={{ color: "#1A1A2E" }}>
                   £{lowestPrice.toLocaleString()}
                 </span>{" "}
                 — all prices include VAT
@@ -931,7 +931,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <button
                 onClick={() => setQuoteOpen(true)}
                 className="w-full mt-4 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none text-white"
-                style={{ background: "#5E8B73" }}
+                style={{ background: "#6B6DE8" }}
               >
                 Get a free quote
               </button>
@@ -945,20 +945,20 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center gap-3 px-4 py-3"
         style={{
           background: "white",
-          borderTop: "1px solid #E8E2D8",
+          borderTop: "1px solid #E8E8F4",
           boxShadow: "0 -4px 20px rgba(28,31,42,0.08)",
         }}
       >
         <div className="flex-1 min-w-0">
           <p className="text-[10px] uppercase tracking-wider" style={{ color: "#9A8E84" }}>From</p>
-          <p className="font-bold text-lg leading-none" style={{ color: "#1C1F2A" }}>
+          <p className="font-bold text-lg leading-none" style={{ color: "#1A1A2E" }}>
             £{lowestPrice.toLocaleString()}
           </p>
         </div>
         <a
           href={`tel:${fd.phone}`}
           className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold min-h-[48px] focus:outline-none"
-          style={{ border: "1px solid #E8E2D8", color: "#1C1F2A" }}
+          style={{ border: "1px solid #E8E8F4", color: "#1A1A2E" }}
         >
           <Phone className="w-4 h-4" aria-hidden="true" />
           Call
@@ -966,7 +966,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
         <button
           onClick={() => setQuoteOpen(true)}
           className="flex-1 py-3 rounded-xl text-white text-sm font-semibold min-h-[48px] hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none"
-          style={{ background: "#1C1F2A" }}
+          style={{ background: "#1A1A2E" }}
         >
           Request a quote
         </button>

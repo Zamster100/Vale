@@ -65,7 +65,7 @@ export default function HowItWorks() {
           className="flex flex-col px-6 py-7 rounded-xl"
           style={{
             background: "#FFFFFF",
-            border: "1px solid #E8E2D8",
+            border: "1px solid #E8E8F4",
             boxShadow: "0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
             // Animation state driven by `visible`
             opacity: visible ? 1 : 0,
@@ -76,23 +76,23 @@ export default function HowItWorks() {
         >
           <div
             className="w-10 h-10 rounded-lg flex items-center justify-center mb-6 shrink-0"
-            style={{ background: "#EAF2EE" }}
+            style={{ background: "#D2D3FC" }}
           >
-            <Icon className="w-5 h-5" style={{ color: "#5E8B73" }} aria-hidden="true" />
+            <Icon className="w-5 h-5" style={{ color: "#6B6DE8" }} aria-hidden="true" />
           </div>
           <h3
             className="mb-2"
             style={{
-              fontFamily: "var(--font-cormorant), serif",
+              fontFamily: "var(--font-open-sans), sans-serif",
               fontSize: "19px",
               fontWeight: 500,
-              color: "#1C1F2A",
+              color: "#1A1A2E",
               lineHeight: 1.25,
             }}
           >
             {title}
           </h3>
-          <p className="text-[13px] leading-[1.65]" style={{ color: "#7A6E64" }}>
+          <p className="text-[13px] leading-[1.65]" style={{ color: "#5C5C7A" }}>
             {body}
           </p>
         </div>

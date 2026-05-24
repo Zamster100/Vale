@@ -6,9 +6,9 @@ import { type QuoteRequest, type QuoteStatus, SERVICE_TYPE_LABELS, timeAgo } fro
 
 const STATUS_STYLES: Record<QuoteStatus, { bg: string; text: string; label: string }> = {
   pending: { bg: "rgba(226,107,94,0.1)", text: "#C95548", label: "New" },
-  contacted: { bg: "rgba(94,139,115,0.1)", text: "#1C1F2A", label: "Contacted" },
+  contacted: { bg: "rgba(107,109,232,0.1)", text: "#1A1A2E", label: "Contacted" },
   booked: { bg: "rgba(123,168,74,0.15)", text: "#5A8A30", label: "Booked" },
-  declined: { bg: "rgba(232,226,216,0.3)", text: "#7A6E64", label: "Declined" },
+  declined: { bg: "rgba(232,226,216,0.3)", text: "#5C5C7A", label: "Declined" },
 };
 
 async function patchStatus(id: string, status: QuoteStatus): Promise<void> {
@@ -36,7 +36,7 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
     <div
       className="rounded-xl overflow-hidden transition-all"
       style={{
-        border: status === "pending" ? "1.5px solid rgba(226,107,94,0.4)" : "1px solid #E8E2D8",
+        border: status === "pending" ? "1.5px solid rgba(226,107,94,0.4)" : "1px solid #E8E8F4",
       }}
     >
       <p className="sr-only" aria-live="polite" aria-atomic="true">{statusAnnounce}</p>
@@ -50,11 +50,11 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
       >
         <div className="flex items-center gap-3 min-w-0">
           {status === "pending" && (
-            <span className="w-2 h-2 rounded-full shrink-0" aria-hidden="true" style={{ background: "#5E8B73" }} />
+            <span className="w-2 h-2 rounded-full shrink-0" aria-hidden="true" style={{ background: "#6B6DE8" }} />
           )}
           <div className="min-w-0">
-            <p className="font-semibold text-sm truncate" style={{ color: "#5A4E44" }}>{init.familyName}</p>
-            <p className="text-xs" style={{ color: "#7A6E64" }}>
+            <p className="font-semibold text-sm truncate" style={{ color: "#5C5C7A" }}>{init.familyName}</p>
+            <p className="text-xs" style={{ color: "#5C5C7A" }}>
               {SERVICE_TYPE_LABELS[init.serviceType] ?? init.serviceType}{" · "}{timeAgo(init.createdAt)}
             </p>
           </div>
@@ -67,30 +67,30 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
             {style.label}
           </span>
           {expanded
-            ? <ChevronUp className="w-4 h-4" aria-hidden="true" style={{ color: "#7A6E64" }} />
-            : <ChevronDown className="w-4 h-4" aria-hidden="true" style={{ color: "#7A6E64" }} />
+            ? <ChevronUp className="w-4 h-4" aria-hidden="true" style={{ color: "#5C5C7A" }} />
+            : <ChevronDown className="w-4 h-4" aria-hidden="true" style={{ color: "#5C5C7A" }} />
           }
         </div>
       </button>
 
       {expanded && (
-        <div className="p-4" style={{ borderTop: "1px solid #E8E2D8", background: "#F7F3EE" }}>
+        <div className="p-4" style={{ borderTop: "1px solid #E8E8F4", background: "#FAFAFA" }}>
           <div className="flex flex-wrap gap-2 mb-4">
             <a
               href={`mailto:${init.email}`}
               className="flex items-center gap-1.5 text-sm hover:underline min-h-[44px] px-3 py-2 rounded-xl hover:opacity-80 transition-opacity focus:outline-none"
-              style={{ background: "white", border: "1px solid #E8E2D8", color: "#5E8B73" }}
+              style={{ background: "white", border: "1px solid #E8E8F4", color: "#6B6DE8" }}
             >
-              <Mail className="w-3.5 h-3.5 shrink-0" aria-hidden="true" style={{ color: "#7A6E64" }} />
+              <Mail className="w-3.5 h-3.5 shrink-0" aria-hidden="true" style={{ color: "#5C5C7A" }} />
               <span className="truncate max-w-[180px]">{init.email}</span>
             </a>
             {init.phone && (
               <a
                 href={`tel:${init.phone}`}
                 className="flex items-center gap-1.5 text-sm hover:underline min-h-[44px] px-3 py-2 rounded-xl hover:opacity-80 transition-opacity focus:outline-none"
-                style={{ background: "white", border: "1px solid #E8E2D8", color: "#5E8B73" }}
+                style={{ background: "white", border: "1px solid #E8E8F4", color: "#6B6DE8" }}
               >
-                <Phone className="w-3.5 h-3.5 shrink-0" aria-hidden="true" style={{ color: "#7A6E64" }} />
+                <Phone className="w-3.5 h-3.5 shrink-0" aria-hidden="true" style={{ color: "#5C5C7A" }} />
                 {init.phone}
               </a>
             )}
@@ -99,7 +99,7 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
           {init.message && (
             <blockquote
               className="pl-3 mb-4 text-sm italic leading-relaxed"
-              style={{ borderLeft: "2px solid #5E8B73", color: "#7A6E64" }}
+              style={{ borderLeft: "2px solid #6B6DE8", color: "#5C5C7A" }}
             >
               &ldquo;{init.message}&rdquo;
             </blockquote>
@@ -112,7 +112,7 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
                   type="button"
                   onClick={() => handleStatus("contacted")}
                   className="text-white px-4 py-2 rounded-md text-xs font-semibold hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
-                  style={{ background: "#1C1F2A" }}
+                  style={{ background: "#1A1A2E" }}
                 >
                   Mark as contacted
                 </button>
@@ -131,7 +131,7 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
                 type="button"
                 onClick={() => handleStatus("declined")}
                 className="px-4 py-2 rounded-md text-xs font-semibold hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
-                style={{ background: "white", border: "1px solid #E8E2D8", color: "#7A6E64" }}
+                style={{ background: "white", border: "1px solid #E8E8F4", color: "#5C5C7A" }}
               >
                 Decline
               </button>
@@ -145,7 +145,7 @@ function QuoteCard({ request: init }: { request: QuoteRequest }) {
             </p>
           )}
           {status === "declined" && (
-            <p className="text-xs" style={{ color: "#7A6E64" }}>This request has been declined.</p>
+            <p className="text-xs" style={{ color: "#5C5C7A" }}>This request has been declined.</p>
           )}
         </div>
       )}
@@ -159,7 +159,7 @@ export default function QuoteRequestFeed({ requests }: { requests: QuoteRequest[
   return (
     <section aria-label="Quote request feed">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold" style={{ color: "#1C1F2A" }}>Quote requests</h2>
+        <h2 className="text-lg font-semibold" style={{ color: "#1A1A2E" }}>Quote requests</h2>
         {newCount > 0 && (
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(226,107,94,0.1)", color: "#C95548" }}>
             {newCount} new
@@ -168,9 +168,9 @@ export default function QuoteRequestFeed({ requests }: { requests: QuoteRequest[
       </div>
 
       {requests.length === 0 ? (
-        <div className="p-8 text-center rounded-xl" style={{ background: "white", border: "1px solid #E8E2D8" }}>
-          <p className="text-sm" style={{ color: "#7A6E64" }}>No quote requests yet.</p>
-          <p className="text-xs mt-1" style={{ color: "#7A6E64" }}>Requests from families will appear here.</p>
+        <div className="p-8 text-center rounded-xl" style={{ background: "white", border: "1px solid #E8E8F4" }}>
+          <p className="text-sm" style={{ color: "#5C5C7A" }}>No quote requests yet.</p>
+          <p className="text-xs mt-1" style={{ color: "#5C5C7A" }}>Requests from families will appear here.</p>
         </div>
       ) : (
         <div className="space-y-3" aria-live="polite" aria-relevant="additions">

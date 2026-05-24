@@ -31,7 +31,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <Navigation />
       <main className="flex-1">{children}</main>
 
-      <footer style={{ background: "#1C1F2A" }}>
+      <footer style={{ background: "#1A1A2E" }}>
         <div className="max-w-6xl mx-auto px-6 py-14">
 
           {/* Top grid */}
@@ -43,7 +43,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <div className="md:col-span-1">
               <Link
                 href="/"
-                className="inline-block mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+                className="inline-block mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
                 aria-label="Vale homepage"
               >
                 <span
@@ -75,7 +75,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     <li key={label}>
                       <Link
                         href={href}
-                        className="text-sm transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+                        className="text-sm transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
                         style={{ color: "rgba(255,255,255,0.6)" }}
                       >
                         {label}
@@ -97,7 +97,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <Link
                   key={label}
                   href={href}
-                  className="text-xs transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5E8B73] rounded"
+                  className="text-xs transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
                   style={{ color: "rgba(255,255,255,0.3)" }}
                 >
                   {label}

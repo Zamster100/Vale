@@ -22,8 +22,8 @@ function MiniStars({ rating }: { rating: number }) {
           key={s}
           className="w-3 h-3"
           style={{
-            color: s <= Math.round(rating) ? "#C4975A" : "#EAF2EE",
-            fill: s <= Math.round(rating) ? "#C4975A" : "#EAF2EE",
+            color: s <= Math.round(rating) ? "#C45EC4" : "#D2D3FC",
+            fill: s <= Math.round(rating) ? "#C45EC4" : "#D2D3FC",
           }}
         />
       ))}
@@ -43,7 +43,7 @@ export default function RatingBreakdown({ reviews }: { reviews: WithFactors[] })
 
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#1C1F2A" }}>
+      <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#1A1A2E" }}>
         Rating breakdown
       </p>
       <div className="grid grid-cols-2 gap-x-6 gap-y-3">
@@ -51,7 +51,7 @@ export default function RatingBreakdown({ reviews }: { reviews: WithFactors[] })
           <div key={label}>
             <div className="flex items-center justify-between mb-0.5">
               <span className="text-xs" style={{ color: "#5F7080" }}>{label}</span>
-              <span className="text-xs font-semibold" style={{ color: "#1C1F2A" }}>{avg}</span>
+              <span className="text-xs font-semibold" style={{ color: "#1A1A2E" }}>{avg}</span>
             </div>
             <MiniStars rating={avg} />
           </div>

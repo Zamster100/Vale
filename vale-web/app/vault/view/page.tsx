@@ -34,9 +34,9 @@ function timeAgo(iso: string): string {
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }> = {
   pending:   { bg: "rgba(226,107,94,0.1)",   text: "#C95548", label: "Pending" },
-  contacted: { bg: "rgba(94,139,115,0.1)",    text: "#1C1F2A", label: "Contacted" },
+  contacted: { bg: "rgba(107,109,232,0.1)",    text: "#1A1A2E", label: "Contacted" },
   booked:    { bg: "rgba(123,168,74,0.15)",   text: "#5A8A30", label: "Booked" },
-  declined:  { bg: "rgba(232,226,216,0.3)",   text: "#7A6E64", label: "Declined" },
+  declined:  { bg: "rgba(232,226,216,0.3)",   text: "#5C5C7A", label: "Declined" },
 };
 
 const SERVICE_TYPE_DATA_LABELS: Record<string, string> = {
@@ -45,7 +45,7 @@ const SERVICE_TYPE_DATA_LABELS: Record<string, string> = {
 
 const card: React.CSSProperties = {
   background: "white",
-  border: "1px solid #E8E2D8",
+  border: "1px solid #E8E8F4",
   borderRadius: "12px",
   overflow: "hidden",
 };
@@ -53,12 +53,12 @@ const card: React.CSSProperties = {
 function SectionCard({ title, step, empty, children }: { title: string; step: number; empty: boolean; children: React.ReactNode }) {
   return (
     <section style={card}>
-      <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: "1px solid #E8E2D8", background: "#F7F3EE" }}>
-        <h2 className="text-base font-semibold" style={{ color: "#1C1F2A" }}>{title}</h2>
+      <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: "1px solid #E8E8F4", background: "#FAFAFA" }}>
+        <h2 className="text-base font-semibold" style={{ color: "#1A1A2E" }}>{title}</h2>
         <Link
           href={`/vault/start?step=${step}`}
           className="flex items-center gap-1.5 text-sm font-semibold hover:underline focus:outline-none rounded px-2 py-1 min-h-[44px]"
-          style={{ color: "#5E8B73" }}
+          style={{ color: "#6B6DE8" }}
         >
           <Pencil className="w-3.5 h-3.5" aria-hidden="true" />
           {empty ? "Add" : "Edit"}
@@ -66,9 +66,9 @@ function SectionCard({ title, step, empty, children }: { title: string; step: nu
       </div>
       <div className="px-6 py-5">
         {empty ? (
-          <p className="text-sm italic" style={{ color: "#7A6E64" }}>
+          <p className="text-sm italic" style={{ color: "#5C5C7A" }}>
             Not yet added —{" "}
-            <Link href={`/vault/start?step=${step}`} className="not-italic underline" style={{ color: "#5E8B73" }}>fill in your details</Link>
+            <Link href={`/vault/start?step=${step}`} className="not-italic underline" style={{ color: "#6B6DE8" }}>fill in your details</Link>
           </p>
         ) : children}
       </div>
@@ -80,8 +80,8 @@ function DataRow({ label, value }: { label: string; value?: string }) {
   if (!value) return null;
   return (
     <div className="flex flex-col sm:flex-row sm:gap-4 py-2.5 last:border-0" style={{ borderBottom: "1px solid rgba(234,242,238,0.6)" }}>
-      <dt className="text-xs font-semibold uppercase tracking-wider sm:w-44 shrink-0 mb-0.5 sm:mb-0 sm:pt-0.5" style={{ color: "#7A6E64" }}>{label}</dt>
-      <dd className="text-sm leading-relaxed" style={{ color: "#5A4E44" }}>{value}</dd>
+      <dt className="text-xs font-semibold uppercase tracking-wider sm:w-44 shrink-0 mb-0.5 sm:mb-0 sm:pt-0.5" style={{ color: "#5C5C7A" }}>{label}</dt>
+      <dd className="text-sm leading-relaxed" style={{ color: "#5C5C7A" }}>{value}</dd>
     </div>
   );
 }
@@ -92,36 +92,36 @@ function ProviderCard({ fd, serviceType, rank, onRequestQuote }: { fd: FuneralDi
     : getLowestPrice(fd);
 
   return (
-    <div className="relative flex flex-col gap-3 p-5 rounded-xl" style={{ background: "white", border: rank === 0 ? "1.5px solid rgba(94,139,115,0.5)" : "1px solid #E8E2D8" }}>
+    <div className="relative flex flex-col gap-3 p-5 rounded-xl" style={{ background: "white", border: rank === 0 ? "1.5px solid rgba(107,109,232,0.5)" : "1px solid #E8E8F4" }}>
       {rank === 0 && (
-        <span className="absolute -top-2.5 left-4 text-xs font-bold px-2.5 py-0.5 rounded-full" style={{ background: "#5E8B73", color: "white" }}>
+        <span className="absolute -top-2.5 left-4 text-xs font-bold px-2.5 py-0.5 rounded-full" style={{ background: "#6B6DE8", color: "white" }}>
           Best match
         </span>
       )}
       <div>
-        <p className="font-semibold text-sm leading-snug" style={{ color: "#1C1F2A" }}>{fd.name}</p>
-        <p className="text-xs mt-0.5" style={{ color: "#7A6E64" }}>{fd.city}</p>
+        <p className="font-semibold text-sm leading-snug" style={{ color: "#1A1A2E" }}>{fd.name}</p>
+        <p className="text-xs mt-0.5" style={{ color: "#5C5C7A" }}>{fd.city}</p>
       </div>
       <div className="flex items-center gap-1.5">
         <Star className="w-3.5 h-3.5" aria-hidden="true" style={{ color: "#E26B5E", fill: "#E26B5E" }} />
-        <span className="text-xs font-semibold" style={{ color: "#1C1F2A" }}>{fd.rating}</span>
-        <span className="text-xs" style={{ color: "#7A6E64" }}>({fd.reviewCount})</span>
+        <span className="text-xs font-semibold" style={{ color: "#1A1A2E" }}>{fd.rating}</span>
+        <span className="text-xs" style={{ color: "#5C5C7A" }}>({fd.reviewCount})</span>
       </div>
       <div>
-        <p className="text-xs" style={{ color: "#7A6E64" }}>From</p>
-        <p className="text-xl font-light" style={{ color: "#1C1F2A" }}>£{price.toLocaleString()}</p>
+        <p className="text-xs" style={{ color: "#5C5C7A" }}>From</p>
+        <p className="text-xl font-light" style={{ color: "#1A1A2E" }}>£{price.toLocaleString()}</p>
       </div>
       <button
         onClick={() => onRequestQuote(fd)}
         className="w-full text-white py-2.5 rounded-md text-xs font-semibold hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
-        style={{ background: "#1C1F2A" }}
+        style={{ background: "#1A1A2E" }}
       >
         Request quote
       </button>
       <Link
         href={`/funeral-directors/${fd.id}`}
         className="w-full py-2 rounded-md text-xs font-semibold text-center hover:opacity-80 transition-opacity min-h-[44px] flex items-center justify-center gap-1 focus:outline-none"
-        style={{ border: "1px solid #E8E2D8", color: "#1C1F2A" }}
+        style={{ border: "1px solid #E8E8F4", color: "#1A1A2E" }}
       >
         View profile <ChevronRight className="w-3 h-3" aria-hidden="true" />
       </Link>
@@ -170,8 +170,8 @@ export default function VaultViewPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F7F3EE" }}>
-        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#1C1F2A", borderTopColor: "transparent" }} aria-label="Loading" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+        <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#1A1A2E", borderTopColor: "transparent" }} aria-label="Loading" />
       </div>
     );
   }
@@ -191,11 +191,11 @@ export default function VaultViewPage() {
     .sort((a, b) => b.rating - a.rating).slice(0, 3);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#F7F3EE" }}>
-      <header className="sticky top-0 z-50" style={{ background: "#1C1F2A" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#FAFAFA" }}>
+      <header className="sticky top-0 z-50" style={{ background: "#1A1A2E" }}>
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 focus:outline-none rounded" aria-label="Vale homepage">
-            <span className="text-xl tracking-tight" style={{ color: "white", fontFamily: "var(--font-cormorant), serif", fontWeight: 600 }}>Vale<span style={{ color: "#5E8B73" }}>.</span></span>
+            <span className="text-xl tracking-tight" style={{ color: "white", fontFamily: "var(--font-open-sans), sans-serif", fontWeight: 600 }}>Vale<span style={{ color: "#6B6DE8" }}>.</span></span>
             <span className="text-sm hidden sm:inline ml-1" style={{ color: "rgba(255,255,255,0.5)" }}>Vault</span>
           </Link>
           <button
@@ -212,13 +212,13 @@ export default function VaultViewPage() {
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 py-10">
         <div className="mb-8">
-          <h1 className="mb-1" style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)", fontSize: "clamp(24px,4vw,36px)" }}>
+          <h1 className="mb-1" style={{ color: "#1A1A2E", fontFamily: "var(--font-open-sans)", fontSize: "clamp(24px,4vw,36px)" }}>
             {firstName ? `${firstName}'s Vault` : "Your Vault"}
           </h1>
-          <p className="text-sm" style={{ color: "#7A6E64" }}>
+          <p className="text-sm" style={{ color: "#5C5C7A" }}>
             {hasBasics ? "You've done something truly thoughtful for the people who love you." : "Start recording your wishes — it's a meaningful gift to your family."}
           </p>
-          {vault?.updatedAt && <p className="text-xs mt-1" style={{ color: "#7A6E64" }}>Last updated {formatDate(vault.updatedAt)}</p>}
+          {vault?.updatedAt && <p className="text-xs mt-1" style={{ color: "#5C5C7A" }}>Last updated {formatDate(vault.updatedAt)}</p>}
         </div>
 
         <div className="flex flex-wrap gap-3 mb-8">
@@ -226,7 +226,7 @@ export default function VaultViewPage() {
             <Link
               href="/vault/start"
               className="flex items-center gap-2 text-white px-5 py-3 rounded-md font-semibold text-sm hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
-              style={{ background: "#1C1F2A" }}
+              style={{ background: "#1A1A2E" }}
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
               Start my Vault
@@ -237,7 +237,7 @@ export default function VaultViewPage() {
                 type="button"
                 onClick={handleCopyLink}
                 className="flex items-center gap-2 text-white px-5 py-3 rounded-md font-semibold text-sm hover:opacity-90 transition-opacity min-h-[44px] focus:outline-none"
-                style={{ background: "#5E8B73" }}
+                style={{ background: "#6B6DE8" }}
               >
                 {copied ? <Check className="w-4 h-4" aria-hidden="true" /> : <Share2 className="w-4 h-4" aria-hidden="true" />}
                 {copied ? "Link copied!" : "Copy share link"}
@@ -246,7 +246,7 @@ export default function VaultViewPage() {
                 type="button"
                 onClick={handleEmailShare}
                 className="flex items-center gap-2 px-5 py-3 rounded-md font-semibold text-sm hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
-                style={{ background: "white", border: "1px solid #E8E2D8", color: "#1C1F2A" }}
+                style={{ background: "white", border: "1px solid #E8E8F4", color: "#1A1A2E" }}
               >
                 <Mail className="w-4 h-4" aria-hidden="true" />
                 Email to family
@@ -255,7 +255,7 @@ export default function VaultViewPage() {
                 type="button"
                 onClick={() => window.print()}
                 className="flex items-center gap-2 px-5 py-3 rounded-md font-semibold text-sm hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
-                style={{ background: "white", border: "1px solid #E8E2D8", color: "#7A6E64" }}
+                style={{ background: "white", border: "1px solid #E8E8F4", color: "#5C5C7A" }}
               >
                 <Printer className="w-4 h-4" aria-hidden="true" />
                 Print
@@ -300,17 +300,17 @@ export default function VaultViewPage() {
           <SectionCard title="Documents" step={4} empty={!hasDocs}>
             <ul className="space-y-3">
               {vault?.documents.map((doc) => (
-                <li key={doc.id} className="flex items-center justify-between gap-3 rounded-xl px-4 py-3" style={{ border: "1px solid #E8E2D8" }}>
+                <li key={doc.id} className="flex items-center justify-between gap-3 rounded-xl px-4 py-3" style={{ border: "1px solid #E8E8F4" }}>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold" style={{ color: "#5A4E44" }}>{doc.label}</p>
-                    <p className="text-xs truncate" style={{ color: "#7A6E64" }}>{doc.fileName} · Uploaded {formatDate(doc.uploadedAt)}</p>
+                    <p className="text-sm font-semibold" style={{ color: "#5C5C7A" }}>{doc.label}</p>
+                    <p className="text-xs truncate" style={{ color: "#5C5C7A" }}>{doc.fileName} · Uploaded {formatDate(doc.uploadedAt)}</p>
                   </div>
                   <a
                     href={doc.dataUrl}
                     download={doc.fileName}
                     aria-label={`Download ${doc.label}`}
                     className="flex items-center gap-1.5 text-xs font-semibold hover:underline focus:outline-none rounded px-2 py-1 min-h-[44px] shrink-0"
-                    style={{ color: "#5E8B73" }}
+                    style={{ color: "#6B6DE8" }}
                   >
                     <Download className="w-3.5 h-3.5" aria-hidden="true" />
                     Download
@@ -324,27 +324,27 @@ export default function VaultViewPage() {
         {myRequests.length > 0 && (
           <section className="mt-8">
             <div className="flex items-center gap-2 mb-4">
-              <h2 className="text-base font-semibold" style={{ color: "#1C1F2A" }}>Your quote requests</h2>
-              <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: "rgba(234,242,238,0.4)", color: "#7A6E64" }}>{myRequests.length}</span>
+              <h2 className="text-base font-semibold" style={{ color: "#1A1A2E" }}>Your quote requests</h2>
+              <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: "rgba(210,211,252,0.2)", color: "#5C5C7A" }}>{myRequests.length}</span>
             </div>
             <div className="space-y-2">
               {myRequests.map((req) => {
                 const status = STATUS_STYLES[req.status] ?? STATUS_STYLES.pending;
                 return (
-                  <div key={req.id} className="rounded-xl px-5 py-4 flex items-center justify-between gap-4" style={{ background: "white", border: "1px solid #E8E2D8" }}>
+                  <div key={req.id} className="rounded-xl px-5 py-4 flex items-center justify-between gap-4" style={{ background: "white", border: "1px solid #E8E8F4" }}>
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-sm truncate" style={{ color: "#5A4E44" }}>{req.fdName}</p>
+                      <p className="font-semibold text-sm truncate" style={{ color: "#5C5C7A" }}>{req.fdName}</p>
                       <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                        <span className="text-xs" style={{ color: "#7A6E64" }}>{SERVICE_TYPE_DATA_LABELS[req.serviceType] ?? req.serviceType}</span>
+                        <span className="text-xs" style={{ color: "#5C5C7A" }}>{SERVICE_TYPE_DATA_LABELS[req.serviceType] ?? req.serviceType}</span>
                         <span style={{ color: "rgba(232,226,216,0.8)" }} aria-hidden="true">·</span>
-                        <span className="flex items-center gap-1 text-xs" style={{ color: "#7A6E64" }}>
+                        <span className="flex items-center gap-1 text-xs" style={{ color: "#5C5C7A" }}>
                           <Clock className="w-3 h-3" aria-hidden="true" />{timeAgo(req.createdAt)}
                         </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
                       {req.phone && (
-                        <a href={`tel:${req.phone}`} aria-label={`Call ${req.fdName}`} className="hover:opacity-70 transition-opacity focus:outline-none rounded p-1" style={{ color: "#7A6E64" }}>
+                        <a href={`tel:${req.phone}`} aria-label={`Call ${req.fdName}`} className="hover:opacity-70 transition-opacity focus:outline-none rounded p-1" style={{ color: "#5C5C7A" }}>
                           <Phone className="w-4 h-4" aria-hidden="true" />
                         </a>
                       )}
@@ -360,11 +360,11 @@ export default function VaultViewPage() {
         {hasBasics && (
           <section className="mt-8">
             <div style={{ ...card }}>
-              <div className="px-6 py-5" style={{ borderBottom: "1px solid #E8E2D8" }}>
-                <h2 className="text-base font-semibold mb-0.5" style={{ color: "#1C1F2A" }}>
+              <div className="px-6 py-5" style={{ borderBottom: "1px solid #E8E8F4" }}>
+                <h2 className="text-base font-semibold mb-0.5" style={{ color: "#1A1A2E" }}>
                   {vaultServiceType ? `Funeral directors offering ${SERVICE_TYPE_LABELS[vaultServiceType as ServiceType]?.toLowerCase()}` : "Funeral directors near you"}
                 </h2>
-                <p className="text-sm" style={{ color: "#7A6E64" }}>
+                <p className="text-sm" style={{ color: "#5C5C7A" }}>
                   {vaultServiceType ? "Based on your wishes, these providers offer exactly what you're looking for." : "Add your service wishes to get personalised recommendations."}
                 </p>
               </div>
@@ -374,9 +374,9 @@ export default function VaultViewPage() {
                     <ProviderCard key={fd.id} fd={fd} serviceType={vault?.serviceType ?? ""} rank={i} onRequestQuote={(fd) => setQuoteTarget({ fd })} />
                   ))}
                 </div>
-                <div className="mt-5 pt-5 flex items-center justify-between gap-4" style={{ borderTop: "1px solid #E8E2D8" }}>
-                  <p className="text-xs" style={{ color: "#7A6E64" }}>Showing top rated providers. All prices include VAT and are CMA compliant.</p>
-                  <Link href="/search" className="text-sm font-semibold hover:underline flex items-center gap-1 shrink-0 focus:outline-none rounded min-h-[44px]" style={{ color: "#5E8B73" }}>
+                <div className="mt-5 pt-5 flex items-center justify-between gap-4" style={{ borderTop: "1px solid #E8E8F4" }}>
+                  <p className="text-xs" style={{ color: "#5C5C7A" }}>Showing top rated providers. All prices include VAT and are CMA compliant.</p>
+                  <Link href="/search" className="text-sm font-semibold hover:underline flex items-center gap-1 shrink-0 focus:outline-none rounded min-h-[44px]" style={{ color: "#6B6DE8" }}>
                     See all providers <ChevronRight className="w-4 h-4" aria-hidden="true" />
                   </Link>
                 </div>
@@ -386,7 +386,7 @@ export default function VaultViewPage() {
         )}
 
         {hasBasics && (
-          <p className="mt-8 text-xs text-center" style={{ color: "#7A6E64" }}>
+          <p className="mt-8 text-xs text-center" style={{ color: "#5C5C7A" }}>
             Share link:{" "}
             <span className="font-mono break-all">
               {typeof window !== "undefined" ? `${window.location.origin}/vault/share/${vault?.shareToken}` : ""}

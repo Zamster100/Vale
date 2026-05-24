@@ -19,10 +19,10 @@ export default function VerificationPage() {
 
   if (!checked) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#F7F3EE" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div
           className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin"
-          style={{ borderColor: "#1C1F2A", borderTopColor: "transparent" }}
+          style={{ borderColor: "#1A1A2E", borderTopColor: "transparent" }}
           aria-label="Loading"
         />
       </div>
@@ -30,20 +30,20 @@ export default function VerificationPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#F7F3EE" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <header
         className="sticky top-0 z-50"
-        style={{ background: "#1C1F2A", borderBottom: "1px solid rgba(28,31,42,0.3)" }}
+        style={{ background: "#1A1A2E", borderBottom: "1px solid rgba(28,31,42,0.3)" }}
       >
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link
               href="/"
               className="text-xl tracking-tight focus:outline-none rounded"
-              style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600, color: "white" }}
+              style={{ fontFamily: "var(--font-open-sans)", fontWeight: 600, color: "white" }}
               aria-label="Vale home"
             >
-              Vale<span style={{ color: "#5E8B73" }}>.</span>
+              Vale<span style={{ color: "#6B6DE8" }}>.</span>
             </Link>
             <span style={{ color: "rgba(255,255,255,0.3)" }} aria-hidden="true">|</span>
             <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
@@ -75,7 +75,7 @@ export default function VerificationPage() {
           <div>
             <h1
               className="text-xl font-semibold"
-              style={{ color: "#1C1F2A", fontFamily: "var(--font-cormorant)" }}
+              style={{ color: "#1A1A2E", fontFamily: "var(--font-open-sans)" }}
             >
               Vale Verification Panel
             </h1>
@@ -87,7 +87,7 @@ export default function VerificationPage() {
 
         <div
           className="p-6 rounded-xl"
-          style={{ background: "white", border: "1px solid #E8E2D8" }}
+          style={{ background: "white", border: "1px solid #E8E8F4" }}
         >
           <VerificationPanel />
         </div>
