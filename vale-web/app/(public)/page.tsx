@@ -15,7 +15,6 @@ import {
   Users,
 } from "lucide-react";
 import HomeSearchBar from "@/components/HomeSearchBar";
-import VersionToggle from "@/components/VersionToggle";
 
 /* ─────────────────────── DESIGN TOKENS ─────────────────────── */
 const OS = "var(--font-open-sans), -apple-system, sans-serif";
@@ -184,7 +183,6 @@ const STATS = [
 export default function Home() {
   return (
     <div style={{ fontFamily: OS, background: "#FFFFFF", color: DARK }}>
-      <VersionToggle />
 
       {/* ══════════════════════════════════════════════════════
           HERO — lavender bg, big search card
