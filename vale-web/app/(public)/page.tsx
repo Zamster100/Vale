@@ -890,11 +890,7 @@ export default function Home() {
       <section
         className="relative overflow-hidden"
         style={{
-          background: "#F4FDF4",
-          backgroundImage: [
-            "radial-gradient(ellipse at 10% 50%, rgba(196,245,196,0.9) 0%, transparent 55%)",
-            "radial-gradient(ellipse at 90% 50%, rgba(251,210,252,0.85) 0%, transparent 55%)",
-          ].join(", "),
+          background: "linear-gradient(to bottom, #D2D3FC 0%, #1A1A2E 100%)",
         }}
       >
         <div className="max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28">
@@ -906,24 +902,24 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-start justify-center px-0 md:pr-12 py-8 md:py-0">
               <span
                 className="inline-block rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide mb-5 w-fit"
-                style={{ background: MINT, color: MINT_BTN }}
+                style={{ background: "rgba(255,255,255,0.2)", color: "#ffffff" }}
               >
                 For families
               </span>
               <h2
                 className="mb-3"
-                style={{ fontFamily: OS, fontWeight: 800, fontSize: "clamp(24px,3vw,36px)", color: DARK, lineHeight: 1.15 }}
+                style={{ fontFamily: OS, fontWeight: 800, fontSize: "clamp(24px,3vw,36px)", color: "#ffffff", lineHeight: 1.15 }}
               >
                 Find a funeral home
               </h2>
-              <p className="mb-7" style={{ fontSize: "15px", color: MED, lineHeight: 1.65, maxWidth: "360px" }}>
+              <p className="mb-7" style={{ fontSize: "15px", color: "rgba(255,255,255,0.75)", lineHeight: 1.65, maxWidth: "360px" }}>
                 Search verified providers near you. See real prices, read genuine family
                 reviews, and connect — no account needed, no pressure, ever.
               </p>
               <Link
                 href="/search"
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
-                style={{ background: MINT_BTN, color: "#FFFFFF" }}
+                style={{ background: "#ffffff", color: DARK }}
               >
                 Search funeral directors
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -933,13 +929,13 @@ export default function Home() {
             {/* Vertical divider */}
             <div
               className="hidden md:block self-stretch shrink-0"
-              style={{ width: "1px", background: "rgba(26,26,46,0.1)" }}
+              style={{ width: "1px", background: "rgba(255,255,255,0.2)" }}
               aria-hidden="true"
             />
             {/* Horizontal divider on mobile */}
             <div
               className="block md:hidden"
-              style={{ height: "1px", background: "rgba(26,26,46,0.1)", margin: "8px 0" }}
+              style={{ height: "1px", background: "rgba(255,255,255,0.2)", margin: "8px 0" }}
               aria-hidden="true"
             />
 
@@ -947,24 +943,24 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-start justify-center px-0 md:pl-12 py-8 md:py-0">
               <span
                 className="inline-block rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide mb-5 w-fit"
-                style={{ background: PINK, color: "#C45EC4" }}
+                style={{ background: "rgba(255,255,255,0.2)", color: "#ffffff" }}
               >
                 For directors
               </span>
               <h2
                 className="mb-3"
-                style={{ fontFamily: OS, fontWeight: 800, fontSize: "clamp(24px,3vw,36px)", color: DARK, lineHeight: 1.15 }}
+                style={{ fontFamily: OS, fontWeight: 800, fontSize: "clamp(24px,3vw,36px)", color: "#ffffff", lineHeight: 1.15 }}
               >
                 List your funeral home
               </h2>
-              <p className="mb-7" style={{ fontSize: "15px", color: MED, lineHeight: 1.65, maxWidth: "360px" }}>
+              <p className="mb-7" style={{ fontSize: "15px", color: "rgba(255,255,255,0.75)", lineHeight: 1.65, maxWidth: "360px" }}>
                 Join 1,200+ verified providers on the UK&apos;s most trusted funeral
                 director platform. Transparent, CMA-compliant, and free to list.
               </p>
               <Link
                 href="/for-funeral-directors"
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
-                style={{ background: "#C45EC4", color: "#FFFFFF" }}
+                style={{ background: "rgba(255,255,255,0.15)", color: "#ffffff", border: "1.5px solid rgba(255,255,255,0.4)" }}
               >
                 Get listed today
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
