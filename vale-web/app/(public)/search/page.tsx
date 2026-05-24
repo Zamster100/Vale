@@ -289,20 +289,20 @@ function FDCard({
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <a
                 href={`tel:${fd.phone}`}
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`Call ${fd.name}`}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all min-h-[42px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-                style={{ border: "1px solid #E8E8F4", color: "#1A1A2E" }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
+                style={{ border: "1px solid #E8E8F4", color: "#5C5C7A" }}
               >
-                <Phone className="w-4 h-4" aria-hidden="true" />
-                View number
+                <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+                Call
               </a>
               <Link
                 href={`/funeral-directors/${fd.id}`}
-                className="flex items-center whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold text-white min-h-[42px] hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#6B6DE8]"
+                className="flex items-center whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-bold text-white hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#6B6DE8]"
                 style={{ background: "#6B6DE8" }}
               >
                 View pricing
