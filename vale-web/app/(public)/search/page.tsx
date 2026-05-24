@@ -90,6 +90,7 @@ function FDCard({
   fd: FuneralDirector;
   serviceFilter: ServiceType | "all";
 }) {
+  const [showPhone, setShowPhone] = useState(false);
   const lowestPrice =
     serviceFilter === "all"
       ? getLowestPrice(fd)
@@ -290,16 +291,28 @@ function FDCard({
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <a
-                href={`tel:${fd.phone}`}
-                onClick={(e) => e.stopPropagation()}
-                aria-label={`Call ${fd.name}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-                style={{ border: "1px solid #E8E8F4", color: "#5C5C7A" }}
-              >
-                <Phone className="w-3.5 h-3.5" aria-hidden="true" />
-                Call
-              </a>
+              {showPhone ? (
+                <a
+                  href={`tel:${fd.phone}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus:outline-none"
+                  style={{ border: "1px solid #D2D3FC", color: "#6B6DE8", background: "#F4F4FD", whiteSpace: "nowrap" }}
+                >
+                  <Phone className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                  {fd.phone}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setShowPhone(true); }}
+                  aria-label={`Reveal phone number for ${fd.name}`}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
+                  style={{ border: "1px solid #E8E8F4", color: "#5C5C7A" }}
+                >
+                  <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+                  Call
+                </button>
+              )}
               <Link
                 href={`/funeral-directors/${fd.id}`}
                 className="flex items-center whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-bold text-white hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#6B6DE8]"
