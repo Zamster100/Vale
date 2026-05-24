@@ -617,73 +617,6 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          VALE VAULT — yellow bg
-      ══════════════════════════════════════════════════════ */}
-      <section className="py-16 md:py-24 px-6 md:px-10" style={{ background: YEL }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-            {/* Copy */}
-            <div>
-              <span
-                className="inline-block rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wide mb-5"
-                style={{ background: "rgba(255,255,255,0.65)", color: "#806000" }}
-              >
-                Vale Vault
-              </span>
-              <h2
-                className="mb-4"
-                style={{ fontFamily: OS, fontWeight: 700, fontSize: "clamp(26px,3.5vw,40px)", color: DARK, lineHeight: 1.15 }}
-              >
-                A gift to the people{" "}
-                <span style={{ color: "#806000" }}>you love.</span>
-              </h2>
-              <p
-                className="mb-8"
-                style={{ fontSize: "16px", color: MED, lineHeight: 1.65, maxWidth: "400px" }}
-              >
-                Store your wishes, important documents, and personal messages in a secure vault.
-                Share access with the people who&apos;ll need it most. Free, forever.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/vault/start"
-                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold hover:opacity-90 transition-opacity"
-                  style={{ background: "#806000", color: "#FFFFFF" }}
-                >
-                  Start your vault — free
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                </Link>
-              </div>
-              <div className="mt-4 flex items-center gap-3 text-xs" style={{ color: "#806000", opacity: 0.7 }}>
-                <Lock className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>End-to-end encrypted · No credit card · Cancel any time</span>
-              </div>
-            </div>
-
-            {/* Feature tiles */}
-            <div className="grid grid-cols-2 gap-4">
-              {VAULT_FEATURES.map(({ icon: Icon, label, desc }) => (
-                <div
-                  key={label}
-                  className="rounded-2xl p-5"
-                  style={{ background: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.9)" }}
-                >
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"
-                    style={{ background: "#FFFFFF" }}
-                  >
-                    <Icon className="w-4.5 h-4.5" style={{ color: "#806000" }} aria-hidden="true" />
-                  </div>
-                  <div style={{ fontSize: "14px", fontWeight: 700, color: DARK, marginBottom: "4px" }}>{label}</div>
-                  <div style={{ fontSize: "12px", color: MED, lineHeight: 1.5 }}>{desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
           ADVISOR SECTION — white bg
       ══════════════════════════════════════════════════════ */}
       <section
@@ -887,8 +820,8 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
           FINAL CTA BAND — full-height, no background
       ══════════════════════════════════════════════════════ */}
-      <section className="min-h-screen flex items-center">
-        <div className="w-full max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28">
+      <section>
+        <div className="max-w-5xl mx-auto px-6 md:px-10 py-16 md:py-24">
 
           {/* Two CTAs side by side with vertical divider */}
           <div className="flex flex-col md:flex-row items-stretch gap-0">
@@ -938,7 +871,7 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-start justify-center px-0 md:pl-12 py-8 md:py-0">
               <span
                 className="inline-block rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide mb-5 w-fit"
-                style={{ background: PINK, color: "#C45EC4" }}
+                style={{ background: LAV, color: LAV_BTN }}
               >
                 For directors
               </span>
@@ -955,7 +888,7 @@ export default function Home() {
               <Link
                 href="/for-funeral-directors"
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity"
-                style={{ background: "#C45EC4", color: "#FFFFFF" }}
+                style={{ background: LAV_BTN, color: "#FFFFFF" }}
               >
                 Get listed today
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
