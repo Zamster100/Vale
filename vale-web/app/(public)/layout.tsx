@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 const FOOTER_LINKS = {
   Families: [
     { label: "Find a director",   href: "/search" },
-    { label: "Guides & advice",   href: "/resources" },
+    { label: "Guides & advice",   href: "/guides" },
     { label: "Submit a review",   href: "/submit-review" },
   ],
   "Funeral directors": [
