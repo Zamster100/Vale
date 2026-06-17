@@ -151,7 +151,7 @@ export default function HomeSearchBar() {
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
       <form onSubmit={handleSubmit} role="search" aria-label="Search funeral directors">
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <input
             type="text"
             value={value}
@@ -170,12 +170,12 @@ export default function HomeSearchBar() {
             autoComplete="off"
             style={{
               fontFamily: OS,
-              fontSize: "13px",
-              color: "#1A1A2E",
+              fontSize: "15px",
+              color: "#100B20",
               background: "transparent",
               border: "none",
-              borderRadius: "10px",
-              padding: "13px 14px",
+              borderRadius: "8px",
+              padding: "10px 8px",
               outline: "none",
               width: "100%",
               flex: 1,
@@ -188,11 +188,11 @@ export default function HomeSearchBar() {
               fontFamily: OS,
               fontSize: "14px",
               fontWeight: 700,
-              background: "#6B6DE8",
+              background: "#4F34C4",
               color: "#FFFFFF",
               border: "none",
-              borderRadius: "10px",
-              padding: "13px 28px",
+              borderRadius: "8px",
+              padding: "10px 22px",
               cursor: hasText ? "pointer" : "default",
               display: "inline-flex",
               alignItems: "center",
@@ -247,7 +247,7 @@ export default function HomeSearchBar() {
                   padding: "9px 12px",
                   borderRadius: "12px",
                   cursor: "pointer",
-                  background: isActive ? "#EEF0FF" : "transparent",
+                  background: isActive ? "#E3DFFF" : "transparent",
                   transition: "background 0.1s",
                 }}
               >
@@ -255,7 +255,7 @@ export default function HomeSearchBar() {
                 <span
                   style={{
                     flexShrink: 0,
-                    color: isDirector ? "#C45EC4" : "#6B6DE8",
+                    color: isDirector ? "#AC7E08" : "#4F34C4",
                     display: "flex",
                   }}
                 >
@@ -307,8 +307,8 @@ export default function HomeSearchBar() {
                     borderRadius: "99px",
                     letterSpacing: "0.04em",
                     textTransform: "uppercase",
-                    background: isDirector ? "#FBD2FC" : "#D2D3FC",
-                    color: isDirector ? "#C45EC4" : "#6B6DE8",
+                    background: isDirector ? "#FEF1C6" : "#E3DFFF",
+                    color: isDirector ? "#AC7E08" : "#4F34C4",
                   }}
                 >
                   {s.kind === "city" ? "Town" : s.kind === "postcode" ? "Postcode" : "Director"}

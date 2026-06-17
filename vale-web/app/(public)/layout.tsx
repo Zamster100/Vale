@@ -31,8 +31,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <Navigation />
       <main className="flex-1">{children}</main>
 
-      <footer style={{ background: "#1A1A2E" }}>
-        <div className="max-w-6xl mx-auto px-6 py-14">
+      <footer style={{ background: "#100B20" }}>
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-7 py-14">
 
           {/* Top grid */}
           <div
