@@ -20,14 +20,13 @@ import VerifiedFamilyLabel from "@/components/reviews/VerifiedFamilyLabel";
 import { use } from "react";
 
 /* ─────────────────────── Design tokens ─────────────────────── */
-const OS = "var(--font-open-sans), sans-serif";
-const LAV = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
-const MINT = "#D3FCD2";
-const PINK_BTN = "#C45EC4";
-const DARK = "#1A1A2E";
-const MED = "#5C5C7A";
-const BDR = "#E8E8F4";
+const DM = "var(--font-dm-sans), -apple-system, sans-serif";
+const LAV = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
+const STAR_C = "#F5C541";
+const DARK = "#100B20";
+const MED = "#4A415E";
+const BDR = "#D5D0E4";
 
 /* ─────────────────────── Helpers ─────────────────────── */
 
@@ -93,8 +92,8 @@ function StarRating({ rating, size = "md" }: { rating: number; size?: "sm" | "md
           key={s}
           className={sz}
           style={{
-            color: s <= Math.round(rating) ? PINK_BTN : LAV,
-            fill: s <= Math.round(rating) ? PINK_BTN : LAV,
+            color: s <= Math.round(rating) ? STAR_C : LAV,
+            fill: s <= Math.round(rating) ? STAR_C : LAV,
           }}
         />
       ))}
@@ -133,11 +132,11 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
   const replyHours = fd.hours?.oohResponseHours ?? 24;
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA", fontFamily: OS }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA", fontFamily: DM }}>
 
       {/* ════════════ Breadcrumb ════════════ */}
       <nav aria-label="Breadcrumb" style={{ background: "white", borderBottom: `1px solid ${BDR}` }}>
-        <ol className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: MED }}>
+        <ol className="max-w-[1366px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-2 text-sm" style={{ color: MED }}>
           <li>
             <Link
               href="/search"
@@ -156,7 +155,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
       </nav>
 
       {/* ════════════ Two-column layout (starts right after breadcrumb, Lottie-style) ════════════ */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-10">
+      <div className="max-w-[1366px] mx-auto px-4 sm:px-6 pt-6 pb-10">
         <div className="lg:grid lg:grid-cols-3 lg:gap-8 flex flex-col gap-6">
 
           {/* ──────────── MAIN CONTENT (left 2/3) ──────────── */}
@@ -180,7 +179,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                   <span
                     className="flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full"
                     style={openStatus.open
-                      ? { background: "rgba(107,109,232,0.1)", color: LAV_BTN }
+                      ? { background: "rgba(79,52,196,0.1)", color: LAV_BTN }
                       : { background: "rgba(226,107,94,0.1)", color: "#7A1F1A" }
                     }
                   >
@@ -193,7 +192,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               {/* Name */}
               <h1
                 className="text-3xl sm:text-4xl mb-3"
-                style={{ color: DARK, fontFamily: OS, fontWeight: 700 }}
+                style={{ color: DARK, fontFamily: DM, fontWeight: 700 }}
               >
                 {fd.name}
               </h1>
@@ -414,7 +413,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           key={i}
                           style={{
                             background: isBest
-                              ? "rgba(107,109,232,0.06)"
+                              ? "rgba(79,52,196,0.06)"
                               : i % 2 === 0 ? "white" : "#FAFAFA",
                             borderBottom: `1px solid ${BDR}`,
                           }}
@@ -442,7 +441,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                               className="inline-block font-bold px-3 py-1 rounded-full"
                               style={isBest
                                 ? { background: LAV, color: LAV_BTN }
-                                : { background: "#F4F4FD", color: DARK }
+                                : { background: "#F4F2F8", color: DARK }
                               }
                             >
                               £{item.price.toLocaleString()}
@@ -467,7 +466,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                       key={i}
                       className="px-5 py-4"
                       style={{
-                        background: isBest ? "rgba(107,109,232,0.06)" : "white",
+                        background: isBest ? "rgba(79,52,196,0.06)" : "white",
                         borderBottom: `1px solid ${BDR}`,
                       }}
                     >
@@ -494,7 +493,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                           className="font-bold px-3 py-1 rounded-full shrink-0"
                           style={isBest
                             ? { background: LAV, color: LAV_BTN }
-                            : { background: "#F4F4FD", color: DARK }
+                            : { background: "#F4F2F8", color: DARK }
                           }
                         >
                           £{item.price.toLocaleString()}
@@ -533,7 +532,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 </div>
                 <Link
                   href={`/submit-review?fd=${fd.id}`}
-                  className="hidden sm:flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full hover:opacity-80 transition-opacity shrink-0 min-h-[44px] focus:outline-none"
+                  className="hidden sm:flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg hover:opacity-80 transition-opacity shrink-0 min-h-[44px] focus:outline-none"
                   style={{ border: `1px solid ${BDR}`, color: DARK }}
                 >
                   <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
@@ -554,7 +553,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                       <StarRating rating={star} size="sm" />
                       <div
                         className="flex-1 h-2 rounded-full overflow-hidden"
-                        style={{ background: "rgba(210,211,252,0.35)" }}
+                        style={{ background: "rgba(227,223,255,0.35)" }}
                       >
                         <div
                           className="h-full rounded-full transition-all duration-500"
@@ -634,11 +633,11 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                               style={{
                                 background: "rgba(210,211,252,0.25)",
                                 color: DARK,
-                                border: "1px solid rgba(107,109,232,0.25)",
+                                border: "1px solid rgba(79,52,196,0.25)",
                               }}
                             >
                               {label}{" "}
-                              <span style={{ color: PINK_BTN, fontWeight: 600 }}>
+                              <span style={{ color: LAV_BTN, fontWeight: 600 }}>
                                 {value}/5
                               </span>
                             </span>
@@ -663,7 +662,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 </Link>
                 <Link
                   href={`/submit-review?fd=${fd.id}`}
-                  className="sm:hidden flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
+                  className="sm:hidden flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg hover:opacity-80 transition-opacity min-h-[44px] focus:outline-none"
                   style={{ border: `1px solid ${BDR}`, color: DARK }}
                 >
                   <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
@@ -724,7 +723,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             <div style={{ ...section, overflow: "hidden" }}>
               {/* Header */}
               <div className="px-6 pt-6 pb-3">
-                <h3 className="text-lg font-bold mb-0.5" style={{ color: DARK, fontFamily: OS }}>
+                <h3 className="text-lg font-bold mb-0.5" style={{ color: DARK, fontFamily: DM }}>
                   Contact {fd.name}
                 </h3>
                 <p className="text-sm" style={{ color: MED }}>Choose how you&apos;d like to get in touch</p>
@@ -746,7 +745,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <button
                   onClick={() => setQuoteOpen(true)}
                   className="w-full py-3.5 rounded-xl text-white font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                  style={{ background: LAV_BTN, fontFamily: OS }}
+                  style={{ background: LAV_BTN, fontFamily: DM }}
                 >
                   ✦ &nbsp;Request a quote
                 </button>
@@ -757,8 +756,8 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 {/* Phone CTA */}
                 <a
                   href={`tel:${fd.phone}`}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-colors min-h-[44px] focus:outline-none hover:bg-[#EEF0FF]"
-                  style={{ border: `1.5px solid ${LAV_BTN}`, color: LAV_BTN, fontFamily: OS }}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold transition-colors min-h-[44px] focus:outline-none hover:bg-[#E3DFFF]"
+                  style={{ border: `1.5px solid ${LAV_BTN}`, color: LAV_BTN, fontFamily: DM }}
                 >
                   <Phone className="w-4 h-4" aria-hidden="true" />
                   Call {fd.phone}
@@ -768,7 +767,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
                 <Link
                   href={`/submit-review?fd=${fd.id}`}
                   className="w-full flex items-center justify-center gap-1.5 py-2.5 text-sm hover:underline transition-opacity min-h-[44px] focus:outline-none"
-                  style={{ color: LAV_BTN, fontFamily: OS }}
+                  style={{ color: LAV_BTN, fontFamily: DM }}
                 >
                   <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
                   Submit a review
@@ -814,7 +813,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
             {/* ── Trust signals ── */}
             <div
               className="p-5 space-y-3 rounded-2xl"
-              style={{ background: "rgba(210,211,252,0.15)", border: `1px solid ${BDR}` }}
+              style={{ background: "rgba(227,223,255,0.15)", border: `1px solid ${BDR}` }}
             >
               <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: DARK }}>
                 Why trust this listing
@@ -879,7 +878,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
               <button
                 onClick={() => setQuoteOpen(true)}
                 className="w-full mt-4 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none text-white"
-                style={{ background: LAV_BTN, fontFamily: OS }}
+                style={{ background: LAV_BTN, fontFamily: DM }}
               >
                 Get a free quote
               </button>
@@ -894,7 +893,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
         style={{
           background: "white",
           borderTop: `1px solid ${BDR}`,
-          boxShadow: "0 -4px 20px rgba(26,26,46,0.08)",
+          boxShadow: "0 -4px 20px rgba(16,11,32,0.08)",
         }}
       >
         <div className="flex-1 min-w-0">
@@ -914,7 +913,7 @@ export default function FDProfilePage({ params }: { params: Promise<{ id: string
         <button
           onClick={() => setQuoteOpen(true)}
           className="flex-1 py-3 rounded-xl text-white text-sm font-bold min-h-[48px] hover:opacity-90 active:scale-[0.98] transition-all focus:outline-none"
-          style={{ background: LAV_BTN, fontFamily: OS }}
+          style={{ background: LAV_BTN, fontFamily: DM }}
         >
           Request a quote
         </button>

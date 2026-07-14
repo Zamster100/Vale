@@ -1,13 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronRight, Clock, ArrowLeft, Star, Search } from "lucide-react";
 
-const OS      = "var(--font-open-sans), -apple-system, sans-serif";
-const DARK    = "#1A1A2E";
-const MED     = "#5C5C7A";
-const LITE    = "#9090A8";
-const LAV     = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
-const BDR     = "#E8E8F4";
+const DM      = "var(--font-dm-sans), -apple-system, sans-serif";
+const DARK    = "#100B20";
+const MED     = "#4A415E";
+const LITE    = "#9E96B2";
+const LAV     = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
+const GOLD    = "#F5C541";
+const BDR     = "#D5D0E4";
+const EASE    = [0.16, 1, 0.3, 1] as const;
 
 export interface TocLink {
   href: string;
@@ -31,12 +36,21 @@ export default function BlogLayout({
   title, category, categoryBg, categoryText,
   author, date, readTime, heroColor, tocLinks, children,
 }: BlogLayoutProps) {
+  const reduce = useReducedMotion();
+
+  function fadeUp(delay: number) {
+    return {
+      initial: { opacity: 0, y: reduce ? 0 : 20 },
+      animate: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
+    };
+  }
+
   return (
-    <div style={{ fontFamily: OS, background: "#FFFFFF", color: DARK }}>
+    <div style={{ fontFamily: DM, background: "#FFFFFF", color: DARK }}>
 
       {/* ── Hero ── */}
       <section style={{ background: DARK }}>
-        <div className="max-w-5xl mx-auto px-6 md:px-10 pt-10 pb-12">
+        <div className="max-w-[1366px] mx-auto px-6 md:px-10 pt-10 pb-12">
 
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 mb-6 flex-wrap">
@@ -50,30 +64,32 @@ export default function BlogLayout({
           </nav>
 
           {/* Category badge */}
-          <span
+          <motion.span
             className="inline-block rounded-full px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide mb-4"
             style={{ background: categoryBg, color: categoryText }}
+            {...fadeUp(0)}
           >
             {category}
-          </span>
+          </motion.span>
 
           {/* Title */}
-          <h1
+          <motion.h1
             className="mb-5 max-w-3xl"
             style={{
-              fontFamily: OS,
+              fontFamily: DM,
               fontSize: "clamp(24px, 4vw, 44px)",
               fontWeight: 700,
               lineHeight: 1.2,
               letterSpacing: "-0.02em",
               color: "#FFFFFF",
             }}
+            {...fadeUp(0.1)}
           >
             {title}
-          </h1>
+          </motion.h1>
 
           {/* Meta row */}
-          <div className="flex items-center gap-5 flex-wrap">
+          <motion.div className="flex items-center gap-5 flex-wrap" {...fadeUp(0.2)}>
             <div className="flex items-center gap-2">
               <div
                 className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
@@ -89,7 +105,7 @@ export default function BlogLayout({
               <Clock className="w-3.5 h-3.5" aria-hidden="true" />
               {readTime} read
             </span>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -97,15 +113,18 @@ export default function BlogLayout({
       <div style={{ background: heroColor, height: "260px" }} aria-hidden="true" />
 
       {/* ── Main content ── */}
-      <div className="max-w-5xl mx-auto px-6 md:px-10 py-12 md:py-16">
+      <div className="max-w-[1366px] mx-auto px-6 md:px-10 py-12 md:py-16">
         <div className="grid lg:grid-cols-[1fr_268px] gap-12 items-start">
 
           {/* Article */}
           <article>
             {/* "In this article" TOC */}
-            <div
+            <motion.div
               className="rounded-xl p-5 mb-10"
-              style={{ background: "#F8F8FF", border: `1px solid ${BDR}` }}
+              style={{ background: "#FDFCFE", border: `1px solid ${BDR}` }}
+              initial={{ opacity: 0, y: reduce ? 0 : 16 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } }}
+              viewport={{ once: true, margin: "-40px" }}
             >
               <p className="text-sm font-bold mb-3" style={{ color: DARK }}>In this article:</p>
               <nav aria-label="Article sections">
@@ -124,7 +143,7 @@ export default function BlogLayout({
                   ))}
                 </ul>
               </nav>
-            </div>
+            </motion.div>
 
             {/* Article body */}
             {children}
@@ -134,9 +153,15 @@ export default function BlogLayout({
           <aside className="space-y-5 lg:sticky lg:top-24">
 
             {/* Search CTA */}
-            <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${BDR}` }}>
+            <motion.div
+              className="rounded-xl overflow-hidden"
+              style={{ border: `1px solid ${BDR}` }}
+              initial={{ opacity: 0, y: reduce ? 0 : 16 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.1, ease: EASE } }}
+              viewport={{ once: true, margin: "-40px" }}
+            >
               <div className="p-5" style={{ background: LAV }}>
-                <p className="font-bold text-sm mb-1" style={{ fontFamily: OS, color: DARK }}>
+                <p className="font-bold text-sm mb-1" style={{ fontFamily: DM, color: DARK }}>
                   Ready to search?
                 </p>
                 <p className="text-sm mb-4" style={{ color: MED }}>
@@ -157,18 +182,18 @@ export default function BlogLayout({
               >
                 <div className="flex gap-0.5" aria-label="5 out of 5 stars">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: "#E8A020" }} aria-hidden="true" />
+                    <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: GOLD }} aria-hidden="true" />
                   ))}
                 </div>
                 <span className="text-xs font-bold" style={{ color: DARK }}>Excellent</span>
                 <span className="text-xs" style={{ color: LITE }}>1,200+ providers</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* TOC (desktop only — secondary navigation) */}
             <div
               className="hidden lg:block rounded-xl p-5"
-              style={{ background: "#FAFAFA", border: `1px solid ${BDR}` }}
+              style={{ background: "#FDFCFE", border: `1px solid ${BDR}` }}
             >
               <p
                 className="text-[11px] font-bold uppercase tracking-wider mb-3"

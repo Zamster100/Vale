@@ -2,19 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { BookOpen, ChevronRight, Clock } from "lucide-react";
 
-const OS = "var(--font-open-sans), -apple-system, sans-serif";
+const DM = "var(--font-dm-sans), -apple-system, sans-serif";
 
-const LAV      = "#D2D3FC";
-const PINK     = "#FBD2FC";
-const YEL      = "#FCFBD2";
-const MINT     = "#D3FCD2";
-const LAV_BTN  = "#6B6DE8";
-const DARK     = "#1A1A2E";
-const MED      = "#5C5C7A";
-const LITE     = "#9090A8";
-const BDR      = "#E8E8F4";
+const LAV      = "#E3DFFF";
+const LAV_BTN  = "#4F34C4";
+const DARK     = "#100B20";
+const MED      = "#4A415E";
+const LITE     = "#9E96B2";
+const BDR      = "#D5D0E4";
+const EASE     = [0.16, 1, 0.3, 1] as const;
 
 type Category = "All" | "Guide" | "Checklist" | "Explainer" | "Support" | "Report";
 
@@ -33,11 +32,11 @@ type GuidePost = {
 const CATEGORIES: Category[] = ["All", "Guide", "Checklist", "Explainer", "Support", "Report"];
 
 const CAT_STYLE: Record<Exclude<Category, "All">, { bg: string; text: string }> = {
-  Guide:     { bg: LAV,   text: LAV_BTN },
-  Checklist: { bg: MINT,  text: "#3AA838" },
-  Explainer: { bg: YEL,   text: "#806000" },
-  Support:   { bg: PINK,  text: "#C45EC4" },
-  Report:    { bg: BDR,   text: MED },
+  Guide:     { bg: LAV, text: LAV_BTN },
+  Checklist: { bg: LAV, text: LAV_BTN },
+  Explainer: { bg: LAV, text: LAV_BTN },
+  Support:   { bg: LAV, text: LAV_BTN },
+  Report:    { bg: BDR, text: MED },
 };
 
 // ─── Add new guide posts here ────────────────────────────────────────────────
@@ -65,7 +64,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "3 June 2026",
     readTime: "10 min",
-    color: PINK,
+    color: LAV,
     href: "/guides/planning-a-meaningful-funeral",
   },
   {
@@ -77,7 +76,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "2 June 2026",
     readTime: "6 min",
-    color: MINT,
+    color: LAV,
     href: "/guides/crafting-funeral-invitations",
   },
   {
@@ -101,7 +100,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "28 May 2026",
     readTime: "6 min",
-    color: MINT,
+    color: LAV,
     href: "/guides/what-to-do-when-someone-dies",
   },
   {
@@ -113,7 +112,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "25 May 2026",
     readTime: "8 min",
-    color: PINK,
+    color: LAV,
     href: "/guides/what-to-do-when-a-child-dies",
   },
   {
@@ -125,7 +124,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "22 May 2026",
     readTime: "7 min",
-    color: YEL,
+    color: LAV,
     href: "/guides/understanding-next-of-kin",
   },
   {
@@ -149,7 +148,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "16 May 2026",
     readTime: "8 min",
-    color: MINT,
+    color: LAV,
     href: "/guides/understanding-inheritance-tax",
   },
   {
@@ -161,7 +160,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "13 May 2026",
     readTime: "7 min",
-    color: PINK,
+    color: LAV,
     href: "/guides/lasting-power-of-attorney",
   },
   {
@@ -173,7 +172,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "10 May 2026",
     readTime: "6 min",
-    color: YEL,
+    color: LAV,
     href: "/guides/planning-for-your-pet",
   },
 ];
@@ -181,6 +180,24 @@ const GUIDES: GuidePost[] = [
 
 export default function GuidesPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("All");
+  const reduce = useReducedMotion();
+
+  function fadeUp(delay: number) {
+    return {
+      initial: { opacity: 0, y: reduce ? 0 : 20 },
+      whileInView: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
+      viewport: { once: true, margin: "-60px" },
+    };
+  }
+
+  const staggerContainer = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+  };
+  const staggerItem = {
+    hidden: { opacity: 0, y: reduce ? 0 : 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+  };
 
   const filtered =
     activeCategory === "All"
@@ -191,20 +208,22 @@ export default function GuidesPage() {
   const rest = filtered.slice(1);
 
   return (
-    <div style={{ fontFamily: OS, background: "#FFFFFF", color: DARK }}>
+    <div style={{ fontFamily: DM, background: "#FFFFFF", color: DARK }}>
 
       {/* ══════════════════ HERO ══════════════════ */}
       <section style={{ background: DARK }}>
-        <div className="max-w-5xl mx-auto px-6 md:px-10 py-16 md:py-20">
-          <div
+        <div className="max-w-[1366px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <motion.div
             className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 text-xs font-semibold uppercase tracking-wide"
             style={{ background: "rgba(210,211,252,0.15)", color: LAV }}
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } }}
           >
             <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
             Vale Guides &amp; Resources
-          </div>
+          </motion.div>
 
-          <h1
+          <motion.h1
             className="mb-4"
             style={{
               fontSize: "clamp(32px, 5vw, 56px)",
@@ -213,19 +232,27 @@ export default function GuidesPage() {
               letterSpacing: "-0.025em",
               color: "#FFFFFF",
             }}
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.1, ease: EASE } }}
           >
             Guides for every step
-          </h1>
+          </motion.h1>
 
-          <p
+          <motion.p
             className="mb-10 max-w-xl"
             style={{ fontSize: "17px", lineHeight: 1.65, color: "rgba(255,255,255,0.6)" }}
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.2, ease: EASE } }}
           >
             Practical, compassionate guidance — written by our family advisors
             for families facing one of life&apos;s hardest moments.
-          </p>
+          </motion.p>
 
-          <div className="flex items-center gap-8 flex-wrap">
+          <motion.div
+            className="flex items-center gap-8 flex-wrap"
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.3, ease: EASE } }}
+          >
             <div>
               <div
                 style={{
@@ -276,7 +303,7 @@ export default function GuidesPage() {
                 Categories
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -286,11 +313,11 @@ export default function GuidesPage() {
           background: "#FFFFFF",
           borderBottom: `1px solid ${BDR}`,
           position: "sticky",
-          top: "64px",
+          top: "68px",
           zIndex: 40,
         }}
       >
-        <div className="max-w-5xl mx-auto px-6 md:px-10 py-3.5 overflow-x-auto">
+        <div className="max-w-[1366px] mx-auto px-6 md:px-10 py-3.5 overflow-x-auto">
           <div className="flex gap-2 min-w-max" role="tablist" aria-label="Filter guides by category">
             {CATEGORIES.map((cat) => {
               const isActive = activeCategory === cat;
@@ -326,7 +353,7 @@ export default function GuidesPage() {
       </div>
 
       {/* ══════════════════ POSTS ══════════════════ */}
-      <div className="max-w-5xl mx-auto px-6 md:px-10 py-12 md:py-16">
+      <div className="max-w-[1366px] mx-auto px-6 md:px-10 py-12 md:py-16">
 
         {filtered.length === 0 ? (
           /* ── Empty state ── */
@@ -360,6 +387,7 @@ export default function GuidesPage() {
           <>
             {/* ── Featured post (latest in filtered set) ── */}
             {featured && (
+              <motion.div {...fadeUp(0)}>
               <Link
                 href={featured.href}
                 className="group block rounded-2xl overflow-hidden mb-8 hover:shadow-xl transition-all duration-200"
@@ -436,14 +464,21 @@ export default function GuidesPage() {
                   </div>
                 </div>
               </Link>
+              </motion.div>
             )}
 
             {/* ── Post grid ── */}
             {rest.length > 0 && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <motion.div
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+              >
                 {rest.map((post) => (
+                  <motion.div key={post.slug} variants={staggerItem}>
                   <Link
-                    key={post.slug}
                     href={post.href}
                     className="group flex flex-col rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200"
                     style={{ border: `1px solid ${BDR}` }}
@@ -506,8 +541,9 @@ export default function GuidesPage() {
                       </div>
                     </div>
                   </Link>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </>
         )}
@@ -518,7 +554,7 @@ export default function GuidesPage() {
         className="py-16 md:py-20 px-6 md:px-10"
         style={{ background: LAV, borderTop: `1px solid ${BDR}` }}
       >
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <motion.div className="max-w-[1366px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6" {...fadeUp(0)}>
           <div>
             <h2
               className="mb-2"
@@ -532,13 +568,13 @@ export default function GuidesPage() {
           </div>
           <Link
             href="/search"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold hover:opacity-90 transition-opacity shrink-0"
+            className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold hover:opacity-90 transition-opacity shrink-0"
             style={{ background: LAV_BTN, color: "#FFFFFF" }}
           >
             Find a funeral director
             <ChevronRight className="w-4 h-4" aria-hidden="true" />
           </Link>
-        </div>
+        </motion.div>
       </section>
 
     </div>

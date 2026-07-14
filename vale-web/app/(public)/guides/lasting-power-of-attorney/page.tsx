@@ -1,13 +1,13 @@
 import BlogLayout from "@/components/blog/BlogLayout";
 
-const DARK    = "#1A1A2E";
-const MED     = "#5C5C7A";
-const LAV     = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
+const DARK    = "#100B20";
+const MED     = "#4A415E";
+const LAV     = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
 const MINT    = "#D3FCD2";
-const PINK    = "#FBD2FC";
+const PINK    = "#CFC8FF";
 const YEL     = "#FCFBD2";
-const BDR     = "#E8E8F4";
+const BDR     = "#D5D0E4";
 
 const H2: React.CSSProperties = { fontSize: "22px", fontWeight: 700, color: DARK, marginTop: "40px", marginBottom: "12px", lineHeight: 1.25 };
 const H3: React.CSSProperties = { fontSize: "16px", fontWeight: 700, color: DARK, marginTop: "20px", marginBottom: "8px", lineHeight: 1.3 };
@@ -28,7 +28,7 @@ export default function LastingPowerOfAttorneyPage() {
       title="Lasting Power of Attorney (LPA): A Guide to Protecting Your Future"
       category="Guide"
       categoryBg={PINK}
-      categoryText="#C45EC4"
+      categoryText="#4F34C4"
       author="Vale Family Advisors"
       date="13 May 2026"
       readTime="7 min"

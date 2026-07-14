@@ -2,25 +2,25 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Users, BarChart2, Star, Shield, TrendingUp, ChevronDown,
   ChevronUp, CheckCircle, Award, MessageSquare, Eye, Zap,
-  Search, Phone, MapPin,
+  Search, Phone, MapPin, ArrowRight,
 } from "lucide-react";
 
 /* ─── Design tokens ─────────────────────────────────────────────── */
-const OS       = "var(--font-open-sans), sans-serif";
-const DARK     = "#1A1A2E";
-const MED      = "#5C5C7A";
-const LITE     = "#9090A8";
-const BDR      = "#E8E8F4";
-const LAV      = "#D2D3FC";
-const LAV_BTN  = "#6B6DE8";
-const MINT     = "#D3FCD2";
-const MINT_BTN = "#3AA838";
-const YEL      = "#FCFBD2";
-const PINK     = "#FBD2FC";
-const PINK_BTN = "#C45EC4";
+const DM       = "var(--font-dm-sans), -apple-system, sans-serif";
+const DARK     = "#100B20";
+const MED      = "#4A415E";
+const LITE     = "#9E96B2";
+const BDR      = "#D5D0E4";
+const LAV      = "#E3DFFF";
+const PURPLE   = "#4F34C4";
+const GOLD     = "#F5C541";
+const BG_OFF   = "#FDFCFE";
+const BG_TINT  = "#F4F2F8";
+const EASE     = [0.16, 1, 0.3, 1] as const;
 
 /* ─── Data ──────────────────────────────────────────────────────── */
 const STATS = [
@@ -87,7 +87,6 @@ const TESTIMONIALS = [
     location: "London",
     body: "Since listing on Vale our enquiry volume has increased by over 40%. The families who contact us have already read our reviews and seen our pricing — they arrive ready to make a decision. It has transformed how we work.",
     rating: 5,
-    color: LAV,
   },
   {
     name: "Sarah Mitchell",
@@ -95,7 +94,6 @@ const TESTIMONIALS = [
     location: "Manchester",
     body: "Vale has levelled the playing field between independent directors like us and the national chains. Our reviews are front and centre, and that's what families genuinely care about. We've never had more meaningful enquiries.",
     rating: 5,
-    color: MINT,
   },
   {
     name: "David Keane",
@@ -103,7 +101,6 @@ const TESTIMONIALS = [
     location: "Birmingham",
     body: "The dashboard benchmarking is something I didn't know I needed. Seeing exactly how our pricing compares to the local area has helped us make much more confident decisions. The verified review system is also a genuine differentiator.",
     rating: 5,
-    color: YEL,
   },
 ];
 
@@ -139,11 +136,11 @@ const FAQS = [
 ];
 
 /* ─── Sub-components ────────────────────────────────────────────── */
-function Check({ children }: { children: React.ReactNode }) {
+function Check({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
     <li className="flex items-start gap-2.5">
-      <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: MINT_BTN }} />
-      <span className="text-sm" style={{ color: MED }}>{children}</span>
+      <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: dark ? GOLD : PURPLE }} />
+      <span className="text-sm" style={{ color: dark ? "rgba(255,255,255,0.8)" : MED }}>{children}</span>
     </li>
   );
 }
@@ -152,7 +149,7 @@ function StarRow({ n }: { n: number }) {
   return (
     <div className="flex gap-0.5 mb-3">
       {Array.from({ length: n }).map((_, i) => (
-        <Star key={i} className="w-4 h-4" style={{ color: "#E26B5E", fill: "#E26B5E" }} />
+        <Star key={i} className="w-4 h-4" style={{ color: GOLD, fill: GOLD }} />
       ))}
     </div>
   );
@@ -167,9 +164,9 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         className="w-full flex items-center justify-between gap-4 py-5 text-left focus:outline-none"
         aria-expanded={open}
       >
-        <span className="text-sm font-semibold" style={{ fontFamily: OS, color: DARK }}>{q}</span>
+        <span className="text-sm font-semibold" style={{ fontFamily: DM, color: DARK }}>{q}</span>
         {open
-          ? <ChevronUp className="w-4 h-4 shrink-0" style={{ color: LAV_BTN }} />
+          ? <ChevronUp className="w-4 h-4 shrink-0" style={{ color: PURPLE }} />
           : <ChevronDown className="w-4 h-4 shrink-0" style={{ color: LITE }} />}
       </button>
       {open && (
@@ -182,168 +179,158 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 /* ─── Page ──────────────────────────────────────────────────────── */
 export default function ForFuneralDirectors() {
   const [tab, setTab] = useState<"business" | "families">("business");
+  const reduce = useReducedMotion();
 
   const activeFeatures = tab === "business" ? MARKETING_BENEFITS : OTHER_BENEFITS;
+
+  function fadeUp(delay: number) {
+    return {
+      initial: { opacity: 0, y: reduce ? 0 : 20 },
+      whileInView: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
+      viewport: { once: true, margin: "-80px" },
+    };
+  }
+
+  const staggerContainer = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+  };
+  const staggerItem = {
+    hidden: { opacity: 0, y: reduce ? 0 : 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+  };
 
   return (
     <div style={{ background: "#FFFFFF" }}>
 
       {/* ══════════════════════════════════════════════════════
-          1. HERO — lavender-left × mint-right diagonal gradient
+          1. HERO
       ══════════════════════════════════════════════════════ */}
       <section
-        className="relative overflow-hidden px-6 md:px-10 pt-20 pb-28 md:pt-24 md:pb-36"
-        style={{
-          background: "#F8F9FF",
-          backgroundImage: [
-            "radial-gradient(ellipse at 10% 0%, rgba(180,182,246,0.85) 0%, transparent 55%)",
-            "radial-gradient(ellipse at 90% 0%, rgba(196,245,196,0.75) 0%, transparent 55%)",
-          ].join(", "),
-        }}
+        className="relative overflow-hidden bg-[#A898F4] pt-20 pb-24 md:pt-24 md:pb-28"
+        aria-label="For funeral directors"
       >
-        {/* Dot texture */}
         <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(107,109,232,0.1) 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
           aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "linear-gradient(180deg, #A898F4 0%, #BFAFF9 65%, #F4F0FF 100%)" }}
         />
-
-        <div className="relative max-w-5xl mx-auto text-center">
-          {/* Trust pill */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold mb-8"
-            style={{ background: "white", border: `1px solid ${BDR}`, color: MINT_BTN, boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
-          >
-            <span className="inline-block w-2 h-2 rounded-full animate-pulse" style={{ background: MINT_BTN }} />
-            2,400+ family enquiries last month — and growing
-          </div>
-
-          <h1
-            className="mb-5 max-w-3xl mx-auto"
-            style={{
-              fontFamily:    OS,
-              fontSize:      "clamp(32px, 5vw, 62px)",
-              fontWeight:    800,
-              lineHeight:    1.06,
-              letterSpacing: "-0.025em",
-              color:         DARK,
-            }}
-          >
-            The UK&apos;s most trusted funeral director discovery platform
-          </h1>
-
-          <p
-            className="text-base md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto"
-            style={{ color: MED }}
-          >
-            Partner with Vale to reach thousands of families searching for a
-            funeral director near them — with fully transparent pricing, verified
-            family reviews, and no pressure sales tactics.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/admin/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: LAV_BTN }}
-            >
-              List your business — it&apos;s free
-            </Link>
-            <Link
-              href="mailto:hello@vale.co.uk"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: "white", border: `1.5px solid ${BDR}`, color: DARK }}
-            >
-              Book a call
-            </Link>
-          </div>
-
-          <p className="mt-4 text-xs" style={{ color: LITE }}>
-            No contract · No monthly fee · 3.5% commission on confirmed bookings only
-          </p>
-
-          {/* Dashboard preview mockup */}
-          <div
-            className="mt-16 rounded-2xl overflow-hidden mx-auto max-w-3xl"
-            style={{
-              border: `1px solid ${BDR}`,
-              boxShadow: "0 20px 60px rgba(107,109,232,0.18)",
-              background: "white",
-            }}
-          >
-            {/* Mockup header bar */}
-            <div
-              className="flex items-center gap-2 px-5 py-3.5"
-              style={{ background: DARK, borderBottom: `1px solid rgba(255,255,255,0.08)` }}
-            >
-              <div className="flex gap-1.5">
-                {["#E26B5E","#F5C842","#3AA838"].map((c) => (
-                  <div key={c} className="w-3 h-3 rounded-full" style={{ background: c }} />
-                ))}
-              </div>
-              <div
-                className="flex-1 mx-4 rounded-full px-3 py-1 text-xs text-center"
-                style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}
+        <div className="relative z-10 max-w-[1366px] mx-auto px-4 sm:px-[1.7rem]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left — copy */}
+            <div>
+              <motion.p
+                className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/30 backdrop-blur-sm px-4 py-1.5 text-[13px] font-[600] text-[#26126E] border border-white/40"
+                initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } }}
               >
-                dashboard.vale.co.uk
-              </div>
+                2,400+ family enquiries last month — and growing
+              </motion.p>
+              <motion.h1
+                className="text-balance text-[34px] sm:text-[44px] lg:text-[52px] font-[900] leading-[1.08] tracking-[-0.02em] text-[#100B20] mb-6"
+                initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.1, ease: EASE } }}
+              >
+                The UK&apos;s most trusted funeral director discovery platform
+              </motion.h1>
+              <motion.p
+                className="max-w-xl text-[16px] sm:text-[18px] font-[400] leading-[1.6] text-[#342C46] mb-8"
+                initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.2, ease: EASE } }}
+              >
+                Partner with Vale to reach thousands of families searching for a funeral director
+                near them — with fully transparent pricing, verified family reviews, and no
+                pressure sales tactics.
+              </motion.p>
+              <motion.div
+                className="flex flex-col sm:flex-row gap-3 mb-5"
+                initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.3, ease: EASE } }}
+              >
+                <Link
+                  href="/admin/signup"
+                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-7 py-3 rounded-xl bg-[#4F34C4] text-white text-[15px] font-[700] transition-[background-color] duration-200 ease-out hover:bg-[#3B229D] active:bg-[#26126E] group"
+                >
+                  List your business — it&apos;s free
+                  <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="mailto:hello@vale.co.uk"
+                  className="inline-flex items-center justify-center min-h-[44px] px-7 py-3 rounded-xl border border-[#100B20]/15 bg-white/40 backdrop-blur-sm text-[15px] font-[600] text-[#26126E] transition-colors duration-200 ease-out hover:bg-white/70 hover:border-[#100B20]/25"
+                >
+                  Book a call
+                </Link>
+              </motion.div>
+              <motion.p
+                className="text-[13px] font-[500] text-[#342C46]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.38 } }}
+              >
+                No contract · No monthly fee · 3.5% commission on confirmed bookings only
+              </motion.p>
             </div>
-            {/* Mockup body */}
-            <div className="p-6 grid grid-cols-3 gap-4">
-              {[
-                { label: "Profile views", value: "1,284", up: "+12%", color: LAV },
-                { label: "Quote requests", value: "47",    up: "+8%",  color: MINT },
-                { label: "Conversion rate", value: "34%",  up: "+5%",  color: YEL },
-              ].map(({ label, value, up, color }) => (
-                <div key={label} className="rounded-xl p-4" style={{ background: color }}>
-                  <p className="text-[11px] font-bold uppercase tracking-wide mb-1.5" style={{ color: MED }}>{label}</p>
-                  <p className="text-2xl font-bold" style={{ color: DARK, fontFamily: OS }}>{value}</p>
-                  <p className="text-[11px] font-semibold mt-0.5" style={{ color: MINT_BTN }}>{up} this week</p>
+
+            {/* Right — dashboard mockup */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, y: reduce ? 0 : 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.25, ease: EASE }}
+            >
+              <div className="rounded-2xl bg-white shadow-[0_24px_60px_rgba(16,11,32,0.18)] border border-white/60 overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-[#EAE7F2] bg-[#FAF9FC]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#E3DFFF]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#CFC8FF]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#B5AAFC]" />
+                  <span className="ml-3 text-[12px] font-[500] text-[#9E96B2]">dashboard.vale.co.uk</span>
                 </div>
-              ))}
-              {/* Fake chart */}
-              <div className="col-span-3 rounded-xl p-4" style={{ background: "#F4F4FD", border: `1px solid ${BDR}` }}>
-                <p className="text-xs font-bold mb-3" style={{ color: MED }}>Enquiry trend — last 8 weeks</p>
-                <div className="flex items-end gap-1.5 h-14">
-                  {[30,45,38,60,52,74,68,90].map((h, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 rounded-t-sm transition-all"
-                      style={{ height: `${h}%`, background: i === 7 ? LAV_BTN : LAV }}
-                    />
-                  ))}
+                <div className="p-5 md:p-6">
+                  <div className="grid grid-cols-3 gap-3 mb-5">
+                    {[
+                      { k: "Profile views", v: "1,284", d: "+12%" },
+                      { k: "Quote requests", v: "47", d: "+8%" },
+                      { k: "Conversion rate", v: "34%", d: "+5%" },
+                    ].map(({ k, v, d }) => (
+                      <div key={k} className="rounded-xl bg-[#FAF9FC] border border-[#EAE7F2] p-3">
+                        <div className="text-[10px] font-[600] tracking-[0.04em] uppercase text-[#9E96B2] mb-1.5">{k}</div>
+                        <div className="text-[20px] md:text-[22px] font-[900] leading-none text-[#100B20] mb-1">{v}</div>
+                        <div className="text-[11px] font-[600] text-[#0A7F49]">{d} this week</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="rounded-xl bg-[#FAF9FC] border border-[#EAE7F2] p-4">
+                    <div className="text-[11px] font-[600] text-[#4A415E] mb-3">Enquiry trend — last 8 weeks</div>
+                    <div className="flex items-end gap-1.5 h-24">
+                      {[38, 46, 42, 58, 54, 70, 66, 86].map((h, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 rounded-t-md"
+                          style={{
+                            height: `${h}%`,
+                            background: i === 7 ? "#4F34C4" : "#CFC8FF",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════════════════
-          2. STATS STRIP — dark background
-      ══════════════════════════════════════════════════════ */}
-      <section style={{ background: DARK }}>
-        <div className="max-w-5xl mx-auto px-6 md:px-10 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <div
-                className="mb-1"
-                style={{
-                  fontFamily:    OS,
-                  fontSize:      "clamp(28px, 3.5vw, 40px)",
-                  fontWeight:    800,
-                  color:         "#FFFFFF",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                {value}
+          {/* Stat band */}
+          <motion.div
+            className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/30 rounded-2xl overflow-hidden border border-white/40 backdrop-blur-sm"
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.45, ease: EASE } }}
+          >
+            {STATS.map(({ value, label }) => (
+              <div key={label} className="bg-white/60 p-5 md:p-6 text-center">
+                <div className="text-[26px] md:text-[32px] font-[900] leading-none tracking-[-0.025em] text-[#26126E] mb-2">{value}</div>
+                <div className="text-[12px] md:text-[13px] font-[500] leading-[1.4] text-[#342C46]">{label}</div>
               </div>
-              <div className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>{label}</div>
-            </div>
-          ))}
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -351,17 +338,18 @@ export default function ForFuneralDirectors() {
           3. "VALE CAN HELP YOU..." — centred heading break
       ══════════════════════════════════════════════════════ */}
       <section className="py-20 px-6 text-center" style={{ background: "#FFFFFF" }}>
-        <h2
+        <motion.h2
           style={{
-            fontFamily:    OS,
+            fontFamily:    DM,
             fontSize:      "clamp(28px, 4vw, 48px)",
             fontWeight:    800,
             color:         DARK,
             letterSpacing: "-0.02em",
           }}
+          {...fadeUp(0)}
         >
           Vale can help you…
-        </h2>
+        </motion.h2>
       </section>
 
       {/* ══════════════════════════════════════════════════════
@@ -369,22 +357,22 @@ export default function ForFuneralDirectors() {
       ══════════════════════════════════════════════════════ */}
       <section
         className="py-20 md:py-28 px-6 md:px-10"
-        style={{ background: LAV }}
+        style={{ background: BG_OFF }}
       >
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <div className="max-w-[1366px] mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-start">
 
           {/* Left — copy */}
-          <div>
+          <motion.div {...fadeUp(0)}>
             <div className="flex items-center gap-2.5 mb-5">
-              <span className="inline-block w-5 h-px" style={{ background: LAV_BTN }} aria-hidden="true" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: LAV_BTN }}>
+              <span className="inline-block w-5 h-px" style={{ background: PURPLE }} aria-hidden="true" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: PURPLE }}>
                 Why Vale
               </span>
             </div>
             <h2
               className="mb-5"
               style={{
-                fontFamily:    OS,
+                fontFamily:    DM,
                 fontSize:      "clamp(26px, 3.5vw, 42px)",
                 fontWeight:    800,
                 lineHeight:    1.1,
@@ -403,7 +391,7 @@ export default function ForFuneralDirectors() {
             {/* Tab switcher */}
             <div
               className="inline-flex items-center gap-1 p-1 rounded-full mb-8"
-              style={{ background: "rgba(107,109,232,0.12)" }}
+              style={{ background: BG_TINT }}
             >
               {(["business", "families"] as const).map((t) => (
                 <button
@@ -412,7 +400,7 @@ export default function ForFuneralDirectors() {
                   className="px-5 py-2 rounded-full text-sm font-bold transition-all focus:outline-none"
                   style={
                     tab === t
-                      ? { background: LAV_BTN, color: "white" }
+                      ? { background: PURPLE, color: "white" }
                       : { color: MED }
                   }
                 >
@@ -430,13 +418,20 @@ export default function ForFuneralDirectors() {
                 "Cancel any time — no lock-in contract",
               ].map((item) => <Check key={item}>{item}</Check>)}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Right — feature cards */}
-          <div className="grid grid-cols-1 gap-4">
+          <motion.div
+            className="grid grid-cols-1 gap-4"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {activeFeatures.map(({ icon: Icon, title, body }) => (
-              <div
+              <motion.div
                 key={title}
+                variants={staggerItem}
                 className="flex items-start gap-4 rounded-2xl px-6 py-5"
                 style={{ background: "white", border: `1px solid ${BDR}` }}
               >
@@ -444,17 +439,17 @@ export default function ForFuneralDirectors() {
                   className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center mt-0.5"
                   style={{ background: LAV }}
                 >
-                  <Icon className="w-5 h-5" style={{ color: LAV_BTN }} aria-hidden="true" />
+                  <Icon className="w-5 h-5" style={{ color: PURPLE }} aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm mb-1.5" style={{ fontFamily: OS, color: DARK }}>
+                  <h3 className="font-bold text-sm mb-1.5" style={{ fontFamily: DM, color: DARK }}>
                     {title}
                   </h3>
                   <p className="text-xs leading-relaxed" style={{ color: MED }}>{body}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -463,45 +458,40 @@ export default function ForFuneralDirectors() {
           5. "YOU'LL BE IN GOOD COMPANY" — accreditation logos
       ══════════════════════════════════════════════════════ */}
       <section className="py-16 px-6 md:px-10" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-5xl mx-auto text-center">
+        <motion.div className="max-w-[1366px] mx-auto text-center" {...fadeUp(0)}>
           <h2
             className="mb-3"
-            style={{ fontFamily: OS, fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 700, color: DARK }}
+            style={{ fontFamily: DM, fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 700, color: DARK }}
           >
             You&apos;ll be in good company
           </h2>
           <p className="text-sm mb-10" style={{ color: MED }}>
             Vale works with directors accredited by the UK&apos;s leading funeral industry bodies
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {[
-              { name: "NAFD",  full: "National Association of Funeral Directors", color: LAV },
-              { name: "SAIF",  full: "Society of Allied and Independent Funeral Directors", color: MINT },
-              { name: "BIFD",  full: "British Institute of Funeral Directors", color: YEL },
-              { name: "ICCM",  full: "Institute of Cemetery & Crematorium Management", color: PINK },
-            ].map(({ name, color }) => (
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {["NAFD", "SAIF", "BIFD", "ICCM"].map((name) => (
               <div
                 key={name}
                 className="px-6 py-4 rounded-2xl flex items-center justify-center font-bold text-sm"
-                style={{ background: color, color: DARK, minWidth: "100px" }}
+                style={{ background: BG_TINT, border: `1px solid ${BDR}`, color: MED, minWidth: "100px" }}
               >
                 {name}
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          6. VALE PARTNER DASHBOARD — 3 feature columns
+          6. VALE PARTNER DASHBOARD — dark, gold accent
       ══════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: DARK }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div className="text-center mb-14" {...fadeUp(0)}>
             <h2
               className="mb-3"
               style={{
-                fontFamily:    OS,
+                fontFamily:    DM,
                 fontSize:      "clamp(26px, 3.5vw, 42px)",
                 fontWeight:    800,
                 color:         "#FFFFFF",
@@ -514,65 +504,69 @@ export default function ForFuneralDirectors() {
               A secure portal giving funeral directors live enquiries and a window into
               their marketing performance — all in one place.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <motion.div
+            className="grid md:grid-cols-3 gap-6 mb-12"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {[
               {
                 icon: MapPin,
-                color: LAV,
                 title: "Manage Your Profile",
                 body: "Update your pricing, photos, team bios, opening hours and service list at any time. Changes go live instantly — complete control, always.",
               },
               {
                 icon: MessageSquare,
-                color: MINT,
                 title: "View Quote Requests",
                 body: "See every family enquiry in real time. Contact details, service type, preferred date and budget — everything you need to respond quickly and win the booking.",
               },
               {
                 icon: BarChart2,
-                color: YEL,
                 title: "Monitor Your Performance",
                 body: "Track profile views, enquiry volume and conversion rates week by week. Benchmark your pricing against local competitors and act on real data.",
               },
-            ].map(({ icon: Icon, color, title, body }) => (
-              <div
+            ].map(({ icon: Icon, title, body }) => (
+              <motion.div
                 key={title}
+                variants={staggerItem}
                 className="rounded-2xl p-6"
                 style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
               >
                 <div
                   className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: color }}
+                  style={{ background: "rgba(245,197,65,0.12)" }}
                 >
-                  <Icon className="w-5 h-5" style={{ color: DARK }} aria-hidden="true" />
+                  <Icon className="w-5 h-5" style={{ color: GOLD }} aria-hidden="true" />
                 </div>
-                <h3 className="font-bold text-base mb-2.5" style={{ fontFamily: OS, color: "#FFFFFF" }}>
+                <h3 className="font-bold text-base mb-2.5" style={{ fontFamily: DM, color: "#FFFFFF" }}>
                   {title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>{body}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="text-center">
+          <motion.div className="text-center" {...fadeUp(0.1)}>
             <Link
               href="/admin/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none"
-              style={{ background: LAV_BTN }}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none"
+              style={{ background: GOLD, color: DARK }}
             >
               Access your dashboard — it&apos;s free
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
           7. PRESS LOGOS
       ══════════════════════════════════════════════════════ */}
-      <section className="py-14 px-6" style={{ background: "#FAFAFA", borderBottom: `1px solid ${BDR}` }}>
-        <div className="max-w-5xl mx-auto">
+      <section className="py-14 px-6" style={{ background: BG_OFF, borderBottom: `1px solid ${BDR}` }}>
+        <motion.div className="max-w-[1366px] mx-auto" {...fadeUp(0)}>
           <p className="text-center text-xs font-bold uppercase tracking-[0.18em] mb-8" style={{ color: LITE }}>
             As seen in
           </p>
@@ -587,19 +581,19 @@ export default function ForFuneralDirectors() {
               </span>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
           8. PRICING — two cards
       ══════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div className="text-center mb-14" {...fadeUp(0)}>
             <h2
               className="mb-3"
               style={{
-                fontFamily:    OS,
+                fontFamily:    DM,
                 fontSize:      "clamp(26px, 3.5vw, 42px)",
                 fontWeight:    800,
                 color:         DARK,
@@ -612,23 +606,30 @@ export default function ForFuneralDirectors() {
               Simple, fair and fully aligned with your success.
               You only pay when Vale delivers a result.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-10">
+          <motion.div
+            className="grid md:grid-cols-2 gap-6 mb-10"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {/* Free listing */}
-            <div
+            <motion.div
+              variants={staggerItem}
               className="rounded-2xl p-8"
               style={{ background: "#F4F4FD", border: `1.5px solid ${BDR}` }}
             >
               <div
                 className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-4"
-                style={{ background: LAV, color: LAV_BTN }}
+                style={{ background: LAV, color: PURPLE }}
               >
                 Standard Listing
               </div>
               <h3
                 className="mb-1"
-                style={{ fontFamily: OS, fontSize: "28px", fontWeight: 800, color: DARK }}
+                style={{ fontFamily: DM, fontSize: "28px", fontWeight: 800, color: DARK }}
               >
                 Free
               </h3>
@@ -648,32 +649,34 @@ export default function ForFuneralDirectors() {
               <Link
                 href="/admin/signup"
                 className="block text-center px-6 py-3.5 rounded-xl font-bold text-sm transition-all hover:opacity-90 active:scale-[0.98] focus:outline-none"
-                style={{ background: LAV_BTN, color: "white" }}
+                style={{ background: PURPLE, color: "white" }}
               >
                 Get started — it&apos;s free
               </Link>
-            </div>
+            </motion.div>
 
             {/* Vale Assured */}
-            <div
+            <motion.div
+              variants={staggerItem}
               className="rounded-2xl p-8 relative overflow-hidden"
-              style={{ background: DARK, border: `1.5px solid rgba(107,109,232,0.4)` }}
+              style={{ background: DARK, border: `1.5px solid rgba(79,52,196,0.4)` }}
             >
-              <div
-                className="absolute top-0 right-0 w-48 h-48 pointer-events-none"
-                style={{ background: "radial-gradient(circle, rgba(196,94,196,0.2) 0%, transparent 70%)" }}
-                aria-hidden="true"
-              />
-              <div
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-4"
-                style={{ background: PINK, color: PINK_BTN }}
+              <span
+                className="absolute top-6 right-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold"
+                style={{ background: GOLD, color: DARK }}
               >
                 <Award className="w-3 h-3" />
+                Recommended
+              </span>
+              <div
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-4"
+                style={{ background: "rgba(245,197,65,0.12)", color: GOLD }}
+              >
                 Vale Assured
               </div>
               <h3
                 className="mb-1"
-                style={{ fontFamily: OS, fontSize: "28px", fontWeight: 800, color: "#FFFFFF" }}
+                style={{ fontFamily: DM, fontSize: "28px", fontWeight: 800, color: "#FFFFFF" }}
               >
                 £79
                 <span className="text-base font-medium" style={{ color: "rgba(255,255,255,0.5)" }}>/month</span>
@@ -693,7 +696,7 @@ export default function ForFuneralDirectors() {
                   <li key={item} className="flex items-start gap-2.5">
                     <CheckCircle
                       className="w-4 h-4 shrink-0 mt-0.5"
-                      style={{ color: i === 0 ? "transparent" : MINT_BTN }}
+                      style={{ color: i === 0 ? "transparent" : GOLD }}
                     />
                     <span
                       className={`text-sm ${i === 0 ? "font-bold" : ""}`}
@@ -707,20 +710,21 @@ export default function ForFuneralDirectors() {
               <Link
                 href="mailto:hello@vale.co.uk?subject=Vale Assured enquiry"
                 className="block text-center px-6 py-3.5 rounded-xl font-bold text-sm transition-all hover:opacity-90 active:scale-[0.98] focus:outline-none"
-                style={{ background: LAV_BTN, color: "white" }}
+                style={{ background: GOLD, color: DARK }}
               >
                 Apply for Vale Assured
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Pricing CTA strip */}
-          <div
+          <motion.div
             className="rounded-2xl px-8 py-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
-            style={{ background: MINT, border: `1px solid ${BDR}` }}
+            style={{ background: BG_TINT, border: `1px solid ${BDR}` }}
+            {...fadeUp(0)}
           >
             <div>
-              <p className="font-bold text-base mb-1" style={{ fontFamily: OS, color: DARK }}>
+              <p className="font-bold text-base mb-1" style={{ fontFamily: DM, color: DARK }}>
                 Ready to see a demo of everything Vale has to offer?
               </p>
               <p className="text-sm" style={{ color: MED }}>
@@ -734,20 +738,20 @@ export default function ForFuneralDirectors() {
             >
               Request a demo
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
           9. TESTIMONIALS — "Don't just take our word for it"
       ══════════════════════════════════════════════════════ */}
-      <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: LAV }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+      <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: BG_OFF }}>
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div className="text-center mb-14" {...fadeUp(0)}>
             <h2
               className="mb-3"
               style={{
-                fontFamily:    OS,
+                fontFamily:    DM,
                 fontSize:      "clamp(26px, 3.5vw, 42px)",
                 fontWeight:    800,
                 color:         DARK,
@@ -759,12 +763,19 @@ export default function ForFuneralDirectors() {
             <p className="text-base max-w-md mx-auto" style={{ color: MED }}>
               Hear from funeral directors already growing their business on Vale.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-5">
-            {TESTIMONIALS.map(({ name, role, location, body, rating, color }) => (
-              <div
+          <motion.div
+            className="grid md:grid-cols-3 gap-5"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
+            {TESTIMONIALS.map(({ name, role, location, body, rating }) => (
+              <motion.div
                 key={name}
+                variants={staggerItem}
                 className="rounded-2xl p-6 flex flex-col"
                 style={{ background: "white", border: `1px solid ${BDR}` }}
               >
@@ -775,7 +786,7 @@ export default function ForFuneralDirectors() {
                 <div className="flex items-center gap-3">
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shrink-0"
-                    style={{ background: color, color: DARK }}
+                    style={{ background: LAV, color: PURPLE }}
                   >
                     {name.charAt(0)}
                   </div>
@@ -788,9 +799,9 @@ export default function ForFuneralDirectors() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -798,12 +809,12 @@ export default function ForFuneralDirectors() {
           10. FAQ
       ══════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-3xl mx-auto">
+        <motion.div className="max-w-3xl mx-auto" {...fadeUp(0)}>
           <div className="text-center mb-12">
             <h2
               className="mb-3"
               style={{
-                fontFamily:    OS,
+                fontFamily:    DM,
                 fontSize:      "clamp(24px, 3vw, 38px)",
                 fontWeight:    800,
                 color:         DARK,
@@ -824,46 +835,28 @@ export default function ForFuneralDirectors() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          11. FINAL CTA — mint + lavender gradient
+          11. FINAL CTA — dark band
       ══════════════════════════════════════════════════════ */}
-      <section
-        className="relative overflow-hidden py-24 md:py-32 px-6 md:px-10"
-        style={{
-          background: "#F8FDF8",
-          backgroundImage: [
-            "radial-gradient(ellipse at 0% 100%, rgba(196,245,196,0.7) 0%, transparent 55%)",
-            "radial-gradient(ellipse at 100% 0%, rgba(180,182,246,0.7) 0%, transparent 55%)",
-          ].join(", "),
-        }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(58,168,56,0.08) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="relative max-w-3xl mx-auto text-center">
+      <section className="py-24 md:py-32 px-6 md:px-10" style={{ background: DARK }}>
+        <motion.div className="relative max-w-3xl mx-auto text-center" {...fadeUp(0)}>
           <h2
             className="mb-4"
             style={{
-              fontFamily:    OS,
+              fontFamily:    DM,
               fontSize:      "clamp(28px, 4vw, 50px)",
               fontWeight:    800,
               lineHeight:    1.1,
               letterSpacing: "-0.025em",
-              color:         DARK,
+              color:         "#FFFFFF",
             }}
           >
             Ready to reach more families than ever before?
           </h2>
-          <p className="text-base leading-relaxed mb-10 max-w-lg mx-auto" style={{ color: MED }}>
+          <p className="text-base leading-relaxed mb-10 max-w-lg mx-auto" style={{ color: "#9889F5" }}>
             Join hundreds of funeral directors who have already listed on Vale.
             Set up your profile in under 10 minutes — no commitment required.
           </p>
@@ -871,15 +864,15 @@ export default function ForFuneralDirectors() {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/admin/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: LAV_BTN }}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C541]"
+              style={{ background: GOLD, color: DARK }}
             >
               List your business — it&apos;s free
             </Link>
             <Link
               href="mailto:hello@vale.co.uk"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: "white", border: `1.5px solid ${BDR}`, color: DARK }}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9889F5]"
+              style={{ background: "transparent", border: `1.5px solid rgba(255,255,255,0.15)`, color: "#CFC8FF" }}
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
               Talk to our team
@@ -887,11 +880,14 @@ export default function ForFuneralDirectors() {
           </div>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
-            {["✓  Free to join", "✓  No hidden fees", "✓  Go live in minutes", "✓  Cancel any time"].map((t) => (
-              <span key={t} className="text-xs font-medium" style={{ color: MED }}>{t}</span>
+            {["Free to join", "No hidden fees", "Go live in minutes", "Cancel any time"].map((t) => (
+              <span key={t} className="inline-flex items-center gap-1.5 text-xs font-medium" style={{ color: "#CFC8FF" }}>
+                <CheckCircle className="w-3.5 h-3.5" style={{ color: GOLD }} aria-hidden="true" />
+                {t}
+              </span>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </div>

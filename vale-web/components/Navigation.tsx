@@ -9,6 +9,7 @@ const PURPLE = "#4F34C4";
 const BODY   = "#4A415E";
 const DARK   = "#100B20";
 const BORDER = "#D5D0E4";
+const DM     = "var(--font-dm-sans), -apple-system, sans-serif";
 
 const CENTER_LINKS = [
   { href: "/how-it-works", label: "How it works", match: ["/how-it-works"] },
@@ -66,7 +67,7 @@ export default function Navigation() {
         className="sticky top-0 w-full bg-white/95 backdrop-blur-sm border-b"
         style={{ borderColor: BORDER, zIndex: "var(--z-header, 50)" }}
       >
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-[1.7rem]">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-[1.7rem]">
           <div className="relative flex h-[68px] items-center justify-between">
 
             {/* Logo */}
@@ -100,7 +101,7 @@ export default function Navigation() {
                   key={href}
                   href={href}
                   className="text-[14px] font-[600] transition-colors duration-200 ease-out whitespace-nowrap hover:opacity-70"
-                  style={{ color: isActive(match) ? PURPLE : BODY }}
+                  style={{ fontFamily: DM, color: isActive(match) ? PURPLE : BODY }}
                 >
                   {label}
                 </Link>
@@ -112,7 +113,7 @@ export default function Navigation() {
               <Link
                 href="/for-funeral-directors"
                 className="hidden lg:inline-flex text-[14px] font-[600] transition-colors duration-200 ease-out whitespace-nowrap hover:opacity-70"
-                style={{ color: BODY }}
+                style={{ fontFamily: DM, color: BODY }}
               >
                 For funeral directors
               </Link>
@@ -120,6 +121,7 @@ export default function Navigation() {
                 href="/search"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-lg font-[700] transition-colors duration-200 ease-out"
                 style={{
+                  fontFamily: DM,
                   minHeight: "36px",
                   padding: "6px 16px",
                   fontSize: "13px",
@@ -217,9 +219,10 @@ export default function Navigation() {
               href={href}
               className="flex items-center px-4 py-3 rounded-xl text-[14px] min-h-[48px] transition-colors"
               style={{
+                fontFamily: DM,
                 fontWeight: isActive(match) ? 600 : 400,
                 color: isActive(match) ? PURPLE : BODY,
-                background: isActive(match) ? "#EDE9FF" : "transparent",
+                background: isActive(match) ? "#E3DFFF" : "transparent",
               }}
             >
               {label}
@@ -232,7 +235,7 @@ export default function Navigation() {
           <Link
             href="/search"
             className="flex items-center justify-center w-full py-3 rounded-lg font-[700] text-[14px] min-h-[48px] transition-colors"
-            style={{ background: PURPLE, color: "#ffffff" }}
+            style={{ fontFamily: DM, background: PURPLE, color: "#ffffff" }}
           >
             Find a director
           </Link>

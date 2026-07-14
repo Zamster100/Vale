@@ -20,9 +20,9 @@ const SERVICE_OPTIONS = [
 
 const inputStyle: React.CSSProperties = {
   background: "#FFFFFF",
-  border: "1px solid #E8E8F4",
+  border: "1px solid #D5D0E4",
   borderRadius: "12px",
-  color: "#5C5C7A",
+  color: "#4A415E",
   width: "100%",
   padding: "10px 16px",
   fontSize: "14px",
@@ -108,31 +108,31 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
 
   const getFieldStyle = (field: string, hasError: boolean): React.CSSProperties => ({
     ...inputStyle,
-    border: hasError ? "1.5px solid #E26B5E" : focused === field ? "1.5px solid rgba(107,109,232,0.5)" : "1px solid #E8E8F4",
-    boxShadow: focused === field && !hasError ? "0 0 0 3px rgba(107,109,232,0.12)" : "none",
+    border: hasError ? "1.5px solid #E26B5E" : focused === field ? "1.5px solid rgba(79,52,196,0.5)" : "1px solid #D5D0E4",
+    boxShadow: focused === field && !hasError ? "0 0 0 3px rgba(79,52,196,0.12)" : "none",
   });
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: "rgba(26,26,46,0.4)" }}
+      style={{ backgroundColor: "rgba(16,11,32,0.4)" }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="quote-modal-title"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div ref={dialogRef} className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-xl" style={{ background: "white", boxShadow: "0 20px 60px rgba(26,26,46,0.2)" }}>
-        <div className="flex items-center justify-between p-6" style={{ borderBottom: "1px solid #E8E8F4" }}>
+      <div ref={dialogRef} className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-xl" style={{ background: "white", boxShadow: "0 20px 60px rgba(16,11,32,0.2)" }}>
+        <div className="flex items-center justify-between p-6" style={{ borderBottom: "1px solid #D5D0E4" }}>
           <div>
-            <h2 id="quote-modal-title" className="font-semibold text-base" style={{ color: "#1A1A2E" }}>Request a quote</h2>
-            <p className="text-sm mt-0.5" style={{ color: "#5C5C7A" }}>from {fdName}</p>
+            <h2 id="quote-modal-title" className="font-semibold text-base" style={{ color: "#100B20" }}>Request a quote</h2>
+            <p className="text-sm mt-0.5" style={{ color: "#4A415E" }}>from {fdName}</p>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
             className="w-10 h-10 flex items-center justify-center rounded-full hover:opacity-70 transition-opacity focus:outline-none"
-            style={{ background: "rgba(210,211,252,0.3)", color: "#5C5C7A" }}
+            style={{ background: "rgba(227,223,255,0.3)", color: "#4A415E" }}
           >
             <X className="w-4 h-4" aria-hidden="true" />
           </button>
@@ -143,15 +143,15 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
             <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(123,168,74,0.12)" }}>
               <CheckCircle className="w-7 h-7" aria-hidden="true" style={{ color: "#7BA84A" }} />
             </div>
-            <h3 className="font-semibold mb-2" style={{ color: "#1A1A2E" }}>Quote request sent</h3>
-            <p className="text-sm leading-relaxed" style={{ color: "#5C5C7A" }}>
-              We&apos;ve sent your request to <strong style={{ color: "#5C5C7A" }}>{fdName}</strong>. They&apos;ll typically be in touch within 24 hours.
+            <h3 className="font-semibold mb-2" style={{ color: "#100B20" }}>Quote request sent</h3>
+            <p className="text-sm leading-relaxed" style={{ color: "#4A415E" }}>
+              We&apos;ve sent your request to <strong style={{ color: "#4A415E" }}>{fdName}</strong>. They&apos;ll typically be in touch within 24 hours.
             </p>
             <button
               type="button"
               onClick={onClose}
               className="mt-6 text-white px-6 py-2.5 rounded-md text-sm font-semibold hover:scale-[1.03] transition-transform min-h-[44px] focus:outline-none"
-              style={{ background: "#1A1A2E" }}
+              style={{ background: "#100B20" }}
             >
               Close
             </button>
@@ -170,9 +170,9 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
               { id: "qm-phone", name: "phone", label: "Phone number", type: "tel", required: false, autoComplete: "tel", placeholder: "07700 000000", error: "" },
             ].map(({ id, name, label, type, required, autoComplete, placeholder, error }) => (
               <div key={id}>
-                <label htmlFor={id} className="block text-sm font-medium mb-1.5" style={{ color: "#1A1A2E" }}>
+                <label htmlFor={id} className="block text-sm font-medium mb-1.5" style={{ color: "#100B20" }}>
                   {label}{required && <span className="ml-1" style={{ color: "#E26B5E" }} aria-hidden="true">*</span>}
-                  {!required && <span className="ml-1 font-normal" style={{ color: "#5C5C7A" }}>(optional)</span>}
+                  {!required && <span className="ml-1 font-normal" style={{ color: "#4A415E" }}>(optional)</span>}
                 </label>
                 <input
                   id={id}
@@ -193,7 +193,7 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
             ))}
 
             <div>
-              <label htmlFor="qm-serviceType" className="block text-sm font-medium mb-1.5" style={{ color: "#1A1A2E" }}>Service type</label>
+              <label htmlFor="qm-serviceType" className="block text-sm font-medium mb-1.5" style={{ color: "#100B20" }}>Service type</label>
               <select
                 id="qm-serviceType"
                 name="serviceType"
@@ -210,8 +210,8 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
             </div>
 
             <div>
-              <label htmlFor="qm-message" className="block text-sm font-medium mb-1.5" style={{ color: "#1A1A2E" }}>
-                Message <span className="font-normal" style={{ color: "#5C5C7A" }}>(optional)</span>
+              <label htmlFor="qm-message" className="block text-sm font-medium mb-1.5" style={{ color: "#100B20" }}>
+                Message <span className="font-normal" style={{ color: "#4A415E" }}>(optional)</span>
               </label>
               <textarea
                 id="qm-message"
@@ -230,13 +230,13 @@ export default function QuoteModal({ fdName, fdId, onClose, initialServiceType }
               type="submit"
               disabled={loading}
               className="w-full text-white py-3 rounded-md font-semibold text-sm hover:scale-[1.03] active:scale-[0.98] transition-transform disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-h-[44px] focus:outline-none"
-              style={{ background: "#1A1A2E" }}
+              style={{ background: "#100B20" }}
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
               {loading ? "Sending…" : "Send quote request"}
             </button>
 
-            <p className="text-xs text-center" style={{ color: "#5C5C7A" }}>
+            <p className="text-xs text-center" style={{ color: "#4A415E" }}>
               They&apos;ll typically respond within 24 hours.
             </p>
           </form>

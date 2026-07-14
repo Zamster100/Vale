@@ -34,11 +34,11 @@ let _standard: L.DivIcon | null = null;
 
 function getPin(fd: FuneralDirector) {
   if (fd.assured) {
-    _assured ??= makePinIcon("#C45EC4", "#A03DA0");
+    _assured ??= makePinIcon("#AC7E08", "#8A6506");
     return _assured;
   }
   if (fd.verified) {
-    _verified ??= makePinIcon("#6B6DE8", "#4F51CC");
+    _verified ??= makePinIcon("#4F34C4", "#3B229D");
     return _verified;
   }
   _standard ??= makePinIcon("#9090A8", "#6B6B7E");
@@ -47,8 +47,8 @@ function getPin(fd: FuneralDirector) {
 
 /* ── Legend ──────────────────────────────────────────────────────── */
 const LEGEND = [
-  { color: "#C45EC4", label: "Vale Assured" },
-  { color: "#6B6DE8", label: "Verified" },
+  { color: "#AC7E08", label: "Vale Assured" },
+  { color: "#4F34C4", label: "Verified" },
   { color: "#9090A8", label: "Listed" },
 ] as const;
 
@@ -71,7 +71,7 @@ export default function MapView({ directors }: MapViewProps) {
       {/* Legend strip */}
       <div
         className="flex items-center gap-4 px-4 py-2.5 shrink-0"
-        style={{ background: "white", borderBottom: "1px solid #E8E8F4" }}
+        style={{ background: "white", borderBottom: "1px solid #D5D0E4" }}
       >
         {LEGEND.map(({ color, label }) => (
           <div key={label} className="flex items-center gap-1.5">
@@ -79,7 +79,7 @@ export default function MapView({ directors }: MapViewProps) {
               className="inline-block w-3 h-3 rounded-full shrink-0"
               style={{ background: color }}
             />
-            <span className="text-[11px] font-medium" style={{ color: "#5C5C7A" }}>
+            <span className="text-[11px] font-medium" style={{ color: "#4A415E" }}>
               {label}
             </span>
           </div>
@@ -107,28 +107,28 @@ export default function MapView({ directors }: MapViewProps) {
               icon={getPin(fd)}
             >
               <Popup>
-                <div style={{ minWidth: "175px", fontFamily: "var(--font-open-sans), sans-serif" }}>
+                <div style={{ minWidth: "175px", fontFamily: "var(--font-dm-sans), sans-serif" }}>
                   {fd.assured && (
                     <span
                       className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5"
-                      style={{ background: "#FBD2FC", color: "#C45EC4" }}
+                      style={{ background: "#FEF1C6", color: "#AC7E08" }}
                     >
                       Vale Assured ✦
                     </span>
                   )}
-                  <p className="font-bold text-sm leading-snug mb-0.5" style={{ color: "#1A1A2E" }}>
+                  <p className="font-bold text-sm leading-snug mb-0.5" style={{ color: "#100B20" }}>
                     {fd.name}
                   </p>
-                  <p className="text-xs mb-2" style={{ color: "#5C5C7A" }}>
+                  <p className="text-xs mb-2" style={{ color: "#4A415E" }}>
                     {fd.city} · {fd.postcode}
                   </p>
-                  <p className="text-base font-bold mb-2.5" style={{ color: "#1A1A2E" }}>
+                  <p className="text-base font-bold mb-2.5" style={{ color: "#100B20" }}>
                     From £{getLowestPrice(fd).toLocaleString()}
                   </p>
                   <Link
                     href={`/funeral-directors/${fd.id}`}
                     className="block text-center text-white text-xs font-bold px-3 py-2 rounded-lg hover:opacity-90 transition-opacity"
-                    style={{ background: "#6B6DE8" }}
+                    style={{ background: "#4F34C4" }}
                   >
                     View profile →
                   </Link>

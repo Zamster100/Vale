@@ -66,29 +66,29 @@ export default function AdminSignupPage() {
     border: fieldErrors[field]
       ? "1.5px solid #E26B5E"
       : focused === field
-      ? "1.5px solid rgba(107,109,232,0.5)"
-      : "1px solid #E8E8F4",
-    color: "#5C5C7A",
+      ? "1.5px solid rgba(79,52,196,0.5)"
+      : "1px solid #D5D0E4",
+    color: "#4A415E",
     boxShadow: focused === field && !fieldErrors[field]
-      ? "0 0 0 3px rgba(107,109,232,0.12)"
+      ? "0 0 0 3px rgba(79,52,196,0.12)"
       : "none",
   });
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#FDFCFE" }}>
       {/* Minimal header */}
       <header className="flex items-center justify-between px-6 py-5">
         <Link
           href="/"
-          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
           aria-label="Vale homepage"
         >
           <span
             className="text-2xl tracking-tight"
-            style={{ fontFamily: "var(--font-open-sans), sans-serif", fontWeight: 600, color: "#1A1A2E" }}
-          >Vale<span style={{ color: "#6B6DE8" }}>.</span></span>
+            style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, color: "#100B20" }}
+          >Vale<span style={{ color: "#4F34C4" }}>.</span></span>
         </Link>
-        <span className="text-xs" style={{ color: "#5C5C7A" }}>For Funeral Directors</span>
+        <span className="text-xs" style={{ color: "#4A415E" }}>For Funeral Directors</span>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-6 py-12">
@@ -99,15 +99,15 @@ export default function AdminSignupPage() {
             <h1
               className="mb-3 font-normal"
               style={{
-                fontFamily: "var(--font-open-sans)",
+                fontFamily: "var(--font-dm-sans)",
                 fontSize: "clamp(28px, 5vw, 40px)",
                 lineHeight: 1.1,
-                color: "#1A1A2E",
+                color: "#100B20",
               }}
             >
               Create your account
             </h1>
-            <p className="text-sm leading-relaxed" style={{ color: "#5C5C7A" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "#4A415E" }}>
               Join Vale and connect with families looking for funeral services.
             </p>
           </div>
@@ -124,7 +124,7 @@ export default function AdminSignupPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+              <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                 Email address
               </label>
               <input
@@ -142,12 +142,12 @@ export default function AdminSignupPage() {
                 style={fieldStyle("email")}
               />
               {fieldErrors.email && (
-                <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{fieldErrors.email}</p>
+                <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{fieldErrors.email}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+              <label htmlFor="password" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                 Password
               </label>
               <div className="relative">
@@ -169,19 +169,19 @@ export default function AdminSignupPage() {
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
-                  style={{ color: "#5C5C7A" }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
+                  style={{ color: "#4A415E" }}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {fieldErrors.password && (
-                <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{fieldErrors.password}</p>
+                <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{fieldErrors.password}</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                 Confirm password
               </label>
               <input
@@ -199,38 +199,38 @@ export default function AdminSignupPage() {
                 style={fieldStyle("confirmPassword")}
               />
               {fieldErrors.confirmPassword && (
-                <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{fieldErrors.confirmPassword}</p>
+                <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{fieldErrors.confirmPassword}</p>
               )}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-md py-4 text-base font-medium text-white hover:opacity-90 active:scale-[0.98] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2"
-              style={{ background: "#1A1A2E" }}
+              className="w-full rounded-md py-4 text-base font-medium text-white hover:opacity-90 active:scale-[0.98] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] focus-visible:ring-offset-2"
+              style={{ background: "#100B20" }}
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
               {loading ? "Creating account…" : "Create account"}
             </button>
 
-            <p className="text-xs text-center" style={{ color: "#5C5C7A" }}>
+            <p className="text-xs text-center" style={{ color: "#4A415E" }}>
               By creating an account you agree to our{" "}
-              <a href="#" className="hover:underline" style={{ color: "#6B6DE8" }}>Terms of Service</a>
+              <a href="#" className="hover:underline" style={{ color: "#4F34C4" }}>Terms of Service</a>
               {" "}and{" "}
-              <a href="#" className="hover:underline" style={{ color: "#6B6DE8" }}>Privacy Policy</a>.
+              <a href="#" className="hover:underline" style={{ color: "#4F34C4" }}>Privacy Policy</a>.
             </p>
           </form>
 
-          <div className="mt-8 pt-6 text-center" style={{ borderTop: "1px solid #E8E8F4" }}>
-            <p className="text-sm" style={{ color: "#5C5C7A" }}>
+          <div className="mt-8 pt-6 text-center" style={{ borderTop: "1px solid #D5D0E4" }}>
+            <p className="text-sm" style={{ color: "#4A415E" }}>
               Already have an account?{" "}
-              <Link href="/admin/dashboard" className="font-medium hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded" style={{ color: "#1A1A2E" }}>
+              <Link href="/admin/dashboard" className="font-medium hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded" style={{ color: "#100B20" }}>
                 Sign in
               </Link>
             </p>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-6 text-xs" style={{ color: "#5C5C7A" }}>
+          <div className="mt-6 flex items-center justify-center gap-6 text-xs" style={{ color: "#4A415E" }}>
             <span>✓ Free to join</span>
             <span>✓ No hidden fees</span>
             <span>✓ Go live in minutes</span>

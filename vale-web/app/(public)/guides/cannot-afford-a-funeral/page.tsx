@@ -1,15 +1,15 @@
 import { CheckCircle } from "lucide-react";
 import BlogLayout from "@/components/blog/BlogLayout";
 
-const DARK    = "#1A1A2E";
-const MED     = "#5C5C7A";
-const LITE    = "#9090A8";
-const LAV     = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
-const PINK    = "#FBD2FC";
+const DARK    = "#100B20";
+const MED     = "#4A415E";
+const LITE    = "#9E96B2";
+const LAV     = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
+const PINK    = "#CFC8FF";
 const MINT    = "#D3FCD2";
 const YEL     = "#FCFBD2";
-const BDR     = "#E8E8F4";
+const BDR     = "#D5D0E4";
 
 const H2: React.CSSProperties = {
   fontSize: "22px", fontWeight: 700, color: DARK,
@@ -173,8 +173,8 @@ export default function CannotAffordFuneralPage() {
                   + 18 monthly payments of <span style={STRONG}>£350</span>
                 </p>
               </div>
-              <div className="rounded-xl p-4" style={{ background: PINK, border: "1px solid #F0B0F0" }}>
-                <p style={{ fontSize: "12px", fontWeight: 700, color: "#C45EC4", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
+              <div className="rounded-xl p-4" style={{ background: PINK, border: "1px solid #B5AAFC" }}>
+                <p style={{ fontSize: "12px", fontWeight: 700, color: "#4F34C4", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
                   Without Dependent Children
                 </p>
                 <p style={{ fontSize: "30px", fontWeight: 700, color: DARK, lineHeight: 1, marginBottom: "4px" }}>£2,500</p>

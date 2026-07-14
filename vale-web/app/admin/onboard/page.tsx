@@ -68,8 +68,8 @@ const inputBase =
 
 const inputStyle = {
   background: "white",
-  border: "1px solid #E8E8F4",
-  color: "#5C5C7A",
+  border: "1px solid #D5D0E4",
+  color: "#4A415E",
 };
 
 function ProgressDots({ current }: { current: number }) {
@@ -82,7 +82,7 @@ function ProgressDots({ current }: { current: number }) {
           style={{
             width: i === current ? "20px" : "8px",
             height: "8px",
-            background: i < current ? "#6B6DE8" : i === current ? "#1A1A2E" : "rgba(232,226,216,0.6)",
+            background: i < current ? "#4F34C4" : i === current ? "#100B20" : "rgba(213,208,228,0.6)",
           }}
         />
       ))}
@@ -121,7 +121,7 @@ function VaultInput({
       className={inputBase}
       style={{
         ...inputStyle,
-        ...(focused ? { border: "1.5px solid rgba(107,109,232,0.5)", boxShadow: "0 0 0 3px rgba(107,109,232,0.12)" } : {}),
+        ...(focused ? { border: "1.5px solid rgba(79,52,196,0.5)", boxShadow: "0 0 0 3px rgba(79,52,196,0.12)" } : {}),
         ...(hasError ? { border: "1.5px solid #E26B5E" } : {}),
       }}
     />
@@ -217,20 +217,20 @@ export default function OnboardPage() {
   const cfg = SCREENS[screen];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#FDFCFE" }}>
       {/* Minimal header */}
       <header className="flex items-center justify-between px-6 py-5">
         <Link
           href="/"
-          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
           aria-label="Vale homepage"
         >
           <span
             className="text-2xl tracking-tight"
-            style={{ fontFamily: "var(--font-open-sans), sans-serif", fontWeight: 600, color: "#1A1A2E" }}
-          >Vale<span style={{ color: "#6B6DE8" }}>.</span></span>
+            style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, color: "#100B20" }}
+          >Vale<span style={{ color: "#4F34C4" }}>.</span></span>
         </Link>
-        <span className="text-xs" style={{ color: "#5C5C7A" }}>For Funeral Directors</span>
+        <span className="text-xs" style={{ color: "#4A415E" }}>For Funeral Directors</span>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-10 max-w-xl mx-auto w-full">
@@ -248,22 +248,22 @@ export default function OnboardPage() {
           <h1
             className="mb-3 font-normal"
             style={{
-              fontFamily: "var(--font-open-sans)",
+              fontFamily: "var(--font-dm-sans)",
               fontSize: "clamp(28px, 5vw, 44px)",
               lineHeight: 1.1,
-              color: "#1A1A2E",
+              color: "#100B20",
             }}
           >
             {cfg.question}
           </h1>
-          <p className="mb-8 text-sm leading-relaxed" style={{ color: "#5C5C7A" }}>
+          <p className="mb-8 text-sm leading-relaxed" style={{ color: "#4A415E" }}>
             {cfg.subtitle}
           </p>
 
           {/* ── Screen: Business name ── */}
           {cfg.id === "businessName" && (
             <div>
-              <label htmlFor="businessName" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+              <label htmlFor="businessName" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                 Business name
               </label>
               <VaultInput
@@ -273,7 +273,7 @@ export default function OnboardPage() {
                 placeholder="e.g. Smith & Sons Funerals"
                 hasError={!!errors.businessName}
               />
-              {errors.businessName && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{errors.businessName}</p>}
+              {errors.businessName && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{errors.businessName}</p>}
             </div>
           )}
 
@@ -281,7 +281,7 @@ export default function OnboardPage() {
           {cfg.id === "address" && (
             <div className="space-y-4">
               <div>
-                <label htmlFor="address" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+                <label htmlFor="address" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                   Street address
                 </label>
                 <VaultInput
@@ -291,11 +291,11 @@ export default function OnboardPage() {
                   placeholder="e.g. 47 High Street, Westminster"
                   hasError={!!errors.address}
                 />
-                {errors.address && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{errors.address}</p>}
+                {errors.address && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{errors.address}</p>}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="postcode" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+                  <label htmlFor="postcode" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                     Postcode
                   </label>
                   <VaultInput
@@ -305,10 +305,10 @@ export default function OnboardPage() {
                     placeholder="e.g. SW1A 1AA"
                     hasError={!!errors.postcode}
                   />
-                  {errors.postcode && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{errors.postcode}</p>}
+                  {errors.postcode && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{errors.postcode}</p>}
                 </div>
                 <div>
-                  <label htmlFor="city" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+                  <label htmlFor="city" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                     City
                   </label>
                   <VaultInput
@@ -326,7 +326,7 @@ export default function OnboardPage() {
           {cfg.id === "contact" && (
             <div className="space-y-4">
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+                <label htmlFor="phone" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                   Phone number
                 </label>
                 <VaultInput
@@ -337,10 +337,10 @@ export default function OnboardPage() {
                   placeholder="e.g. 020 7946 0958"
                   hasError={!!errors.phone}
                 />
-                {errors.phone && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{errors.phone}</p>}
+                {errors.phone && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{errors.phone}</p>}
               </div>
               <div>
-                <label htmlFor="fdEmail" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
+                <label htmlFor="fdEmail" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
                   Business email
                 </label>
                 <VaultInput
@@ -351,11 +351,11 @@ export default function OnboardPage() {
                   placeholder="info@yourfuneralhome.co.uk"
                   hasError={!!errors.email}
                 />
-                {errors.email && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#E26B5E" }}>{errors.email}</p>}
+                {errors.email && <p role="alert" className="mt-1.5 text-xs" style={{ color: "#C95548" }}>{errors.email}</p>}
               </div>
               <div>
-                <label htmlFor="website" className="block text-sm font-medium mb-2" style={{ color: "#1A1A2E" }}>
-                  Website <span className="font-normal" style={{ color: "#5C5C7A" }}>(optional)</span>
+                <label htmlFor="website" className="block text-sm font-medium mb-2" style={{ color: "#100B20" }}>
+                  Website <span className="font-normal" style={{ color: "#4A415E" }}>(optional)</span>
                 </label>
                 <VaultInput
                   id="website"
@@ -378,10 +378,10 @@ export default function OnboardPage() {
               )}
 
               {form.prices.map((entry, i) => (
-                <div key={i} className="rounded-xl p-4" style={{ background: "white", border: "1px solid #E8E8F4" }}>
+                <div key={i} className="rounded-xl p-4" style={{ background: "white", border: "1px solid #D5D0E4" }}>
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex-1">
-                      <label htmlFor={`stype-${i}`} className="block text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#5C5C7A" }}>
+                      <label htmlFor={`stype-${i}`} className="block text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#4A415E" }}>
                         Service type
                       </label>
                       <select
@@ -389,7 +389,7 @@ export default function OnboardPage() {
                         value={entry.serviceType}
                         onChange={(e) => updatePrice(i, "serviceType", e.target.value)}
                         className="w-full px-3 py-2.5 rounded-lg text-sm focus:outline-none"
-                        style={{ background: "#FAFAFA", border: "1px solid #E8E8F4", color: "#5C5C7A" }}
+                        style={{ background: "#FDFCFE", border: "1px solid #D5D0E4", color: "#4A415E" }}
                       >
                         {SERVICE_OPTIONS.map((s) => (
                           <option key={s.type} value={s.type}>{s.label}</option>
@@ -402,7 +402,7 @@ export default function OnboardPage() {
                         onClick={() => removePrice(i)}
                         aria-label={`Remove service ${i + 1}`}
                         className="mt-5 w-9 h-9 flex items-center justify-center rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E26B5E]"
-                        style={{ color: "#5C5C7A" }}
+                        style={{ color: "#4A415E" }}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -410,7 +410,7 @@ export default function OnboardPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label htmlFor={`sname-${i}`} className="block text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#5C5C7A" }}>
+                      <label htmlFor={`sname-${i}`} className="block text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#4A415E" }}>
                         Service name
                       </label>
                       <input
@@ -420,15 +420,15 @@ export default function OnboardPage() {
                         onChange={(e) => updatePrice(i, "serviceName", e.target.value)}
                         placeholder={SERVICE_OPTIONS.find((s) => s.type === entry.serviceType)?.placeholder ?? ""}
                         className="w-full px-3 py-2.5 rounded-lg text-sm focus:outline-none"
-                        style={{ background: "#FAFAFA", border: "1px solid #E8E8F4", color: "#5C5C7A" }}
+                        style={{ background: "#FDFCFE", border: "1px solid #D5D0E4", color: "#4A415E" }}
                       />
                     </div>
                     <div>
-                      <label htmlFor={`price-${i}`} className="block text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#5C5C7A" }}>
+                      <label htmlFor={`price-${i}`} className="block text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#4A415E" }}>
                         Price (£)
                       </label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style={{ color: "#5C5C7A" }} aria-hidden="true">£</span>
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style={{ color: "#4A415E" }} aria-hidden="true">£</span>
                         <input
                           id={`price-${i}`}
                           type="number"
@@ -438,7 +438,7 @@ export default function OnboardPage() {
                           onChange={(e) => updatePrice(i, "price", e.target.value)}
                           placeholder="0"
                           className="w-full pl-7 pr-3 py-2.5 rounded-lg text-sm focus:outline-none"
-                          style={{ background: "#FAFAFA", border: "1px solid #E8E8F4", color: "#5C5C7A" }}
+                          style={{ background: "#FDFCFE", border: "1px solid #D5D0E4", color: "#4A415E" }}
                         />
                       </div>
                     </div>
@@ -449,8 +449,8 @@ export default function OnboardPage() {
               <button
                 type="button"
                 onClick={addPrice}
-                className="w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-                style={{ border: "1.5px dashed rgba(232,226,216,0.8)", color: "#5C5C7A" }}
+                className="w-full py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4]"
+                style={{ border: "1.5px dashed rgba(213,208,228,0.8)", color: "#4A415E" }}
               >
                 <Plus className="w-4 h-4" aria-hidden="true" />
                 Add another service
@@ -465,8 +465,8 @@ export default function OnboardPage() {
             type="button"
             onClick={advance}
             disabled={loading}
-            className="w-full rounded-md py-5 text-base font-medium text-white hover:opacity-90 active:scale-[0.98] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2"
-            style={{ background: "#1A1A2E", maxWidth: "320px" }}
+            className="w-full rounded-md py-5 text-base font-medium text-white hover:opacity-90 active:scale-[0.98] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] focus-visible:ring-offset-2"
+            style={{ background: "#100B20", maxWidth: "320px" }}
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />}
             {loading ? "Saving…" : screen >= TOTAL - 1 ? (
@@ -478,8 +478,8 @@ export default function OnboardPage() {
             <button
               type="button"
               onClick={goBack}
-              className="flex items-center gap-1.5 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
-              style={{ color: "#5C5C7A" }}
+              className="flex items-center gap-1.5 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
+              style={{ color: "#4A415E" }}
             >
               <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               Back

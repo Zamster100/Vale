@@ -2,7 +2,7 @@ import type { TeamMember } from "@/lib/data";
 
 const card = {
   background: "white",
-  border: "1px solid #E8E8F4",
+  border: "1px solid #D5D0E4",
   borderRadius: "12px",
 };
 
@@ -13,7 +13,7 @@ export default function TeamGrid({ team }: { team: TeamMember[] }) {
 
   return (
     <section style={card} className="p-6" aria-label="Meet the team">
-      <h2 className="text-lg font-semibold mb-1" style={{ color: "#1A1A2E" }}>
+      <h2 className="text-lg font-semibold mb-1" style={{ color: "#100B20" }}>
         Meet the team
       </h2>
       <p className="text-sm mb-6" style={{ color: "#5F7080" }}>
@@ -24,17 +24,17 @@ export default function TeamGrid({ team }: { team: TeamMember[] }) {
         {sorted.map((member) => (
           <div
             key={member.id}
-            className="group flex flex-col items-center text-center p-5 rounded-xl transition-all duration-200 hover:shadow-md hover:ring-1 hover:ring-[#6B6DE8]/40"
+            className="group flex flex-col items-center text-center p-5 rounded-xl transition-all duration-200 hover:shadow-md hover:ring-1 hover:ring-[#4F34C4]/40"
             style={{
-              border: "1px solid #E8E8F4",
+              border: "1px solid #D5D0E4",
               background: "#FAFAFA",
             }}
           >
             {/* Circular photo */}
             <div className="relative mb-4 shrink-0">
               <div
-                className="w-[120px] h-[120px] rounded-full overflow-hidden transition-all duration-200 group-hover:ring-2 group-hover:ring-[#6B6DE8]/50"
-                style={{ border: "3px solid rgba(107,109,232,0.2)" }}
+                className="w-[120px] h-[120px] rounded-full overflow-hidden transition-all duration-200 group-hover:ring-2 group-hover:ring-[#4F34C4]/50"
+                style={{ border: "3px solid rgba(79,52,196,0.2)" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -48,7 +48,7 @@ export default function TeamGrid({ team }: { team: TeamMember[] }) {
                 <div
                   className="absolute -bottom-1 -right-1 rounded-full font-semibold"
                   style={{
-                    background: "#1A1A2E",
+                    background: "#100B20",
                     color: "white",
                     fontSize: "11px",
                     lineHeight: 1,
@@ -62,12 +62,12 @@ export default function TeamGrid({ team }: { team: TeamMember[] }) {
             </div>
 
             {/* Name & title */}
-            <h3 className="font-semibold text-sm mb-0.5" style={{ color: "#5C5C7A" }}>
+            <h3 className="font-semibold text-sm mb-0.5" style={{ color: "#4A415E" }}>
               {member.name}
             </h3>
             <p
               className="text-sm mb-3 font-medium uppercase tracking-wide"
-              style={{ color: "#6B6DE8" }}
+              style={{ color: "#4F34C4" }}
             >
               {member.title}
             </p>
@@ -82,11 +82,11 @@ export default function TeamGrid({ team }: { team: TeamMember[] }) {
               <div
                 className="mt-4 pt-3 w-full text-sm"
                 style={{
-                  borderTop: "1px solid #E8E8F4",
+                  borderTop: "1px solid #D5D0E4",
                   color: "#5F7080",
                 }}
               >
-                <span style={{ color: "#1A1A2E", fontWeight: 600 }}>{member.yearsExp}</span> years in funeral care
+                <span style={{ color: "#100B20", fontWeight: 600 }}>{member.yearsExp}</span> years in funeral care
               </div>
             )}
           </div>

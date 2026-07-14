@@ -1,13 +1,13 @@
 import BlogLayout from "@/components/blog/BlogLayout";
 
-const DARK    = "#1A1A2E";
-const MED     = "#5C5C7A";
-const LAV     = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
-const PINK    = "#FBD2FC";
+const DARK    = "#100B20";
+const MED     = "#4A415E";
+const LAV     = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
+const PINK    = "#CFC8FF";
 const MINT    = "#D3FCD2";
 const YEL     = "#FCFBD2";
-const BDR     = "#E8E8F4";
+const BDR     = "#D5D0E4";
 
 const H2: React.CSSProperties = {
   fontSize: "22px", fontWeight: 700, color: DARK,
@@ -218,7 +218,7 @@ export default function PlanningFuneralPage() {
       </section>
 
       {/* ── Note of Support ── */}
-      <div className="mt-10 rounded-xl p-6" style={{ background: PINK, border: "1px solid #F0B0F0" }}>
+      <div className="mt-10 rounded-xl p-6" style={{ background: PINK, border: "1px solid #B5AAFC" }}>
         <h3 style={{ ...H3, marginTop: 0, marginBottom: "8px" }}>A Note of Support</h3>
         <p style={{ fontSize: "14px", color: MED, lineHeight: 1.75, marginBottom: 0 }}>
           If you are planning a funeral today, please accept our deepest condolences. By taking these steps one at a

@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle, ArrowRight, Search } from "lucide-react";
 import HomeSearchBar from "@/components/HomeSearchBar";
 
 /* ─────────────────────── DESIGN TOKENS ─────────────────────── */
 const DM        = "var(--font-dm-sans), -apple-system, sans-serif";
+const EASE      = [0.16, 1, 0.3, 1] as const;
 
 const PURPLE    = "#4F34C4";
 const DARK      = "#100B20";
@@ -185,6 +187,25 @@ const RESOURCES = [
 
 /* ─────────────────────── PAGE ───────────────────────────────── */
 export default function Home() {
+  const reduce = useReducedMotion();
+
+  function fadeUp(delay: number) {
+    return {
+      initial: { opacity: 0, y: reduce ? 0 : 20 },
+      whileInView: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
+      viewport: { once: true, margin: "-80px" },
+    };
+  }
+
+  const staggerContainer = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+  };
+  const staggerItem = {
+    hidden: { opacity: 0, y: reduce ? 0 : 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+  };
+
   return (
     <div style={{ fontFamily: DM, background: "#ffffff", color: DARK }}>
 
@@ -196,10 +217,10 @@ export default function Home() {
         style={{ background: HERO_BG, paddingTop: "64px", paddingBottom: "144px" }}
       >
         {/* Content */}
-        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-7 flex flex-col items-center text-center">
+        <div className="relative z-10 max-w-[1366px] mx-auto px-4 sm:px-7 flex flex-col items-center text-center">
 
           {/* Badge */}
-          <div
+          <motion.div
             className="mb-5 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[13px] font-semibold border"
             style={{
               background: "rgba(255,255,255,0.30)",
@@ -207,13 +228,15 @@ export default function Home() {
               borderColor: "rgba(255,255,255,0.40)",
               color: BADGE_TXT,
             }}
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } }}
           >
             <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
             UK&apos;s verified funeral marketplace
-          </div>
+          </motion.div>
 
           {/* H1 */}
-          <h1
+          <motion.h1
             className="text-balance max-w-3xl mb-5"
             style={{
               fontSize: "clamp(32px, 5vw, 56px)",
@@ -222,22 +245,30 @@ export default function Home() {
               letterSpacing: "-0.02em",
               color: DARK,
             }}
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.1, ease: EASE } }}
           >
             Find a verified funeral director{" "}
             <span style={{ color: BADGE_TXT }}>near you</span>
-          </h1>
+          </motion.h1>
 
           {/* Subtext */}
-          <p
+          <motion.p
             className="max-w-xl mb-10"
             style={{ fontSize: "clamp(16px,1.5vw,18px)", fontWeight: 400, lineHeight: 1.6, color: DRK_PUR }}
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.2, ease: EASE } }}
           >
             Compare real prices from 1,200+ verified providers across the UK.
             No account needed. No pressure. No hidden fees.
-          </p>
+          </motion.p>
 
           {/* Search */}
-          <div className="w-full max-w-[560px]">
+          <motion.div
+            className="w-full max-w-[560px]"
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.3, ease: EASE } }}
+          >
             <div
               className="flex items-center gap-2 rounded-xl p-2 border"
               style={{
@@ -251,10 +282,14 @@ export default function Home() {
                 <HomeSearchBar />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Trust badges */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+          <motion.div
+            className="mt-6 flex flex-wrap items-center justify-center gap-2"
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.42, ease: EASE } }}
+          >
             {[
               { icon: <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />, label: "Prices shown upfront" },
               { icon: <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />, label: "1,200+ verified providers" },
@@ -274,7 +309,7 @@ export default function Home() {
                 {label}
               </span>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Hero background terrain */}
@@ -303,11 +338,18 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════
           2. WHY VALE — white cards overlapping the hero
       ══════════════════════════════════════════════════════ */}
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-7">
-        <div className="-mt-20 md:-mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="relative z-10 max-w-[1366px] mx-auto px-4 sm:px-7">
+        <motion.div
+          className="-mt-20 md:-mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
           {WHY_VALE.map(({ icon, title, body }) => (
-            <div
+            <motion.div
               key={title}
+              variants={staggerItem}
               className="group relative flex flex-col items-center text-center gap-4 rounded-xl bg-white p-6 border cursor-default"
               style={{
                 borderColor: PUR_GRAY,
@@ -331,19 +373,19 @@ export default function Home() {
                 style={{ background: PURPLE }}
                 aria-hidden="true"
               />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* ══════════════════════════════════════════════════════
           3. PRICING + STATS
       ══════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28" style={{ background: BG_OFF }}>
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-7">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-7">
 
           {/* Section header */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <motion.div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14" {...fadeUp(0)}>
             <div className="max-w-lg">
               <h2
                 className="mb-3"
@@ -366,13 +408,20 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Pricing cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-16">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-16"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {COSTS.map(({ label, price, tag, desc, img, bg, color, radius }) => (
-              <div
+              <motion.div
                 key={label}
+                variants={staggerItem}
                 className="group relative bg-white rounded-2xl border overflow-hidden flex flex-col"
                 style={{ borderColor: BORDER }}
               >
@@ -419,9 +468,9 @@ export default function Home() {
                   <div style={{ fontSize: "15px", fontWeight: 600, color: DARK, marginBottom: "6px" }}>{label}</div>
                   <p style={{ fontSize: "13px", color: BODY, lineHeight: 1.55 }}>{desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           <p className="mb-16 text-xs" style={{ color: MUTED }}>
             * UK averages, Vale Funeral Price Index Q1 2026. Regional prices vary significantly.
@@ -462,10 +511,10 @@ export default function Home() {
           4. SEARCH BY CATEGORY
       ══════════════════════════════════════════════════════ */}
       <section className="pb-20 md:pb-28" style={{ background: BG_OFF }}>
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-7">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-7">
 
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14">
+          <motion.div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14" {...fadeUp(0)}>
             <div className="max-w-lg">
               <h2
                 id="category-grid-heading"
@@ -488,13 +537,20 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Category cards — 3-col grid, alternating wide card */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {SEARCH_CATS.map(({ label, bg, color, radius, imgH, img, desc, searchHref, infoHref, wide }) => (
-              <div
+              <motion.div
                 key={label}
+                variants={staggerItem}
                 className={`group relative bg-white rounded-2xl border overflow-hidden flex flex-col transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${wide ? "md:col-span-2" : ""}`}
                 style={{ borderColor: BORDER }}
               >
@@ -540,9 +596,9 @@ export default function Home() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -550,7 +606,7 @@ export default function Home() {
           5. AS FEATURED IN
       ══════════════════════════════════════════════════════ */}
       <section className="py-10 px-4" style={{ background: "#ffffff", borderTop: `1px solid ${PUR_GRAY}`, borderBottom: `1px solid ${PUR_GRAY}` }}>
-        <div className="max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        <motion.div className="max-w-[1366px] mx-auto flex flex-wrap items-center justify-center gap-8 md:gap-12" {...fadeUp(0)}>
           <span
             style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: MUTED }}
           >
@@ -566,17 +622,17 @@ export default function Home() {
               className="opacity-40 grayscale hover:opacity-70 hover:grayscale-0 transition-all duration-200 object-contain"
             />
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
           6. TESTIMONIALS
       ══════════════════════════════════════════════════════ */}
       <section className="bg-white py-24 md:py-32 overflow-hidden" aria-labelledby="testimonials-heading">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-7">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-7">
 
           {/* Header — centred */}
-          <div className="text-center max-w-xl mx-auto mb-16 md:mb-20">
+          <motion.div className="text-center max-w-xl mx-auto mb-16 md:mb-20" {...fadeUp(0)}>
             <h2
               id="testimonials-heading"
               className="mb-4"
@@ -593,13 +649,20 @@ export default function Home() {
             <p style={{ fontSize: "clamp(15px,1.2vw,16px)", fontWeight: 400, lineHeight: 1.65, color: BODY }}>
               Real families, real experiences — every review linked to a confirmed arrangement.
             </p>
-          </div>
+          </motion.div>
 
           {/* Staggered cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-start">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-start"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {TESTIMONIALS.map(({ quote, name, location, date, avatar }, i) => (
-              <figure
+              <motion.figure
                 key={name}
+                variants={staggerItem}
                 className={`relative flex flex-col rounded-2xl border p-8 ${
                   i === 1 ? "md:mt-12" : i === 2 ? "md:mt-6" : ""
                 }`}
@@ -643,9 +706,9 @@ export default function Home() {
                     <div style={{ fontSize: "12px", fontWeight: 400, color: STAT_LBL, lineHeight: 1.4 }}>{location} · {date}</div>
                   </div>
                 </figcaption>
-              </figure>
+              </motion.figure>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -656,10 +719,11 @@ export default function Home() {
         className="py-20 md:py-28 px-4 sm:px-7"
         style={{ background: "#ffffff", borderBottom: `1px solid ${PUR_GRAY}` }}
       >
-        <div className="max-w-[1200px] mx-auto">
-          <div
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div
             className="grid md:grid-cols-2 rounded-2xl border overflow-hidden"
             style={{ borderColor: BORDER }}
+            {...fadeUp(0)}
           >
             {/* Illustration panel */}
             <div
@@ -735,7 +799,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -746,10 +810,10 @@ export default function Home() {
         className="py-24 md:py-28"
         style={{ background: BG_OFF, borderTop: `1px solid ${PUR_GRAY}` }}
       >
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-7">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-7">
 
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14">
+          <motion.div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14" {...fadeUp(0)}>
             <div>
               <h2
                 className="mb-3"
@@ -771,12 +835,18 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* 2-column list */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
             {RESOURCES.map(({ title, tag, href, tagBg, tagColor }) => (
-              <div key={title} className="group border-t first:border-t" style={{ borderColor: BORDER }}>
+              <motion.div key={title} variants={staggerItem} className="group border-t first:border-t" style={{ borderColor: BORDER }}>
                 <Link
                   href={href}
                   className="flex items-start justify-between gap-4 py-5 -mx-3 px-3 rounded-lg transition-colors duration-150"
@@ -804,9 +874,9 @@ export default function Home() {
                     aria-hidden="true"
                   />
                 </Link>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -814,10 +884,10 @@ export default function Home() {
           9. FOR FUNERAL DIRECTORS
       ══════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden py-24 md:py-28" style={{ background: DARK }}>
-        <div className="relative max-w-[1200px] mx-auto px-4 sm:px-7">
+        <div className="relative max-w-[1366px] mx-auto px-4 sm:px-7">
 
           {/* Header */}
-          <div className="max-w-2xl mb-14">
+          <motion.div className="max-w-2xl mb-14" {...fadeUp(0)}>
             <p
               className="mb-5 text-[13px] font-semibold uppercase tracking-[0.07em]"
               style={{ color: MUTED }}
@@ -840,12 +910,16 @@ export default function Home() {
               Join 1,200+ funeral directors on Vale. Families arrive informed, prices agreed,
               ready to enquire — not just browsing.
             </p>
-          </div>
+          </motion.div>
 
           {/* Stats grid */}
-          <div
+          <motion.div
             className="grid grid-cols-2 md:grid-cols-4 mb-12 md:divide-x"
             style={{ borderColor: DK_BDR }}
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
           >
             {[
               { stat: "Free",  label: "to list",           desc: "No setup fee. Pay per verified enquiry." },
@@ -853,8 +927,9 @@ export default function Home() {
               { stat: "£0",    label: "CMA tools",          desc: "Free itemised price display and compliance." },
               { stat: "Live",  label: "dashboard",          desc: "Track views, enquiries, and reviews." },
             ].map(({ stat, label, desc }) => (
-              <div
+              <motion.div
                 key={label}
+                variants={staggerItem}
                 className="py-6 md:px-10 first:md:pl-0 last:md:pr-0 border-t md:border-t-0"
                 style={{ borderColor: DK_BDR }}
               >
@@ -872,12 +947,12 @@ export default function Home() {
                 </div>
                 <div style={{ fontSize: "14px", fontWeight: 600, color: "#ffffff", marginBottom: "6px" }}>{label}</div>
                 <div style={{ fontSize: "12px", fontWeight: 400, lineHeight: 1.5, color: MUTED }}>{desc}</div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3">
+          <motion.div className="flex flex-col sm:flex-row gap-3" {...fadeUp(0.1)}>
             <Link
               href="/for-funeral-directors"
               className="inline-flex items-center justify-center gap-2 min-h-[44px] px-7 py-2.5 rounded-lg text-[14px] font-bold transition-colors duration-200 group"
@@ -905,7 +980,7 @@ export default function Home() {
             >
               Book a demo
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FileText, CheckCircle, Download, Shield, Star } from "lucide-react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Check, ShieldCheck, Download, FileCheck2 } from "lucide-react";
 
 interface SignupRecord { id: string; email: string; name: string; signed_up_at: string }
 interface DownloadRecord { id: string; resource_name: string; email: string; downloaded_at: string }
@@ -10,12 +12,24 @@ interface ChecklistSection { title: string; items: string[]; notes?: string[] }
 const SIGNUP_KEY = "vale_resource_signups";
 const DOWNLOAD_KEY = "vale_pdf_downloads";
 
+/* ─── Design tokens ─────────────────────────────────────────────── */
+const DARK  = "#100B20";
+const MED   = "#4A415E";
+const BDR   = "#E3DFFF";
+const LAV   = "#F4F0FF";
+const PURPLE       = "#4F34C4";
+const PURPLE_MUTED = "#A898F4";
+const PURPLE_ICON  = "#7C69EB";
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const SECTIONS = [
-  { title: "Before contacting a funeral director", count: 7, color: "#1A1A2E" },
-  { title: "First 24–48 hours", count: 8, color: "#5C5C7A" },
-  { title: "Planning the service", count: 9, color: "#1A1A2E" },
-  { title: "After the service", count: 8, color: "#6B6DE8" },
+  { title: "Before contacting a funeral director", count: "7 steps" },
+  { title: "First 24–48 hours", count: "8 steps" },
+  { title: "Planning the service", count: "9 steps" },
+  { title: "After the service", count: "8 steps" },
 ];
+
+const trustItems = ["No spam, ever", "Free download", "Reviewed by professionals"];
 
 const CHECKLIST: ChecklistSection[] = [
   {
@@ -228,6 +242,18 @@ async function generatePDF(name: string, email: string): Promise<void> {
 }
 
 export default function ResourcesPage() {
+  const reduce = useReducedMotion();
+  const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: reduce ? 0 : 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
+  });
+  const revealUp = (delay = 0) => ({
+    initial: { opacity: 0, y: reduce ? 0 : 22 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-60px" } as const,
+    transition: { duration: 0.55, delay, ease: EASE },
+  });
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -284,368 +310,243 @@ export default function ResourcesPage() {
   const firstName = name.split(" ")[0];
 
   return (
-    <div className="min-h-screen" style={{ background: "#FFFFFF" }}>
-      {/* Hero */}
-      <section style={{ background: "#1A1A2E" }}>
-        <div className="max-w-4xl mx-auto px-6 py-16 text-center">
-          <div
-            className="animate-fade-rise inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-[11px] font-medium uppercase tracking-[0.13em]"
-            style={{
-              border: "1px solid rgba(232,226,216,0.3)",
-              background: "rgba(232,226,216,0.15)",
-              color: "#D2D3FC",
-            }}
-          >
-            <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-            Free resource
-          </div>
-          <h1
-            className="animate-fade-rise mb-5"
-            style={{
-              fontFamily: "var(--font-open-sans)",
-              fontSize: "clamp(38px, 6vw, 64px)",
-              lineHeight: 1.08,
-              letterSpacing: "-0.025em",
-              color: "white",
-            }}
-          >
-            Funeral Planning
-            <br />
-            <em style={{ color: "#D2D3FC", fontStyle: "italic" }}>Checklist</em>
-          </h1>
-          <p
-            className="animate-fade-rise-delay text-base sm:text-lg max-w-xl mx-auto leading-relaxed"
-            style={{ color: "rgba(232,226,216,0.85)" }}
-          >
-            A clear, compassionate guide to help families navigate every step —
-            from the first hours to settling the estate.
-          </p>
-        </div>
-      </section>
+    <section className="bg-[#F4F0FF] py-16 md:py-24" aria-labelledby="funeral-guide-heading">
+      <div className="max-w-[1366px] mx-auto px-4 sm:px-[1.7rem]">
 
-      {/* Main content */}
-      <section className="max-w-5xl mx-auto px-6 py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-          {/* Left: What's inside */}
-          <div>
-            <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#6B6DE8" }} aria-hidden="true" />
-            <h2
-              className="mb-3"
-              style={{
-                fontFamily: "var(--font-open-sans)",
-                fontSize: "clamp(24px, 3vw, 36px)",
-                lineHeight: 1.15,
-                letterSpacing: "-0.02em",
-                fontWeight: 400,
-                color: "#1A1A2E",
-              }}
+        {/* Two-column: intro + form */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start mb-20 md:mb-28">
+
+          {/* LEFT */}
+          <motion.div {...fadeUp(0)}>
+            <motion.p
+              className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-[12px] font-[700] tracking-[0.08em] uppercase text-[#4F34C4] border border-[#E3DFFF]"
+              {...fadeUp(0)}
             >
-              What&apos;s inside
-            </h2>
-            <p className="text-sm mb-8 leading-relaxed" style={{ color: "#5C5C7A" }}>
-              32 practical steps across 4 clear sections — written with funeral
-              directors, bereavement counsellors, and families in mind.
-            </p>
-            <div className="space-y-3">
-              {SECTIONS.map((s, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 p-5 rounded-xl transition-all duration-200"
-                  style={{
-                    background: "white",
-                    border: "1px solid #E8E8F4",
-                  }}
-                >
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold"
-                    style={{
-                      background: "rgba(107,109,232,0.12)",
-                      color: "#6B6DE8",
-                    }}
-                    aria-hidden="true"
-                  >
-                    {i + 1}
-                  </div>
-                  <div>
-                    <p
-                      className="text-sm font-semibold"
-                      style={{ color: "#1A1A2E" }}
-                    >
-                      {s.title}
-                    </p>
-                    <p className="text-xs mt-0.5" style={{ color: "#5C5C7A" }}>
-                      {s.count} steps
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+              Free resource
+            </motion.p>
+            <motion.h1
+              id="funeral-guide-heading"
+              className="text-[36px] sm:text-[48px] lg:text-[56px] font-[900] leading-[1.05] tracking-[-0.03em] text-[#100B20] mb-5"
+              style={{ textWrap: "balance" } as React.CSSProperties}
+              {...fadeUp(0.08)}
+            >
+              Funeral Planning Checklist
+            </motion.h1>
+            <motion.p
+              className="text-[16px] md:text-[18px] font-[400] leading-[1.6] text-[#4A415E] mb-8"
+              style={{ maxWidth: "52ch" } as React.CSSProperties}
+              {...fadeUp(0.16)}
+            >
+              A clear, compassionate guide to help families navigate every step — from the
+              first hours to settling the estate.
+            </motion.p>
 
-            {/* Trust signals */}
-            <div className="flex flex-wrap gap-5 mt-8 pt-6" style={{ borderTop: "1px solid #E8E8F4" }}>
-              {[
-                { icon: Shield, text: "No spam, ever" },
-                { icon: CheckCircle, text: "Free download" },
-                { icon: Star, text: "Reviewed by professionals" },
-              ].map(({ icon: Icon, text }) => (
-                <div
-                  key={text}
-                  className="flex items-center gap-1.5 text-xs font-medium"
-                  style={{ color: "#5C5C7A" }}
-                >
-                  <Icon
-                    className="w-3.5 h-3.5"
-                    style={{ color: "#6B6DE8" }}
-                    aria-hidden="true"
-                  />
-                  {text}
-                </div>
-              ))}
-            </div>
-          </div>
+            {/* What's inside */}
+            <motion.div className="mb-8" {...fadeUp(0.22)}>
+              <h2 className="text-[15px] font-[700] tracking-[0.04em] uppercase text-[#26126E] mb-3">
+                What&apos;s inside
+              </h2>
+              <p className="text-[15px] md:text-[16px] font-[400] leading-[1.65] text-[#4A415E]" style={{ maxWidth: "52ch" }}>
+                32 practical steps across 4 clear sections — written with funeral directors,
+                bereavement counsellors, and families in mind.
+              </p>
+            </motion.div>
 
-          {/* Right: Signup / Download */}
-          <div
-            className="rounded-xl p-7"
-            style={{
-              background: "white",
-              border: "1px solid #E8E8F4",
-            }}
+            {/* Trust row */}
+            <motion.div className="flex flex-wrap items-center gap-3" {...fadeUp(0.28)}>
+              {trustItems.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-[600] text-[#26126E] border border-[#E3DFFF]"
+                >
+                  <ShieldCheck size={14} className="flex-shrink-0 text-[#7C69EB]" aria-hidden="true" />
+                  {item}
+                </span>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT — form */}
+          <motion.div
+            className="w-full lg:sticky lg:top-24 rounded-2xl bg-white p-8 md:p-10"
+            style={{ boxShadow: "0 12px 50px rgba(79,52,196,0.10)" }}
+            {...fadeUp(0.1)}
           >
-            {!submitted ? (
-              <>
-                <h2
-                  className="mb-1"
-                  style={{
-                    fontFamily: "var(--font-open-sans)",
-                    fontSize: "clamp(20px, 2vw, 26px)",
-                    lineHeight: 1.2,
-                    fontWeight: 400,
-                    color: "#1A1A2E",
-                  }}
+            {submitted ? (
+              <div className="text-center py-6" role="status" aria-live="polite">
+                <span
+                  className="inline-flex items-center justify-center w-14 h-14 rounded-full mb-5"
+                  style={{ backgroundColor: "#F4F0FF", color: "#4F34C4" }}
+                  aria-hidden="true"
                 >
-                  Get your free guide
-                </h2>
-                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#5C5C7A" }}>
-                  Enter your details below. We&apos;ll never share your
-                  information.
-                </p>
-                <form onSubmit={handleSubmit} noValidate>
-                  <div className="space-y-3 mb-4">
-                    <div>
-                      <label
-                        htmlFor="res-name"
-                        className="block text-sm font-medium mb-1.5"
-                        style={{ color: "#1A1A2E" }}
-                      >
-                        Your name
-                      </label>
-                      <input
-                        id="res-name"
-                        type="text"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                          setError("");
-                        }}
-                        autoComplete="name"
-                        placeholder="e.g. Sarah Thompson"
-                        className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-1"
-                        style={{
-                          background: "#FFFFFF",
-                          border: "1px solid #E8E8F4",
-                          color: "#5C5C7A",
-                          minHeight: "44px",
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="res-email"
-                        className="block text-sm font-medium mb-1.5"
-                        style={{ color: "#1A1A2E" }}
-                      >
-                        Email address
-                      </label>
-                      <input
-                        id="res-email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          setError("");
-                        }}
-                        autoComplete="email"
-                        placeholder="e.g. sarah@example.com"
-                        className="w-full text-sm rounded-xl px-4 py-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-1"
-                        style={{
-                          background: "#FFFFFF",
-                          border: "1px solid #E8E8F4",
-                          color: "#5C5C7A",
-                          minHeight: "44px",
-                        }}
-                      />
-                    </div>
-                  </div>
-                  {error && (
-                    <p
-                      role="alert"
-                      className="text-sm mb-3"
-                      style={{ color: "#C95548" }}
-                    >
-                      {error}
-                    </p>
-                  )}
-                  <button
-                    type="submit"
-                    className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2"
-                    style={{ background: "#1A1A2E", color: "white" }}
-                  >
-                    <FileText className="w-4 h-4" aria-hidden="true" />
-                    Get your free guide
-                  </button>
-                </form>
-              </>
-            ) : (
-              <div className="text-center">
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
-                  style={{ background: "rgba(90,174,85,0.12)" }}
-                >
-                  <CheckCircle
-                    className="w-7 h-7"
-                    style={{ color: "#6B6DE8" }}
-                    aria-hidden="true"
-                  />
-                </div>
-                <h2
-                  className="mb-1"
-                  style={{
-                    fontFamily: "var(--font-open-sans)",
-                    fontSize: "clamp(20px, 2vw, 26px)",
-                    lineHeight: 1.2,
-                    fontWeight: 400,
-                    color: "#1A1A2E",
-                  }}
-                >
+                  <FileCheck2 size={26} />
+                </span>
+                <h3 className="text-[24px] md:text-[28px] font-[900] leading-[1.15] tracking-[-0.02em] text-[#100B20] mb-3">
                   {firstName ? `Thank you, ${firstName}.` : "Thank you."}
-                </h2>
-                <p className="text-sm mb-6 leading-relaxed" style={{ color: "#5C5C7A" }}>
-                  Your checklist is ready to download.
+                </h3>
+                <p className="text-[15px] font-[400] leading-[1.6] text-[#4A415E] mb-6" style={{ maxWidth: "40ch", margin: "0 auto" }}>
+                  Your Funeral Planning Checklist is ready to download.
                 </p>
                 <button
                   type="button"
                   onClick={handleDownload}
                   disabled={downloading}
-                  className="w-full flex items-center justify-center gap-2 text-sm font-medium py-3 rounded-xl min-h-[52px] hover:scale-[1.02] active:scale-[0.98] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2 disabled:opacity-60 disabled:scale-100"
-                  style={{ background: "#1A1A2E", color: "white" }}
+                  className="w-full inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl bg-[#4F34C4] text-white text-[15px] font-[700] transition-colors duration-200 ease-out hover:bg-[#3B229D] active:bg-[#26126E] disabled:opacity-60"
                 >
-                  <Download className="w-4 h-4" aria-hidden="true" />
+                  <Download size={16} aria-hidden="true" />
                   {downloading ? "Generating…" : "Download PDF"}
                 </button>
-                <p className="text-xs mt-3" style={{ color: "#5C5C7A" }}>
+                <p className="text-[13px] font-[400] text-[#4A415E] mt-3">
                   Opens as a PDF in your downloads folder.
                 </p>
               </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Checklist preview */}
-      <section className="max-w-5xl mx-auto px-6 pb-28">
-        <div className="w-10 h-[2px] rounded-full mb-6" style={{ background: "#6B6DE8" }} aria-hidden="true" />
-        <h2
-          className="mb-2"
-          style={{
-            fontFamily: "var(--font-open-sans)",
-            fontSize: "clamp(22px, 2.5vw, 30px)",
-            lineHeight: 1.2,
-            fontWeight: 400,
-            color: "#1A1A2E",
-          }}
-        >
-          A look inside
-        </h2>
-        <p className="text-sm mb-8 leading-relaxed" style={{ color: "#5C5C7A" }}>
-          The first few steps from each section — the full guide covers all 32.
-        </p>
-        <div
-          className="rounded-xl overflow-hidden"
-          style={{ background: "white", border: "1px solid #E8E8F4" }}
-        >
-          {CHECKLIST.map((section, si) => (
-            <div
-              key={si}
-              style={{
-                borderBottom:
-                  si < CHECKLIST.length - 1
-                    ? "1px solid #E8E8F4"
-                    : "none",
-              }}
-            >
-              {/* Section header */}
-              <div
-                className="px-6 py-4 flex items-center gap-3"
-                style={{ background: si % 2 === 0 ? "white" : "#FFFFFF" }}
-              >
-                <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-                  style={{
-                    background: "rgba(107,109,232,0.12)",
-                    color: "#6B6DE8",
-                  }}
-                  aria-hidden="true"
-                >
-                  {si + 1}
+            ) : (
+              <>
+                <div className="flex items-center gap-3 mb-2">
+                  <span
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0"
+                    style={{ backgroundColor: "#F4F0FF", color: "#4F34C4" }}
+                    aria-hidden="true"
+                  >
+                    <Download size={18} />
+                  </span>
+                  <h3 className="text-[22px] md:text-[26px] font-[900] leading-[1.15] tracking-[-0.02em] text-[#100B20]">
+                    Get your free guide
+                  </h3>
                 </div>
-                <span
-                  className="text-sm font-semibold"
-                  style={{ color: "#1A1A2E" }}
-                >
-                  {section.title.replace(/^Section \d+: /, "")}
-                </span>
-                <span
-                  className="ml-auto text-xs font-medium"
-                  style={{ color: "#5C5C7A" }}
-                >
-                  {section.items.length} steps
-                </span>
-              </div>
-
-              {/* Preview items */}
-              <div
-                className="px-6 pb-5"
-                style={{ background: si % 2 === 0 ? "white" : "#FFFFFF" }}
-              >
-                {section.items.slice(0, 3).map((item, ii) => (
-                  <div
-                    key={ii}
-                    className="flex items-start gap-3 py-2"
-                  >
-                    <div
-                      className="w-3.5 h-3.5 border rounded-sm mt-0.5 shrink-0"
-                      style={{ borderColor: "rgba(107,109,232,0.35)" }}
-                      aria-hidden="true"
+                <p className="text-[14px] font-[400] leading-[1.6] text-[#4A415E] mb-7">
+                  Enter your details below. We&apos;ll never share your information.
+                </p>
+                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                  <div>
+                    <label htmlFor="res-name" className="sr-only">Your name</label>
+                    <input
+                      id="res-name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      value={name}
+                      onChange={(e) => { setName(e.target.value); setError(""); }}
+                      placeholder="Your name"
+                      className="w-full rounded-xl bg-[#F4F0FF] border border-[#E3DFFF] px-4 py-3 text-[15px] font-[400] text-[#100B20] placeholder:text-[#9E96B2] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4]/20 focus:border-[#4F34C4]"
                     />
-                    <span className="text-sm leading-relaxed" style={{ color: "#5C5C7A" }}>
-                      {item}
-                    </span>
                   </div>
-                ))}
-                {section.items.length > 3 && (
-                  <p
-                    className="text-xs mt-2 pl-6 font-medium"
-                    style={{ color: "#6B6DE8" }}
+                  <div>
+                    <label htmlFor="res-email" className="sr-only">Email address</label>
+                    <input
+                      id="res-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                      placeholder="Email address"
+                      className="w-full rounded-xl bg-[#F4F0FF] border border-[#E3DFFF] px-4 py-3 text-[15px] font-[400] text-[#100B20] placeholder:text-[#9E96B2] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4]/20 focus:border-[#4F34C4]"
+                    />
+                  </div>
+                  {error && (
+                    <p role="alert" className="text-[13px]" style={{ color: "#C95548" }}>
+                      {error}
+                    </p>
+                  )}
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-xl bg-[#4F34C4] text-white text-[15px] font-[700] transition-colors duration-200 ease-out hover:bg-[#3B229D] active:bg-[#26126E]"
                   >
-                    + {section.items.length - 3} more steps in the full guide
-                  </p>
-                )}
-              </div>
-            </div>
+                    Get your free guide
+                  </button>
+                </form>
+              </>
+            )}
+          </motion.div>
+        </div>
+
+        {/* Four section tiles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-16 md:mb-20">
+          {SECTIONS.map(({ title, count }, i) => (
+            <motion.div
+              key={title}
+              className="rounded-2xl bg-white p-6 flex flex-col"
+              {...revealUp(0.05 + i * 0.09)}
+            >
+              <span
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full text-[18px] font-[900] mb-5"
+                style={{ backgroundColor: "#F4F0FF", color: "#A898F4" }}
+                aria-hidden="true"
+              >
+                {i + 1}
+              </span>
+              <h3 className="text-[16px] font-[700] leading-[1.3] text-[#100B20] mb-2">{title}</h3>
+              <p className="mt-auto text-[13px] font-[600] text-[#A898F4]">{count}</p>
+            </motion.div>
           ))}
         </div>
-      </section>
-    </div>
+
+        {/* A look inside */}
+        <motion.div className="max-w-2xl mb-10" {...revealUp()}>
+          <h2
+            className="text-[26px] md:text-[32px] font-[900] leading-[1.12] tracking-[-0.02em] text-[#100B20] mb-3"
+            style={{ textWrap: "balance" } as React.CSSProperties}
+          >
+            A look inside
+          </h2>
+          <p className="text-[15px] md:text-[16px] font-[400] leading-[1.65] text-[#4A415E]">
+            The first few steps from each section — the full guide covers all 32.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-16">
+          {CHECKLIST.map((section, i) => {
+            const title = section.title.replace(/^Section \d+: /, "");
+            const preview = section.items.slice(0, 3);
+            const more = section.items.length - 3;
+            return (
+              <motion.div
+                key={section.title}
+                className="rounded-2xl bg-white p-7"
+                {...revealUp(0.05 + (i % 2) * 0.09)}
+              >
+                <div className="flex items-center gap-3 mb-5">
+                  <span
+                    className="inline-flex items-center justify-center w-8 h-8 rounded-full text-[14px] font-[900] flex-shrink-0"
+                    style={{ backgroundColor: "#F4F0FF", color: "#A898F4" }}
+                    aria-hidden="true"
+                  >
+                    {i + 1}
+                  </span>
+                  <h3 className="text-[16px] font-[700] leading-[1.25] text-[#100B20]">{title}</h3>
+                </div>
+                <ul className="space-y-3 mb-4">
+                  {preview.map((step) => (
+                    <li key={step} className="flex items-start gap-3">
+                      <Check size={16} className="mt-0.5 flex-shrink-0 text-[#7C69EB]" aria-hidden="true" />
+                      <span className="text-[14px] font-[400] leading-[1.55] text-[#4A415E]">{step}</span>
+                    </li>
+                  ))}
+                </ul>
+                {more > 0 && (
+                  <p className="text-[13px] font-[600] text-[#A898F4] pl-7">+ {more} more steps in the full guide</p>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* CTA to search */}
+        <motion.div className="text-center" {...revealUp()}>
+          <p className="text-[15px] font-[400] text-[#4A415E] mb-5">
+            Ready to find a funeral director?
+          </p>
+          <Link
+            href="/search"
+            className="inline-flex items-center justify-center gap-2 min-h-[44px] px-7 py-3 rounded-xl bg-[#4F34C4] text-white text-[15px] font-[700] transition-[background-color] duration-200 ease-out hover:bg-[#3B229D] active:bg-[#26126E] group"
+          >
+            Search verified directors
+            <ArrowRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+        </motion.div>
+
+      </div>
+    </section>
   );
 }

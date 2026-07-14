@@ -25,6 +25,8 @@ const LEGAL_LINKS = [
   { label: "Terms",   href: "/" },
 ];
 
+const DM = "var(--font-dm-sans), -apple-system, sans-serif";
+
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -32,7 +34,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <main className="flex-1">{children}</main>
 
       <footer style={{ background: "#100B20" }}>
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-7 py-14">
+        <div className="max-w-[1366px] mx-auto px-4 sm:px-7 py-14">
 
           {/* Top grid */}
           <div
@@ -43,19 +45,19 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <div className="md:col-span-1">
               <Link
                 href="/"
-                className="inline-block mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
+                className="inline-block mb-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
                 aria-label="Vale homepage"
               >
                 <span
-                  style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 600, color: "#FFFFFF" }}
+                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 600, color: "#FFFFFF" }}
                   className="text-2xl tracking-wide"
                 >
-                  Vale<span style={{ color: "#C4975A" }}>.</span>
+                  Vale<span style={{ color: "#F5C541" }}>.</span>
                 </span>
               </Link>
               <p
                 className="text-sm leading-relaxed max-w-[200px]"
-                style={{ color: "rgba(255,255,255,0.45)" }}
+                style={{ fontFamily: DM, color: "rgba(255,255,255,0.45)" }}
               >
                 Transparent prices. Genuine choice. Dignity for every family.
               </p>
@@ -66,7 +68,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <div key={section}>
                 <p
                   className="text-[10px] font-semibold uppercase tracking-[0.14em] mb-4"
-                  style={{ color: "rgba(255,255,255,0.35)" }}
+                  style={{ fontFamily: DM, color: "rgba(255,255,255,0.35)" }}
                 >
                   {section}
                 </p>
@@ -75,8 +77,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                     <li key={label}>
                       <Link
                         href={href}
-                        className="text-sm transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
-                        style={{ color: "rgba(255,255,255,0.6)" }}
+                        className="text-sm transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
+                        style={{ fontFamily: DM, color: "rgba(255,255,255,0.6)" }}
                       >
                         {label}
                       </Link>
@@ -89,7 +91,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
           {/* Bottom strip */}
           <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <p className="text-xs" style={{ fontFamily: DM, color: "rgba(255,255,255,0.3)" }}>
               © Vale 2026
             </p>
             <div className="flex items-center gap-5">
@@ -97,8 +99,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <Link
                   key={label}
                   href={href}
-                  className="text-xs transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] rounded"
-                  style={{ color: "rgba(255,255,255,0.3)" }}
+                  className="text-xs transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4] rounded"
+                  style={{ fontFamily: DM, color: "rgba(255,255,255,0.3)" }}
                 >
                   {label}
                 </Link>

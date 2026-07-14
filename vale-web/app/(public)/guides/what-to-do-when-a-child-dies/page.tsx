@@ -1,14 +1,14 @@
 import { Heart } from "lucide-react";
 import BlogLayout from "@/components/blog/BlogLayout";
 
-const DARK    = "#1A1A2E";
-const MED     = "#5C5C7A";
-const LAV     = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
-const PINK    = "#FBD2FC";
+const DARK    = "#100B20";
+const MED     = "#4A415E";
+const LAV     = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
+const PINK    = "#CFC8FF";
 const MINT    = "#D3FCD2";
 const YEL     = "#FCFBD2";
-const BDR     = "#E8E8F4";
+const BDR     = "#D5D0E4";
 
 const H2: React.CSSProperties = { fontSize: "22px", fontWeight: 700, color: DARK, marginTop: "40px", marginBottom: "12px", lineHeight: 1.25 };
 const H3: React.CSSProperties = { fontSize: "16px", fontWeight: 700, color: DARK, marginTop: "20px", marginBottom: "8px", lineHeight: 1.3 };
@@ -30,7 +30,7 @@ export default function WhatToDoWhenChildDiesPage() {
       title="What To Do When a Child Dies"
       category="Support"
       categoryBg={PINK}
-      categoryText="#C45EC4"
+      categoryText="#4F34C4"
       author="Vale Family Advisors"
       date="25 May 2026"
       readTime="8 min"
@@ -38,8 +38,8 @@ export default function WhatToDoWhenChildDiesPage() {
       tocLinks={TOC}
     >
       {/* Sympathetic intro */}
-      <div className="rounded-xl p-5 mb-8 flex gap-4" style={{ background: PINK, border: "1px solid #F0B0F0" }}>
-        <Heart className="w-5 h-5 mt-0.5 shrink-0 fill-current" style={{ color: "#C45EC4" }} aria-hidden="true" />
+      <div className="rounded-xl p-5 mb-8 flex gap-4" style={{ background: PINK, border: "1px solid #B5AAFC" }}>
+        <Heart className="w-5 h-5 mt-0.5 shrink-0 fill-current" style={{ color: "#4F34C4" }} aria-hidden="true" />
         <p style={{ fontSize: "15px", color: MED, lineHeight: 1.75, marginBottom: 0 }}>
           If you are reading this page, please accept our deepest and most sincere condolences for the loss of your
           child or baby. We recognise that this is an unimaginably painful time. While your priority is, and should

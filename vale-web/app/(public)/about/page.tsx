@@ -1,46 +1,39 @@
+'use client';
+
 import Link from "next/link";
-import { Search, Building2, TrendingUp, Users, ShieldCheck, Heart } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Search, Building2, TrendingUp, Users, ShieldCheck, Heart, HandHeart, MapPin, ArrowRight } from "lucide-react";
 
 /* ─── Design tokens ─────────────────────────────────────────────── */
-const OS   = "var(--font-open-sans), -apple-system, sans-serif";
-const DARK = "#1A1A2E";
-const MED  = "#5C5C7A";
-const BDR  = "#E8E8F4";
+const DM    = "var(--font-dm-sans), -apple-system, sans-serif";
+const DARK  = "#100B20";
+const MED   = "#4A415E";
+const BDR   = "#D5D0E4";
 
-const LAV       = "#D2D3FC";
-const LAV_BTN   = "#6B6DE8";
-const MINT      = "#D3FCD2";
-const MINT_BTN  = "#3AA838";
-const YEL       = "#FCFBD2";
-const PINK      = "#FBD2FC";
+const LAV       = "#E3DFFF";
+const PURPLE    = "#4F34C4";
+const GOLD      = "#F5C541";
+const EASE      = [0.16, 1, 0.3, 1] as const;
 
 /* ─── Data ──────────────────────────────────────────────────────── */
 const VALUES = [
   {
-    color: LAV,
-    accent: LAV_BTN,
-    icon: "◎",
+    icon: ShieldCheck,
     title: "Radical transparency",
     body: "Every price, every review, every data point on Vale is real and verified. We do not accept advertising, sponsored placements, or paid listings.",
   },
   {
-    color: MINT,
-    accent: MINT_BTN,
-    icon: "◌",
+    icon: HandHeart,
     title: "No pressure, ever",
     body: "We will never contact you, upsell you, or pass your details to a provider without your explicit consent. Your search is private.",
   },
   {
-    color: PINK,
-    accent: "#C45EC4",
-    icon: "◈",
+    icon: Users,
     title: "Families first, always",
     body: "Vale's commercial model is funded by providers who list with us. But our loyalty is to families — full stop. Those two things are never in conflict because transparency is what makes providers valuable.",
   },
   {
-    color: YEL,
-    accent: "#806000",
-    icon: "◻",
+    icon: MapPin,
     title: "Local and independent",
     body: "We believe independent funeral directors often provide the most personal care. Vale gives them the same digital visibility as national chains — on merit, not budget.",
   },
@@ -61,13 +54,13 @@ const INDUSTRY_STATS = [
 ];
 
 /* ─── Section label helper ──────────────────────────────────────── */
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function SectionLabel({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
     <div className="flex items-center gap-2.5 mb-5">
-      <span className="inline-block w-5 h-px" style={{ background: LAV_BTN }} aria-hidden="true" />
+      <span className="inline-block w-5 h-px" style={{ background: dark ? "#9889F5" : PURPLE }} aria-hidden="true" />
       <span
         className="text-[11px] font-bold uppercase tracking-[0.18em]"
-        style={{ color: LAV_BTN }}
+        style={{ color: dark ? "#9889F5" : PURPLE }}
       >
         {children}
       </span>
@@ -77,89 +70,94 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 /* ─── Page ──────────────────────────────────────────────────────── */
 export default function AboutPage() {
+  const reduce = useReducedMotion();
+
+  function fadeUp(delay: number) {
+    return {
+      initial: { opacity: 0, y: reduce ? 0 : 20 },
+      whileInView: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
+      viewport: { once: true, margin: "-80px" },
+    };
+  }
+
+  const staggerContainer = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+  };
+  const staggerItem = {
+    hidden: { opacity: 0, y: reduce ? 0 : 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+  };
+
   return (
     <div style={{ background: "#FFFFFF" }}>
 
       {/* ══════════════ HERO ══════════════ */}
       <section
-        className="relative overflow-hidden px-6 md:px-10 pt-20 pb-28 md:pt-28 md:pb-36"
-        style={{
-          background: "#F4F4FF",
-          backgroundImage: [
-            "radial-gradient(ellipse at 10% 0%, rgba(180,182,246,0.9) 0%, transparent 55%)",
-            "radial-gradient(ellipse at 90% 0%, rgba(251,210,252,0.85) 0%, transparent 55%)",
-          ].join(", "),
-        }}
+        className="relative overflow-hidden bg-[#A898F4] pt-20 pb-24 md:pt-28 md:pb-28"
+        aria-label="About Vale"
       >
-        {/* Dot texture */}
         <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(107,109,232,0.12) 1px, transparent 1px)",
-            backgroundSize: "26px 26px",
-          }}
           aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "linear-gradient(180deg, #A898F4 0%, #BFAFF9 60%, #F4F0FF 100%)" }}
         />
-
-        <div className="relative max-w-5xl mx-auto">
-          <SectionLabel>About Vale</SectionLabel>
-
-          <h1
-            className="mb-5 max-w-3xl"
-            style={{
-              fontFamily:    OS,
-              fontSize:      "clamp(36px, 5vw, 64px)",
-              fontWeight:    800,
-              lineHeight:    1.05,
-              letterSpacing: "-0.025em",
-              color:         DARK,
-            }}
-          >
-            We built Vale because the alternative was unacceptable.
-          </h1>
-
-          <p
-            className="max-w-xl mb-12 text-base leading-relaxed"
-            style={{ fontFamily: OS, color: MED }}
-          >
-            Transparency belongs in every part of life — including the end of it. We
-            created Vale so families can make informed choices at the hardest moment.
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/search"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: DARK, color: "#FFFFFF" }}
+        <div className="relative z-10 max-w-[1366px] mx-auto px-4 sm:px-[1.7rem]">
+          <div className="max-w-3xl">
+            <motion.p
+              className="mb-5 inline-flex items-center rounded-full bg-white/30 backdrop-blur-sm px-4 py-1.5 text-[13px] font-[600] text-[#26126E] border border-white/40 tracking-[0.04em] uppercase"
+              {...fadeUp(0)}
             >
-              <Search className="w-4 h-4" aria-hidden="true" />
-              Find a funeral director
-            </Link>
-            <Link
-              href="/for-funeral-directors"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: "rgba(107,109,232,0.12)", color: DARK, border: "1px solid rgba(107,109,232,0.3)" }}
+              About Vale
+            </motion.p>
+
+            <motion.h1
+              className="text-balance text-[36px] sm:text-[48px] lg:text-[56px] font-[900] leading-[1.1] tracking-[-0.02em] text-[#100B20] mb-6"
+              {...fadeUp(0.1)}
             >
-              <Building2 className="w-4 h-4" aria-hidden="true" />
-              List your funeral home
-            </Link>
+              We built Vale because the alternative was unacceptable.
+            </motion.h1>
+
+            <motion.p
+              className="max-w-2xl text-[16px] sm:text-[18px] font-[400] leading-[1.6] text-[#342C46] mb-10"
+              {...fadeUp(0.2)}
+            >
+              Transparency belongs in every part of life — including the end of it.
+              We created Vale so families can make informed choices at the hardest moment.
+            </motion.p>
+
+            <motion.div className="flex flex-col sm:flex-row gap-3" {...fadeUp(0.3)}>
+              <Link
+                href="/search"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-7 py-3 rounded-xl bg-[#4F34C4] text-white text-[15px] font-[700] transition-[background-color] duration-200 ease-out hover:bg-[#3B229D] active:bg-[#26126E] group"
+              >
+                Find a funeral director
+                <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/for-funeral-directors"
+                className="inline-flex items-center justify-center min-h-[44px] px-7 py-3 rounded-xl border border-[#100B20]/15 bg-white/40 backdrop-blur-sm text-[15px] font-[600] text-[#26126E] transition-colors duration-200 ease-out hover:bg-white/70 hover:border-[#100B20]/25"
+              >
+                List your funeral home
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* ══════════════ WHY WE EXIST ══════════════ */}
       <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-[1366px] mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
 
             {/* Left — story */}
-            <div>
+            <motion.div {...fadeUp(0)}>
               <SectionLabel>Why we exist</SectionLabel>
 
               <h2
                 className="mb-5"
                 style={{
-                  fontFamily:    OS,
+                  fontFamily:    DM,
                   fontSize:      "clamp(24px, 3vw, 36px)",
                   fontWeight:    700,
                   lineHeight:    1.15,
@@ -187,13 +185,20 @@ export default function AboutPage() {
                 are here to make them fairer — so that what a family pays reflects the
                 quality of care they receive, not the desperation of the moment they chose.
               </p>
-            </div>
+            </motion.div>
 
             {/* Right — industry stats, top-padded to align with the h2 headline */}
-            <div className="grid grid-cols-1 gap-4 md:pt-[52px]">
+            <motion.div
+              className="grid grid-cols-1 gap-4 md:pt-[52px]"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+            >
               {INDUSTRY_STATS.map(({ icon: Icon, value, label }) => (
-                <div
+                <motion.div
                   key={value}
+                  variants={staggerItem}
                   className="flex items-start gap-5 rounded-2xl px-6 py-5"
                   style={{ background: "#F4F4FD", border: `1px solid ${BDR}` }}
                 >
@@ -201,12 +206,12 @@ export default function AboutPage() {
                     className="shrink-0 w-11 h-11 rounded-xl flex items-center justify-center mt-0.5"
                     style={{ background: LAV }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: LAV_BTN }} aria-hidden="true" />
+                    <Icon className="w-5 h-5" style={{ color: PURPLE }} aria-hidden="true" />
                   </div>
                   <div>
                     <div
                       style={{
-                        fontFamily:    OS,
+                        fontFamily:    DM,
                         fontSize:      "30px",
                         fontWeight:    800,
                         color:         DARK,
@@ -220,191 +225,168 @@ export default function AboutPage() {
                       {label}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
           </div>
         </div>
       </section>
 
       {/* ══════════════ VALUES ══════════════ */}
-      <section
-        className="py-20 md:py-28 px-6 md:px-10"
-        style={{
-          background: "#F4FFF4",
-          backgroundImage: [
-            "radial-gradient(ellipse at 10% 0%, rgba(196,245,196,0.9) 0%, transparent 55%)",
-            "radial-gradient(ellipse at 90% 0%, rgba(180,182,246,0.8) 0%, transparent 55%)",
-          ].join(", "),
-        }}
-      >
-        <div className="max-w-5xl mx-auto">
-          <SectionLabel>Our values</SectionLabel>
+      <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "#F4F2F8" }}>
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div {...fadeUp(0)}>
+            <SectionLabel>Our values</SectionLabel>
 
-          <h2
-            className="mb-12 max-w-xl"
-            style={{
-              fontFamily:    OS,
-              fontSize:      "clamp(26px, 3vw, 40px)",
-              fontWeight:    700,
-              lineHeight:    1.12,
-              letterSpacing: "-0.02em",
-              color:         DARK,
-            }}
+            <h2
+              className="mb-12 max-w-xl"
+              style={{
+                fontFamily:    DM,
+                fontSize:      "clamp(26px, 3vw, 40px)",
+                fontWeight:    700,
+                lineHeight:    1.12,
+                letterSpacing: "-0.02em",
+                color:         DARK,
+              }}
+            >
+              The principles we will never compromise on
+            </h2>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
           >
-            The principles we will never compromise on
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {VALUES.map(({ color, accent, icon, title, body }) => (
-              <div
+            {VALUES.map(({ icon: Icon, title, body }) => (
+              <motion.div
                 key={title}
+                variants={staggerItem}
                 className="flex items-start gap-4 rounded-2xl px-6 py-6"
                 style={{ background: "#FFFFFF", border: `1px solid ${BDR}` }}
               >
                 <div
-                  className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center mt-0.5 text-base font-bold"
-                  style={{ background: color, color: accent }}
-                  aria-hidden="true"
+                  className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center mt-0.5"
+                  style={{ background: LAV, color: PURPLE }}
                 >
-                  {icon}
+                  <Icon className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
                   <h3
                     className="mb-2"
-                    style={{ fontFamily: OS, fontSize: "17px", fontWeight: 700, color: DARK, lineHeight: 1.25 }}
+                    style={{ fontFamily: DM, fontSize: "17px", fontWeight: 700, color: DARK, lineHeight: 1.25 }}
                   >
                     {title}
                   </h3>
                   <p className="text-sm leading-relaxed" style={{ color: MED }}>{body}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ══════════════ STATS + WHO WE ARE ══════════════ */}
+      {/* ══════════════ VALE IN NUMBERS — dark band ══════════════ */}
+      <section className="py-20 md:py-24 px-6 md:px-10" style={{ background: DARK }}>
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div {...fadeUp(0)}>
+            <SectionLabel dark>Vale in numbers</SectionLabel>
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 md:divide-x"
+            style={{ borderColor: "#1E172E" }}
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+          >
+            {STATS.map(({ value, label }) => (
+              <motion.div
+                key={label}
+                variants={staggerItem}
+                className="py-6 md:px-10 first:md:pl-0 last:md:pr-0 border-t md:border-t-0"
+                style={{ borderColor: "#1E172E" }}
+              >
+                <div
+                  style={{
+                    fontFamily:    DM,
+                    fontSize:      "clamp(32px,3vw,42px)",
+                    fontWeight:    800,
+                    lineHeight:    1,
+                    letterSpacing: "-0.025em",
+                    color:         GOLD,
+                    marginBottom:  "8px",
+                  }}
+                >
+                  {value}
+                </div>
+                <div
+                  className="text-[13px] tracking-[0.04em] uppercase font-semibold"
+                  style={{ color: "#9E96B2" }}
+                >
+                  {label}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════ WHO WE ARE ══════════════ */}
       <section className="py-20 md:py-28 px-6 md:px-10" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div className="max-w-[1366px] mx-auto">
+          <motion.div className="max-w-2xl" {...fadeUp(0)}>
+            <SectionLabel>Who we are</SectionLabel>
 
-            {/* Stats 2×2 grid */}
-            <div>
-              <SectionLabel>Vale in numbers</SectionLabel>
-              <div
-                className="grid grid-cols-2 rounded-2xl overflow-hidden"
-                style={{ border: `1px solid ${BDR}` }}
-              >
-                {STATS.map(({ value, label }, i) => (
-                  <div
-                    key={label}
-                    className="flex flex-col items-center justify-center px-4 py-10"
-                    style={{
-                      borderRight:  i % 2 === 0 ? `1px solid ${BDR}` : undefined,
-                      borderBottom: i < 2       ? `1px solid ${BDR}` : undefined,
-                      background:   [LAV, PINK, MINT, YEL][i],
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily:    OS,
-                        fontSize:      "38px",
-                        fontWeight:    800,
-                        lineHeight:    1,
-                        color:         DARK,
-                        letterSpacing: "-0.025em",
-                      }}
-                    >
-                      {value}
-                    </div>
-                    <div
-                      className="text-[11px] mt-2.5 tracking-[0.08em] uppercase font-semibold text-center"
-                      style={{ color: MED }}
-                    >
-                      {label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <h2
+              className="mb-5"
+              style={{
+                fontFamily:    DM,
+                fontSize:      "clamp(24px, 2.5vw, 36px)",
+                fontWeight:    700,
+                lineHeight:    1.15,
+                letterSpacing: "-0.02em",
+                color:         DARK,
+              }}
+            >
+              Founded in London. Built for families.
+            </h2>
 
-            {/* Who we are */}
-            <div>
-              <SectionLabel>Who we are</SectionLabel>
-
-              <h2
-                className="mb-5"
-                style={{
-                  fontFamily:    OS,
-                  fontSize:      "clamp(24px, 2.5vw, 36px)",
-                  fontWeight:    700,
-                  lineHeight:    1.15,
-                  letterSpacing: "-0.02em",
-                  color:         DARK,
-                }}
-              >
-                Founded in London. Built for families.
-              </h2>
-
-              <p className="mb-4 text-base font-semibold leading-relaxed" style={{ color: DARK }}>
-                Vale was founded in London in 2026 by a team that had experienced the
-                confusion of arranging a funeral first-hand and refused to accept that it
-                had to be that way.
-              </p>
-              <p className="mb-4 text-sm leading-relaxed" style={{ color: MED }}>
-                We are backed by investors who share our belief that transparency in this
-                market is not just a business opportunity — it is a social necessity.
-              </p>
-              <p className="text-sm leading-relaxed" style={{ color: MED }}>
-                We are members of the Good Business Charter. All Vale advisors complete
-                professional bereavement awareness training. Our data is independently
-                audited quarterly.
-              </p>
-            </div>
-
-          </div>
+            <p className="mb-4 text-base font-semibold leading-relaxed" style={{ color: DARK }}>
+              Vale was founded in London in 2026 by a team that had experienced the
+              confusion of arranging a funeral first-hand and refused to accept that it
+              had to be that way.
+            </p>
+            <p className="mb-4 text-sm leading-relaxed" style={{ color: MED }}>
+              We are backed by investors who share our belief that transparency in this
+              market is not just a business opportunity — it is a social necessity.
+            </p>
+            <p className="text-sm leading-relaxed" style={{ color: MED }}>
+              We are members of the Good Business Charter. All Vale advisors complete
+              professional bereavement awareness training. Our data is independently
+              audited quarterly.
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* ══════════════ FINAL CTA ══════════════ */}
-      <section
-        className="relative overflow-hidden py-24 md:py-32 px-6 md:px-10"
-        style={{ background: LAV }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(107,109,232,0.18) 1px, transparent 1px)",
-            backgroundSize: "26px 26px",
-          }}
-          aria-hidden="true"
-        />
-        {/* Green glow */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            bottom: "-80px", left: "-80px",
-            width: "400px", height: "400px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(58,168,56,0.2) 0%, transparent 65%)",
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="relative max-w-5xl mx-auto">
-          <SectionLabel>Get started</SectionLabel>
+      {/* ══════════════ FINAL CTA — dark band ══════════════ */}
+      <section className="py-24 md:py-32 px-6 md:px-10" style={{ background: DARK }}>
+        <motion.div className="max-w-[1366px] mx-auto" {...fadeUp(0)}>
+          <SectionLabel dark>Get started</SectionLabel>
 
           <h2
             className="mb-4 max-w-2xl"
             style={{
-              fontFamily:    OS,
+              fontFamily:    DM,
               fontSize:      "clamp(28px, 4vw, 52px)",
               fontWeight:    800,
               lineHeight:    1.08,
               letterSpacing: "-0.025em",
-              color:         DARK,
+              color:         "#FFFFFF",
             }}
           >
             Ready to find a funeral director you can trust?
@@ -412,7 +394,7 @@ export default function AboutPage() {
 
           <p
             className="mb-10 max-w-lg text-base leading-relaxed"
-            style={{ color: MED }}
+            style={{ color: "#9889F5" }}
           >
             Or if you&apos;re a funeral director who believes families deserve better —
             we&apos;d like to work with you.
@@ -421,22 +403,22 @@ export default function AboutPage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/search"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: DARK, color: "#FFFFFF" }}
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C541]"
+              style={{ background: GOLD, color: DARK }}
             >
               <Search className="w-4 h-4" aria-hidden="true" />
               Search funeral directors
             </Link>
             <Link
               href="/for-funeral-directors"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8]"
-              style={{ background: LAV_BTN, color: "#FFFFFF" }}
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9889F5]"
+              style={{ background: "transparent", color: "#CFC8FF", border: "1px solid rgba(255,255,255,0.15)" }}
             >
               <Building2 className="w-4 h-4" aria-hidden="true" />
               List your funeral home
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </div>

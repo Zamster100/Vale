@@ -1,14 +1,14 @@
 import { CheckCircle } from "lucide-react";
 import BlogLayout from "@/components/blog/BlogLayout";
 
-const DARK    = "#1A1A2E";
-const MED     = "#5C5C7A";
-const LITE    = "#9090A8";
-const LAV     = "#D2D3FC";
-const LAV_BTN = "#6B6DE8";
+const DARK    = "#100B20";
+const MED     = "#4A415E";
+const LITE    = "#9E96B2";
+const LAV     = "#E3DFFF";
+const LAV_BTN = "#4F34C4";
 const MINT    = "#D3FCD2";
 const YEL     = "#FCFBD2";
-const BDR     = "#E8E8F4";
+const BDR     = "#D5D0E4";
 
 const H2: React.CSSProperties = {
   fontSize: "22px", fontWeight: 700, color: DARK,
