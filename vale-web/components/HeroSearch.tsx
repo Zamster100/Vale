@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search, MapPin, Loader2, X } from "lucide-react";
-import { funeralDirectors } from "@/lib/data";
+import { getFuneralDirectors } from "@/lib/queries/funeralDirectors";
 
 interface Suggestion {
   label: string;
@@ -11,19 +11,10 @@ interface Suggestion {
   query: string;
 }
 
-const UNIQUE_LOCATIONS: Suggestion[] = Array.from(
-  new Map(
-    funeralDirectors.flatMap((fd) => [
-      [`${fd.city}`, { label: fd.city, sublabel: "City", query: fd.city }],
-      [`${fd.postcode}`, { label: fd.postcode, sublabel: fd.city, query: fd.postcode }],
-    ])
-  ).values()
-);
-
-function getSuggestions(query: string): Suggestion[] {
+function getSuggestions(query: string, locations: Suggestion[]): Suggestion[] {
   if (!query.trim() || query.length < 2) return [];
   const q = query.toLowerCase();
-  return UNIQUE_LOCATIONS.filter(
+  return locations.filter(
     (s) => s.label.toLowerCase().startsWith(q) || s.sublabel.toLowerCase().startsWith(q)
   ).slice(0, 6);
 }
@@ -37,13 +28,25 @@ export default function HeroSearch() {
   const [locating, setLocating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [locations, setLocations] = useState<Suggestion[]>([]);
 
   const open = focused && (suggestions.length > 0 || value.length >= 2);
 
   useEffect(() => {
-    setSuggestions(getSuggestions(value));
+    getFuneralDirectors().then((fds) => {
+      const unique = new Map<string, Suggestion>();
+      for (const fd of fds) {
+        unique.set(fd.city, { label: fd.city, sublabel: "City", query: fd.city });
+        unique.set(fd.postcode, { label: fd.postcode, sublabel: fd.city, query: fd.postcode });
+      }
+      setLocations(Array.from(unique.values()));
+    });
+  }, []);
+
+  useEffect(() => {
+    setSuggestions(getSuggestions(value, locations));
     setActiveIndex(-1);
-  }, [value]);
+  }, [value, locations]);
 
   const navigate = useCallback(
     (query: string) => {

@@ -1,40 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
-import { join } from "path";
-import type { QuoteRequest } from "@/lib/adminData";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { mapQuoteRequestRow, type QuoteRequestRow } from "@/lib/queries/quoteRequests";
 import { logEmails } from "@/lib/email";
-
-const DATA_DIR = join(process.cwd(), "data");
-const DATA_FILE = join(DATA_DIR, "quote-requests.json");
-
-function readRequests(): QuoteRequest[] {
-  if (!existsSync(DATA_FILE)) return [];
-  try {
-    return JSON.parse(readFileSync(DATA_FILE, "utf-8")) as QuoteRequest[];
-  } catch {
-    return [];
-  }
-}
-
-function writeRequests(requests: QuoteRequest[]): void {
-  if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
-  writeFileSync(DATA_FILE, JSON.stringify(requests, null, 2), "utf-8");
-}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const fdId = searchParams.get("fdId");
 
-  const all = readRequests();
-  const filtered = fdId ? all.filter((r) => r.fdId === fdId) : all;
+  const supabase = createAdminClient();
+  let query = supabase.from("quote_requests").select("*");
+  if (fdId) query = query.eq("fd_id", fdId);
+  const { data, error } = await query;
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  filtered.sort((a, b) => {
+  const requests = (data as QuoteRequestRow[]).map(mapQuoteRequestRow);
+  requests.sort((a, b) => {
     if (a.status === "pending" && b.status !== "pending") return -1;
     if (a.status !== "pending" && b.status === "pending") return 1;
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
-  return NextResponse.json(filtered);
+  return NextResponse.json(requests);
 }
 
 export async function POST(req: NextRequest) {
@@ -63,22 +49,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
   }
 
-  const newRequest: QuoteRequest = {
-    id: `qr_${Date.now()}`,
-    fdId: body.fdId,
-    fdName: body.fdName,
-    familyName: body.familyName,
-    email: body.email,
-    phone: body.phone ?? "",
-    serviceType: body.serviceType,
-    message: body.message ?? "",
-    status: "pending",
-    createdAt: new Date().toISOString(),
-  };
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("quote_requests")
+    .insert({
+      fd_id: body.fdId,
+      fd_name: body.fdName,
+      family_name: body.familyName,
+      email: body.email,
+      phone: body.phone ?? "",
+      service_type: body.serviceType,
+      message: body.message ?? "",
+      status: "pending",
+    })
+    .select()
+    .single();
 
-  const requests = readRequests();
-  requests.unshift(newRequest);
-  writeRequests(requests);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  const newRequest = mapQuoteRequestRow(data as QuoteRequestRow);
 
   const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/admin/dashboard`;
 

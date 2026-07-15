@@ -7,7 +7,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle, ArrowLeft, Loader2 } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-import { funeralDirectors } from "@/lib/data";
+import type { FuneralDirector } from "@/lib/data";
+import { getFuneralDirectors } from "@/lib/queries/funeralDirectors";
 import { submitReview } from "@/lib/reviews";
 import FourFactorSelector, { type FactorRatings } from "@/components/FourFactorSelector";
 
@@ -56,21 +57,26 @@ function SubmitReviewForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
+  const [funeralDirectors, setFuneralDirectors] = useState<FuneralDirector[]>([]);
 
   useEffect(() => {
     if (preselected) setForm((f) => ({ ...f, fdId: preselected }));
   }, [preselected]);
 
+  useEffect(() => {
+    getFuneralDirectors().then(setFuneralDirectors);
+  }, []);
+
   const selectedFD = funeralDirectors.find((f) => f.id === form.fdId);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate(form);
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setLoading(true);
     const fd = funeralDirectors.find((f) => f.id === form.fdId)!;
     const overall = Math.round((form.communicationRating + form.dignityRating + form.valueRating + form.facilitiesRating) / 4);
-    submitReview({
+    await submitReview({
       fdId: form.fdId, fdName: fd.name, rating: overall,
       communicationRating: form.communicationRating,
       dignityRating: form.dignityRating,

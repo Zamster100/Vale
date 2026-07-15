@@ -1,20 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
-import type { QuoteRequest, QuoteStatus } from "@/lib/adminData";
-
-const DATA_FILE = join(process.cwd(), "data", "quote-requests.json");
+import { createAdminClient } from "@/lib/supabase/admin";
+import { mapQuoteRequestRow, type QuoteRequestRow } from "@/lib/queries/quoteRequests";
+import type { QuoteStatus } from "@/lib/adminData";
 
 const VALID_STATUSES: QuoteStatus[] = ["pending", "contacted", "booked", "declined"];
-
-function readRequests(): QuoteRequest[] {
-  if (!existsSync(DATA_FILE)) return [];
-  try {
-    return JSON.parse(readFileSync(DATA_FILE, "utf-8")) as QuoteRequest[];
-  } catch {
-    return [];
-  }
-}
 
 export async function PUT(
   req: NextRequest,
@@ -33,15 +22,16 @@ export async function PUT(
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
-  const requests = readRequests();
-  const idx = requests.findIndex((r) => r.id === id);
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("quote_requests")
+    .update({ status: body.status })
+    .eq("id", id)
+    .select()
+    .maybeSingle();
 
-  if (idx === -1) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!data) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  requests[idx] = { ...requests[idx], status: body.status };
-  writeFileSync(DATA_FILE, JSON.stringify(requests, null, 2), "utf-8");
-
-  return NextResponse.json(requests[idx]);
+  return NextResponse.json(mapQuoteRequestRow(data as QuoteRequestRow));
 }

@@ -1,4 +1,4 @@
-import { funeralDirectors } from "@/lib/data";
+import { createClient } from "@/lib/supabase/client";
 
 export interface StoredReview {
   id: string;
@@ -23,66 +23,34 @@ export interface ReviewStats {
   distribution: Record<number, number>; // star → count
 }
 
-const STORAGE_KEY = "vale_reviews";
+export async function getAllReviewsForFD(fdId: string, fdName: string): Promise<StoredReview[]> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("fd_id", fdId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
 
-const MONTH_MAP: Record<string, string> = {
-  January: "01", February: "02", March: "03", April: "04",
-  May: "05", June: "06", July: "07", August: "08",
-  September: "09", October: "10", November: "11", December: "12",
-};
-
-function parseLegacyDate(dateStr: string): string {
-  const [month, year] = dateStr.split(" ");
-  if (year && MONTH_MAP[month]) {
-    return `${year}-${MONTH_MAP[month]}-15T12:00:00.000Z`;
-  }
-  return new Date().toISOString();
+  return data.map((r) => ({
+    id: r.id,
+    fdId: r.fd_id,
+    fdName,
+    rating: r.rating,
+    text: r.text,
+    familyName: r.family_name,
+    createdAt: r.created_at,
+    verified: r.verified,
+    quoteRequestId: r.quote_request_id,
+    status: r.status ?? undefined,
+    communicationRating: r.communication_rating ?? undefined,
+    dignityRating: r.dignity_rating ?? undefined,
+    valueRating: r.value_rating ?? undefined,
+    facilitiesRating: r.facilities_rating ?? undefined,
+  }));
 }
 
-export function getSeedReviews(): StoredReview[] {
-  const out: StoredReview[] = [];
-  let idx = 0;
-  for (const fd of funeralDirectors) {
-    for (const r of fd.reviews) {
-      out.push({
-        id: `seed_${fd.id}_${idx++}`,
-        fdId: fd.id,
-        fdName: fd.name,
-        rating: r.rating,
-        text: r.text,
-        familyName: r.name,
-        createdAt: parseLegacyDate(r.date),
-        verified: r.verified,
-        quoteRequestId: r.quoteRequestId ?? null,
-        status: r.status,
-        communicationRating: r.communicationRating,
-        dignityRating: r.dignityRating,
-        valueRating: r.valueRating,
-        facilitiesRating: r.facilitiesRating,
-      });
-    }
-  }
-  return out;
-}
-
-export function getSubmittedReviews(): StoredReview[] {
-  if (typeof window === "undefined") return [];
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]") as StoredReview[];
-  } catch {
-    return [];
-  }
-}
-
-export function getAllReviewsForFD(fdId: string): StoredReview[] {
-  const seed = getSeedReviews().filter((r) => r.fdId === fdId);
-  const submitted = getSubmittedReviews().filter((r) => r.fdId === fdId);
-  return [...submitted, ...seed].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-}
-
-export function submitReview(data: {
+export async function submitReview(data: {
   fdId: string;
   fdName: string;
   rating: number;
@@ -92,15 +60,20 @@ export function submitReview(data: {
   facilitiesRating?: number;
   text: string;
   familyName: string;
-}): void {
-  const existing = getSubmittedReviews();
-  const review: StoredReview = {
-    id: `user_${Date.now()}`,
-    ...data,
-    createdAt: new Date().toISOString(),
+}): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.from("reviews").insert({
+    fd_id: data.fdId,
+    family_name: data.familyName,
+    rating: data.rating,
+    text: data.text,
     verified: false,
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([review, ...existing]));
+    communication_rating: data.communicationRating ?? null,
+    dignity_rating: data.dignityRating ?? null,
+    value_rating: data.valueRating ?? null,
+    facilities_rating: data.facilitiesRating ?? null,
+  });
+  if (error) throw error;
 }
 
 export function getReviewStats(reviews: StoredReview[]): ReviewStats {

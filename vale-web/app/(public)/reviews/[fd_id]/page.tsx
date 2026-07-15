@@ -5,10 +5,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, CheckCircle, PenLine, Star } from "lucide-react";
-import { funeralDirectors } from "@/lib/data";
+import { getFuneralDirectorById } from "@/lib/queries/funeralDirectors";
+import type { FuneralDirector } from "@/lib/data";
 import VerifiedFamilyLabel from "@/components/reviews/VerifiedFamilyLabel";
 import {
-  getSeedReviews,
   getAllReviewsForFD,
   getReviewStats,
   formatReviewDate,
@@ -100,15 +100,20 @@ function ReviewCard({ review, variants }: { review: StoredReview; variants: Retu
 
 export default function ReviewsPage({ params }: { params: Promise<{ fd_id: string }> }) {
   const { fd_id } = use(params);
-  const fd = funeralDirectors.find((f) => f.id === fd_id);
-  if (!fd) notFound();
-
-  const seedReviews = getSeedReviews().filter((r) => r.fdId === fd_id);
-  const [reviews, setReviews] = useState<StoredReview[]>(seedReviews);
+  const [fd, setFd] = useState<FuneralDirector | null | undefined>(undefined);
+  const [reviews, setReviews] = useState<StoredReview[]>([]);
   const [filterRating, setFilterRating] = useState<number | null>(null);
   const reduce = useReducedMotion();
 
-  useEffect(() => { setReviews(getAllReviewsForFD(fd_id)); }, [fd_id]);
+  useEffect(() => {
+    getFuneralDirectorById(fd_id).then((found) => {
+      setFd(found);
+      if (found) getAllReviewsForFD(fd_id, found.name).then(setReviews);
+    });
+  }, [fd_id]);
+
+  if (fd === null) notFound();
+  if (fd === undefined) return null;
 
   const stats = getReviewStats(reviews);
   const displayed = filterRating === null ? reviews : reviews.filter((r) => r.rating === filterRating);

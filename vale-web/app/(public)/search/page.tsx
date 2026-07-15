@@ -21,13 +21,13 @@ import {
 } from "lucide-react";
 import ValeAssuredBadge from "@/components/ValeAssuredBadge";
 import {
-  funeralDirectors,
   filterByServiceType,
   sortDirectors,
   getLowestPrice,
   type ServiceType,
   type FuneralDirector,
 } from "@/lib/data";
+import { getFuneralDirectors } from "@/lib/queries/funeralDirectors";
 
 /* ─── Map (client-only) ─────────────────────────────────────────── */
 const MapView = dynamic(() => import("@/components/search/MapView"), {
@@ -339,10 +339,15 @@ function SearchPageInner() {
   const [priceRange,    setPriceRange]    = useState(0);
   const [sortBy,        setSortBy]        = useState<"price" | "rating" | "name">("rating");
   const [mobileView,    setMobileView]    = useState<"list" | "map">("list");
+  const [funeralDirectors, setFuneralDirectors] = useState<FuneralDirector[]>([]);
 
   useEffect(() => {
     setPostcode(searchParams.get("q") ?? "");
   }, [searchParams]);
+
+  useEffect(() => {
+    getFuneralDirectors().then(setFuneralDirectors);
+  }, []);
 
   const filteredAndSorted = useMemo(() => {
     let results = filterByServiceType(funeralDirectors, serviceFilter);
@@ -365,7 +370,7 @@ function SearchPageInner() {
       );
     }
     return sortDirectors(results, sortBy, serviceFilter);
-  }, [serviceFilter, priceRange, postcode, sortBy]);
+  }, [funeralDirectors, serviceFilter, priceRange, postcode, sortBy]);
 
   /* Map top offset: nav (64px) */
   const MAP_STICKY_TOP = 64;

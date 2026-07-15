@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -8,7 +8,8 @@ import {
   MapPin, Phone, Globe, CheckCircle, ArrowLeft, ChevronRight,
   PenLine, Star, Clock, LayoutGrid, CalendarDays,
 } from "lucide-react";
-import { funeralDirectors, getLowestPrice, type FuneralDirector } from "@/lib/data";
+import { getLowestPrice, type FuneralDirector } from "@/lib/data";
+import { getFuneralDirectorById } from "@/lib/queries/funeralDirectors";
 import QuoteModal from "@/components/QuoteModal";
 import PhotoGallery from "@/components/fd/PhotoGallery";
 import TeamGrid from "@/components/fd/TeamGrid";
@@ -111,11 +112,26 @@ const section = {
 
 export default function FDProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const fd: FuneralDirector | undefined = funeralDirectors.find((f) => f.id === id);
+  const [fd, setFd] = useState<FuneralDirector | null | undefined>(undefined);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
 
-  if (!fd) return notFound();
+  useEffect(() => {
+    getFuneralDirectorById(id).then(setFd);
+  }, [id]);
+
+  if (fd === null) return notFound();
+  if (fd === undefined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+        <div
+          className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin"
+          style={{ borderColor: "#4F34C4", borderTopColor: "transparent" }}
+          aria-label="Loading"
+        />
+      </div>
+    );
+  }
 
   const lowestPrice = getLowestPrice(fd);
   const gallery = [...(fd.gallery ?? [])].sort((a, b) => a.order - b.order);

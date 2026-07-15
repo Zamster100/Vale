@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Search, MapPin, Building2 } from "lucide-react";
-import { funeralDirectors } from "@/lib/data";
+import { getFuneralDirectors } from "@/lib/queries/funeralDirectors";
+import type { FuneralDirector } from "@/lib/data";
 
 const OS = "var(--font-open-sans), -apple-system, sans-serif";
 
@@ -19,7 +20,7 @@ interface Suggestion {
 }
 
 /* ── Build suggestions from data ────────────────────────────── */
-function getSuggestions(query: string): Suggestion[] {
+function getSuggestions(query: string, funeralDirectors: FuneralDirector[]): Suggestion[] {
   const q = query.toLowerCase().trim();
   if (q.length < 2) return [];
 
@@ -89,9 +90,14 @@ export default function HomeSearchBar() {
   const [activeIdx, setActiveIdx] = useState(-1);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [fds, setFds] = useState<FuneralDirector[]>([]);
+
+  useEffect(() => {
+    getFuneralDirectors().then(setFds);
+  }, []);
 
   const hasText = value.trim().length > 0;
-  const suggestions = useMemo(() => getSuggestions(value), [value]);
+  const suggestions = useMemo(() => getSuggestions(value, fds), [value, fds]);
   const showDropdown = open && suggestions.length > 0;
 
   /* Close when clicking outside */
