@@ -42,6 +42,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<FDUser | null>(null);
   const [profile, setProfile] = useState<FDProfile | null>(null);
+  const [fdId, setFdId] = useState<string | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
@@ -51,9 +52,9 @@ export default function DashboardPage() {
   const { toasts, addToast, dismiss } = useToast();
 
   const fetchRequests = useCallback(
-    async (isPolling = false) => {
+    async (fdId: string, isPolling = false) => {
       try {
-        const res = await fetch("/api/quote-requests?fdId=fd_001");
+        const res = await fetch(`/api/quote-requests?fdId=${encodeURIComponent(fdId)}`);
         if (!res.ok) throw new Error("fetch failed");
         const data: QuoteRequest[] = await res.json();
 
@@ -79,24 +80,26 @@ export default function DashboardPage() {
   );
 
   useEffect(() => {
-    const u = getUser();
-    const p = getProfile();
-    if (!u) { router.replace("/admin/signup"); return; }
-    if (!u.onboarded) { router.replace("/admin/onboard"); return; }
-    setUser(u);
-    setProfile(p);
-    setAuthChecked(true);
-    fetchRequests(false);
+    getUser().then(async (u) => {
+      if (!u) { router.replace("/admin/signup"); return; }
+      if (!u.onboarded || !u.fdId) { router.replace("/admin/onboard"); return; }
+      const p = await getProfile();
+      setUser(u);
+      setProfile(p);
+      setFdId(u.fdId);
+      setAuthChecked(true);
+      fetchRequests(u.fdId, false);
+    });
   }, [router, fetchRequests]);
 
   useEffect(() => {
-    if (!authChecked) return;
-    const id = setInterval(() => fetchRequests(true), POLL_INTERVAL);
+    if (!authChecked || !fdId) return;
+    const id = setInterval(() => fetchRequests(fdId, true), POLL_INTERVAL);
     return () => clearInterval(id);
-  }, [authChecked, fetchRequests]);
+  }, [authChecked, fdId, fetchRequests]);
 
-  const handleSignOut = () => {
-    signOut();
+  const handleSignOut = async () => {
+    await signOut();
     router.push("/admin/signup");
   };
 
@@ -147,7 +150,7 @@ export default function DashboardPage() {
               Verification
             </Link>
             <Link
-              href="/funeral-directors/fd_001"
+              href={`/funeral-directors/${fdId}`}
               target="_blank"
               className="hidden sm:flex items-center gap-1.5 text-sm px-3 py-2 rounded min-h-[44px] hover:opacity-75 transition-opacity focus:outline-none"
               style={{ color: "rgba(255,255,255,0.7)" }}
@@ -221,7 +224,7 @@ export default function DashboardPage() {
             className="p-6 rounded-xl"
             style={{ background: "white", border: "1px solid #D5D0E4" }}
           >
-            <GalleryTeamManager />
+            {fdId && <GalleryTeamManager fdId={fdId} />}
           </div>
         )}
 
@@ -231,7 +234,7 @@ export default function DashboardPage() {
             className="p-6 rounded-xl"
             style={{ background: "white", border: "1px solid #D5D0E4" }}
           >
-            <HoursEditor />
+            {fdId && <HoursEditor fdId={fdId} />}
           </div>
         )}
 
@@ -245,7 +248,7 @@ export default function DashboardPage() {
             </p>
             <button
               type="button"
-              onClick={() => fetchRequests(false)}
+              onClick={() => fdId && fetchRequests(fdId, false)}
               className="flex items-center gap-1.5 text-sm font-semibold hover:underline focus:outline-none rounded shrink-0"
               style={{ color: "#C95548" }}
             >

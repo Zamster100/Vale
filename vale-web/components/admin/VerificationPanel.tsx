@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Check, Save, ShieldCheck } from "lucide-react";
-import { funeralDirectors } from "@/lib/data";
-
-const STORAGE_KEY = "vale_verifications";
+import { useState, useEffect } from "react";
+import { Check, Save, ShieldCheck, Loader2 } from "lucide-react";
 
 interface RowState {
   id: string;
@@ -17,29 +14,18 @@ interface RowState {
   verifiedAt: string;
 }
 
-type BoolField = "nafdVerified" | "saifVerified" | "bifdVerified" | "iccmVerified" | "assured";
-
-function loadState(): RowState[] {
-  const base: RowState[] = funeralDirectors.map((fd) => ({
-    id: fd.id,
-    name: fd.name,
-    nafdVerified: fd.nafdVerified ?? false,
-    saifVerified: fd.saifVerified ?? false,
-    bifdVerified: fd.bifdVerified ?? false,
-    iccmVerified: fd.iccmVerified ?? false,
-    assured: fd.assured,
-    verifiedAt: fd.verifiedAt ?? "",
-  }));
-
-  if (typeof window === "undefined") return base;
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null") as Record<string, Partial<RowState>> | null;
-    if (!saved) return base;
-    return base.map((row) => ({ ...row, ...(saved[row.id] ?? {}) }));
-  } catch {
-    return base;
-  }
+interface VerificationRow {
+  id: string;
+  name: string;
+  nafd_verified: boolean;
+  saif_verified: boolean;
+  bifd_verified: boolean;
+  iccm_verified: boolean;
+  assured: boolean;
+  verified_at: string | null;
 }
+
+type BoolField = "nafdVerified" | "saifVerified" | "bifdVerified" | "iccmVerified" | "assured";
 
 const ACCRED_COLS: { field: BoolField; label: string }[] = [
   { field: "nafdVerified", label: "NAFD" },
@@ -49,8 +35,30 @@ const ACCRED_COLS: { field: BoolField; label: string }[] = [
 ];
 
 export default function VerificationPanel() {
-  const [rows, setRows] = useState<RowState[]>(loadState);
+  const [rows, setRows] = useState<RowState[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/admin/verification")
+      .then((res) => res.json())
+      .then((data: VerificationRow[]) => {
+        setRows(
+          data.map((fd) => ({
+            id: fd.id,
+            name: fd.name,
+            nafdVerified: fd.nafd_verified,
+            saifVerified: fd.saif_verified,
+            bifdVerified: fd.bifd_verified,
+            iccmVerified: fd.iccm_verified,
+            assured: fd.assured,
+            verifiedAt: fd.verified_at ?? "",
+          }))
+        );
+        setLoading(false);
+      });
+  }, []);
 
   const toggle = (id: string, field: BoolField) => {
     setRows((prev) => prev.map((r) => r.id === id ? { ...r, [field]: !r[field] } : r));
@@ -62,15 +70,37 @@ export default function VerificationPanel() {
     setSaved(false);
   };
 
-  const saveAll = () => {
-    const map: Record<string, Omit<RowState, "id" | "name">> = {};
-    for (const { id, name: _name, ...rest } of rows) {
-      map[id] = rest;
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+  const saveAll = async () => {
+    setSaving(true);
+    await Promise.all(
+      rows.map((row) =>
+        fetch("/api/admin/verification", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: row.id,
+            nafdVerified: row.nafdVerified,
+            saifVerified: row.saifVerified,
+            bifdVerified: row.bifdVerified,
+            iccmVerified: row.iccmVerified,
+            assured: row.assured,
+            verifiedAt: row.verifiedAt,
+          }),
+        })
+      )
+    );
+    setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="w-5 h-5 animate-spin" style={{ color: "#4A415E" }} aria-hidden="true" />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -85,15 +115,20 @@ export default function VerificationPanel() {
         </div>
         <button
           onClick={saveAll}
-          className="flex items-center gap-1.5 text-sm px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition-all duration-200 focus:outline-none shrink-0 min-h-[40px]"
+          disabled={saving}
+          className="flex items-center gap-1.5 text-sm px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition-all duration-200 focus:outline-none shrink-0 min-h-[40px] disabled:opacity-60"
           style={
             saved
               ? { background: "rgba(90,174,85,0.15)", color: "#3F7A35" }
               : { background: "#100B20", color: "white" }
           }
         >
-          {saved ? <Check className="w-4 h-4" aria-hidden="true" /> : <Save className="w-4 h-4" aria-hidden="true" />}
-          {saved ? "Saved" : "Save changes"}
+          {saved
+            ? <Check className="w-4 h-4" aria-hidden="true" />
+            : saving
+            ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+            : <Save className="w-4 h-4" aria-hidden="true" />}
+          {saved ? "Saved" : saving ? "Saving…" : "Save changes"}
         </button>
       </div>
 
@@ -204,7 +239,7 @@ export default function VerificationPanel() {
       </div>
 
       <p className="text-xs mt-4" style={{ color: "#4A415E" }}>
-        Changes are saved locally for demo. Production integration requires database persistence.
+        Changes save to the shared Vale database for all providers.
       </p>
     </div>
   );

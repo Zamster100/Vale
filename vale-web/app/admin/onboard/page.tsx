@@ -147,9 +147,10 @@ export default function OnboardPage() {
   });
 
   useEffect(() => {
-    const user = getUser();
-    if (!user) router.replace("/admin/signup");
-    else if (user.onboarded) router.replace("/admin/dashboard");
+    getUser().then((user) => {
+      if (!user) router.replace("/admin/signup");
+      else if (user.onboarded) router.replace("/admin/dashboard");
+    });
   }, [router]);
 
   const setField = (field: keyof Omit<FormState, "prices">, value: string) => {
@@ -202,9 +203,13 @@ export default function OnboardPage() {
       }
       setErrors({});
       setLoading(true);
-      await new Promise((r) => setTimeout(r, 800));
-      saveProfile({ ...form, prices: valid });
-      router.push("/admin/dashboard");
+      try {
+        await saveProfile({ ...form, prices: valid });
+        router.push("/admin/dashboard");
+      } catch {
+        setErrors({ prices: "Something went wrong saving your profile. Please try again." });
+        setLoading(false);
+      }
     }
   };
 

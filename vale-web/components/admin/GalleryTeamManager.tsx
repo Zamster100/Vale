@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import {
   Trash2,
   Upload,
@@ -12,8 +12,10 @@ import {
   ChevronDown,
   Camera,
   Users,
+  Loader2,
 } from "lucide-react";
-import { funeralDirectors, type GalleryPhoto, type TeamMember, type PhotoCategory } from "@/lib/data";
+import type { GalleryPhoto, TeamMember, PhotoCategory } from "@/lib/data";
+import { createClient } from "@/lib/supabase/client";
 
 const CATEGORY_LABELS: Record<PhotoCategory, string> = {
   chapel: "Chapel / Service Room",
@@ -55,11 +57,40 @@ type MemberFormData = {
 
 const EMPTY_MEMBER_FORM: MemberFormData = { name: "", title: "", bio: "", yearsExp: "", photoUrl: "" };
 
-const fd001 = funeralDirectors.find((f) => f.id === "fd_001")!;
+export default function GalleryTeamManager({ fdId }: { fdId: string }) {
+  const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function GalleryTeamManager() {
-  const [photos, setPhotos] = useState<GalleryPhoto[]>(fd001.gallery ?? []);
-  const [team, setTeam] = useState<TeamMember[]>(fd001.team ?? []);
+  useEffect(() => {
+    const supabase = createClient();
+    Promise.all([
+      supabase.from("gallery_photos").select("*").eq("fd_id", fdId).order("sort_order"),
+      supabase.from("team_members").select("*").eq("fd_id", fdId).order("sort_order"),
+    ]).then(([galleryRes, teamRes]) => {
+      setPhotos(
+        (galleryRes.data ?? []).map((g) => ({
+          id: g.id,
+          url: g.url,
+          category: g.category as PhotoCategory,
+          caption: g.caption ?? undefined,
+          order: g.sort_order,
+        }))
+      );
+      setTeam(
+        (teamRes.data ?? []).map((t) => ({
+          id: t.id,
+          name: t.name,
+          title: t.title,
+          bio: t.bio,
+          photoUrl: t.photo_url,
+          yearsExp: t.years_exp ?? undefined,
+          order: t.sort_order,
+        }))
+      );
+      setLoading(false);
+    });
+  }, [fdId]);
 
   // Gallery state
   const [pendingPhoto, setPendingPhoto] = useState<PendingPhoto | null>(null);
@@ -96,21 +127,37 @@ export default function GalleryTeamManager() {
     e.target.value = "";
   };
 
-  const confirmAddPhoto = () => {
+  const confirmAddPhoto = async () => {
     if (!pendingPhoto) return;
-    const newPhoto: GalleryPhoto = {
-      id: `photo_${Date.now()}`,
-      url: pendingPhoto.previewUrl,
-      category: pendingPhoto.category,
-      caption: pendingPhoto.caption.trim() || undefined,
-      order: photos.length + 1,
-    };
-    setPhotos((prev) => [...prev, newPhoto]);
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("gallery_photos")
+      .insert({
+        fd_id: fdId,
+        url: pendingPhoto.previewUrl,
+        category: pendingPhoto.category,
+        caption: pendingPhoto.caption.trim() || null,
+        sort_order: photos.length + 1,
+      })
+      .select()
+      .single();
+    if (!error && data) {
+      setPhotos((prev) => [
+        ...prev,
+        { id: data.id, url: data.url, category: data.category, caption: data.caption ?? undefined, order: data.sort_order },
+      ]);
+    }
     setPendingPhoto(null);
   };
 
-  const deletePhoto = (id: string) => {
-    setPhotos((prev) => prev.filter((p) => p.id !== id).map((p, i) => ({ ...p, order: i + 1 })));
+  const deletePhoto = async (id: string) => {
+    const supabase = createClient();
+    await supabase.from("gallery_photos").delete().eq("id", id);
+    const remaining = photos.filter((p) => p.id !== id).map((p, i) => ({ ...p, order: i + 1 }));
+    setPhotos(remaining);
+    await Promise.all(
+      remaining.map((p) => supabase.from("gallery_photos").update({ sort_order: p.order }).eq("id", p.id))
+    );
   };
 
   // --- Team handlers ---
@@ -148,62 +195,96 @@ export default function GalleryTeamManager() {
     setMemberPhotoPreview(null);
   };
 
-  const saveMember = () => {
+  const saveMember = async () => {
     if (!memberForm.name.trim() || !memberForm.title.trim()) return;
     const photoUrl = memberPhotoPreview || memberForm.photoUrl || `https://picsum.photos/seed/${encodeURIComponent(memberForm.name)}/200/200`;
+    const supabase = createClient();
 
     if (editingId) {
-      setTeam((prev) =>
-        prev.map((m) =>
-          m.id === editingId
-            ? {
-                ...m,
-                name: memberForm.name.trim(),
-                title: memberForm.title.trim(),
-                bio: memberForm.bio.trim(),
-                yearsExp: memberForm.yearsExp ? parseInt(memberForm.yearsExp) : undefined,
-                photoUrl,
-              }
-            : m
-        )
-      );
-    } else {
-      const newMember: TeamMember = {
-        id: `team_${Date.now()}`,
+      const patch = {
         name: memberForm.name.trim(),
         title: memberForm.title.trim(),
         bio: memberForm.bio.trim(),
         yearsExp: memberForm.yearsExp ? parseInt(memberForm.yearsExp) : undefined,
         photoUrl,
-        order: team.length + 1,
       };
-      setTeam((prev) => [...prev, newMember]);
+      await supabase
+        .from("team_members")
+        .update({
+          name: patch.name,
+          title: patch.title,
+          bio: patch.bio,
+          years_exp: patch.yearsExp ?? null,
+          photo_url: patch.photoUrl,
+        })
+        .eq("id", editingId);
+      setTeam((prev) => prev.map((m) => (m.id === editingId ? { ...m, ...patch } : m)));
+    } else {
+      const yearsExp = memberForm.yearsExp ? parseInt(memberForm.yearsExp) : undefined;
+      const { data, error } = await supabase
+        .from("team_members")
+        .insert({
+          fd_id: fdId,
+          name: memberForm.name.trim(),
+          title: memberForm.title.trim(),
+          bio: memberForm.bio.trim(),
+          years_exp: yearsExp ?? null,
+          photo_url: photoUrl,
+          sort_order: team.length + 1,
+        })
+        .select()
+        .single();
+      if (!error && data) {
+        setTeam((prev) => [
+          ...prev,
+          { id: data.id, name: data.name, title: data.title, bio: data.bio, yearsExp: data.years_exp ?? undefined, photoUrl: data.photo_url, order: data.sort_order },
+        ]);
+      }
     }
     cancelMemberForm();
   };
 
-  const deleteMember = (id: string) => {
-    setTeam((prev) => prev.filter((m) => m.id !== id).map((m, i) => ({ ...m, order: i + 1 })));
+  const deleteMember = async (id: string) => {
+    const supabase = createClient();
+    await supabase.from("team_members").delete().eq("id", id);
+    const remaining = team.filter((m) => m.id !== id).map((m, i) => ({ ...m, order: i + 1 }));
+    setTeam(remaining);
+    await Promise.all(
+      remaining.map((m) => supabase.from("team_members").update({ sort_order: m.order }).eq("id", m.id))
+    );
   };
 
-  const moveMember = (id: string, dir: -1 | 1) => {
-    setTeam((prev) => {
-      const sorted = [...prev].sort((a, b) => a.order - b.order);
-      const idx = sorted.findIndex((m) => m.id === id);
-      const swapIdx = idx + dir;
-      if (swapIdx < 0 || swapIdx >= sorted.length) return prev;
-      const a = sorted[idx].order;
-      const b = sorted[swapIdx].order;
-      return prev.map((m) => {
-        if (m.id === sorted[idx].id) return { ...m, order: b };
-        if (m.id === sorted[swapIdx].id) return { ...m, order: a };
+  const moveMember = async (id: string, dir: -1 | 1) => {
+    const sorted = [...team].sort((a, b) => a.order - b.order);
+    const idx = sorted.findIndex((m) => m.id === id);
+    const swapIdx = idx + dir;
+    if (swapIdx < 0 || swapIdx >= sorted.length) return;
+    const a = sorted[idx];
+    const b = sorted[swapIdx];
+    setTeam((prev) =>
+      prev.map((m) => {
+        if (m.id === a.id) return { ...m, order: b.order };
+        if (m.id === b.id) return { ...m, order: a.order };
         return m;
-      });
-    });
+      })
+    );
+    const supabase = createClient();
+    await Promise.all([
+      supabase.from("team_members").update({ sort_order: b.order }).eq("id", a.id),
+      supabase.from("team_members").update({ sort_order: a.order }).eq("id", b.id),
+    ]);
   };
 
   const sortedPhotos = [...photos].sort((a, b) => a.order - b.order);
   const sortedTeam = [...team].sort((a, b) => a.order - b.order);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="w-5 h-5 animate-spin" style={{ color: "#5F7080" }} aria-hidden="true" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

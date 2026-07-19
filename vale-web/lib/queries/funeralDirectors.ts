@@ -23,8 +23,8 @@ interface FDRow {
   city: string;
   phone: string;
   website: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   rating: number;
   review_count: number;
   verified: boolean;
@@ -57,8 +57,8 @@ function mapRow(row: FDRow): FuneralDirector {
     city: row.city,
     phone: row.phone,
     website: row.website,
-    latitude: row.latitude,
-    longitude: row.longitude,
+    latitude: row.latitude ?? 0,
+    longitude: row.longitude ?? 0,
     rating: row.rating,
     reviewCount: row.review_count,
     verified: row.verified,

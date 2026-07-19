@@ -1,11 +1,11 @@
-// Demo auth layer — works without Supabase credentials.
-// When NEXT_PUBLIC_SUPABASE_URL is set, swap these calls for real Supabase auth.
+import { createClient } from "@/lib/supabase/client";
 
 export interface FDUser {
   id: string;
   email: string;
   businessName: string;
   onboarded: boolean;
+  fdId?: string;
 }
 
 export interface FDProfile {
@@ -25,49 +25,137 @@ export interface PriceEntry {
   price: number;
 }
 
-const USER_KEY = "vale_fd_user";
-const PROFILE_KEY = "vale_fd_profile";
+export async function getUser(): Promise<FDUser | null> {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
 
-export function getUser(): FDUser | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(USER_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
+  const { data: fd } = await supabase
+    .from("funeral_directors")
+    .select("id, name, onboarded")
+    .eq("owner_user_id", user.id)
+    .maybeSingle();
+
+  return {
+    id: user.id,
+    email: user.email ?? "",
+    businessName: fd?.name ?? "",
+    onboarded: fd?.onboarded ?? false,
+    fdId: fd?.id,
+  };
 }
 
-export function signUp(email: string, _password: string): FDUser {
-  const user: FDUser = {
-    id: `fd_demo_${Date.now()}`,
-    email,
-    businessName: "",
-    onboarded: false,
+export async function signUp(
+  email: string,
+  password: string
+): Promise<{ user: FDUser | null; needsEmailConfirmation: boolean }> {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.signUp({ email, password });
+  if (error) throw error;
+
+  if (!data.session || !data.user) {
+    return { user: null, needsEmailConfirmation: true };
+  }
+
+  return {
+    user: { id: data.user.id, email: data.user.email ?? email, businessName: "", onboarded: false },
+    needsEmailConfirmation: false,
   };
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+export async function signIn(email: string, password: string): Promise<FDUser> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  const user = await getUser();
+  if (!user) throw new Error("Sign in succeeded but no session was found");
   return user;
 }
 
-export function saveProfile(profile: FDProfile): void {
-  const user = getUser();
-  if (!user) return;
-  const updated: FDUser = { ...user, businessName: profile.businessName, onboarded: true };
-  localStorage.setItem(USER_KEY, JSON.stringify(updated));
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-}
+export async function saveProfile(profile: FDProfile): Promise<void> {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Not authenticated");
 
-export function getProfile(): FDProfile | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(PROFILE_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
+  const { data: existing } = await supabase
+    .from("funeral_directors")
+    .select("id")
+    .eq("owner_user_id", user.id)
+    .maybeSingle();
+
+  const fdId = existing?.id ?? `fd_${crypto.randomUUID().slice(0, 8)}`;
+
+  const row = {
+    name: profile.businessName,
+    address: profile.address,
+    postcode: profile.postcode,
+    city: profile.city,
+    phone: profile.phone,
+    email: profile.email,
+    website: profile.website,
+    onboarded: true,
+  };
+
+  const { error } = existing
+    ? await supabase.from("funeral_directors").update(row).eq("id", fdId)
+    : await supabase.from("funeral_directors").insert({
+        id: fdId,
+        owner_user_id: user.id,
+        description: "",
+        ...row,
+      });
+  if (error) throw error;
+
+  await supabase.from("prices").delete().eq("fd_id", fdId);
+  if (profile.prices.length) {
+    const { error: priceError } = await supabase.from("prices").insert(
+      profile.prices.map((p) => ({
+        fd_id: fdId,
+        service: p.serviceName,
+        type: p.serviceType,
+        price: p.price,
+        includes: [],
+      }))
+    );
+    if (priceError) throw priceError;
   }
 }
 
-export function signOut(): void {
-  localStorage.removeItem(USER_KEY);
-  localStorage.removeItem(PROFILE_KEY);
+export async function getProfile(): Promise<FDProfile | null> {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data: fd } = await supabase
+    .from("funeral_directors")
+    .select("*, prices(*)")
+    .eq("owner_user_id", user.id)
+    .maybeSingle();
+  if (!fd) return null;
+
+  return {
+    businessName: fd.name,
+    address: fd.address,
+    postcode: fd.postcode,
+    city: fd.city,
+    phone: fd.phone,
+    email: fd.email ?? "",
+    website: fd.website,
+    prices: (fd.prices as { service: string; type: string; price: number }[]).map((p) => ({
+      serviceType: p.type,
+      serviceName: p.service,
+      price: p.price,
+    })),
+  };
+}
+
+export async function signOut(): Promise<void> {
+  const supabase = createClient();
+  await supabase.auth.signOut();
 }

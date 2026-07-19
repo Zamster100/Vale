@@ -12,9 +12,10 @@ export default function VerificationPage() {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    const user = getUser();
-    if (!user) { router.replace("/admin/signup"); return; }
-    setChecked(true);
+    getUser().then((user) => {
+      if (!user) { router.replace("/admin/signup"); return; }
+      setChecked(true);
+    });
   }, [router]);
 
   if (!checked) {

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Save } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import type { DayKey, DayHours, OpeningHours } from "@/lib/data";
-
-const STORAGE_KEY = "vale_hours_fd001";
+import { createClient } from "@/lib/supabase/client";
 
 const DAYS: { key: DayKey; label: string }[] = [
   { key: "mon", label: "Monday" },
@@ -32,19 +31,30 @@ const DEFAULT_HOURS: OpeningHours = {
   oohResponseHours: 2,
 };
 
-export default function HoursEditor() {
+export default function HoursEditor({ fdId }: { fdId: string }) {
   const [hours, setHours] = useState<OpeningHours>(DEFAULT_HOURS);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setHours(JSON.parse(stored) as OpeningHours);
-    } catch {}
-  }, []);
+    const supabase = createClient();
+    supabase
+      .from("funeral_directors")
+      .select("hours")
+      .eq("id", fdId)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.hours) setHours(data.hours as OpeningHours);
+        setLoading(false);
+      });
+  }, [fdId]);
 
-  const save = () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(hours));
+  const save = async () => {
+    setSaving(true);
+    const supabase = createClient();
+    await supabase.from("funeral_directors").update({ hours }).eq("id", fdId);
+    setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
@@ -55,6 +65,14 @@ export default function HoursEditor() {
       schedule: { ...h.schedule, [key]: { ...h.schedule[key], ...patch } },
     }));
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="w-5 h-5 animate-spin" style={{ color: "#5F7080" }} aria-hidden="true" />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -70,14 +88,15 @@ export default function HoursEditor() {
         <button
           type="button"
           onClick={save}
-          className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-md min-h-[44px] shrink-0 transition-all hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2"
+          disabled={saving}
+          className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-md min-h-[44px] shrink-0 transition-all hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B6DE8] focus-visible:ring-offset-2 disabled:opacity-60"
           style={saved
             ? { background: "rgba(123,168,74,0.15)", color: "#5A8A30" }
             : { background: "#1A1A2E", color: "white" }
           }
         >
-          <Save className="w-3.5 h-3.5" aria-hidden="true" />
-          {saved ? "Saved!" : "Save hours"}
+          {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : <Save className="w-3.5 h-3.5" aria-hidden="true" />}
+          {saved ? "Saved!" : saving ? "Saving…" : "Save hours"}
         </button>
       </div>
 
