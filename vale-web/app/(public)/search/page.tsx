@@ -392,7 +392,7 @@ function SearchPageInner() {
       >
         <div
           className="mx-auto px-6 md:px-10"
-          style={{ maxWidth: "1152px" }}
+          style={{ maxWidth: "1366px" }}
         >
           {/* ── Header row: headline left · Share right ── */}
           <div className="flex items-start justify-between gap-8 mb-10">
@@ -597,7 +597,7 @@ function SearchPageInner() {
       {/* ══════════════ Result count + location heading ══════════════ */}
       <div
         className="mx-auto px-6 md:px-10 py-5"
-        style={{ maxWidth: "1152px" }}
+        style={{ maxWidth: "1366px" }}
       >
         <p className="text-sm" style={{ color: "#4A415E" }} aria-live="polite" aria-atomic="true">
           Showing{" "}
@@ -659,7 +659,7 @@ function SearchPageInner() {
       {/* ══════════════ TWO-COLUMN LAYOUT ══════════════ */}
       <div
         className="mx-auto flex items-start"
-        style={{ maxWidth: "1152px" }}
+        style={{ maxWidth: "1366px" }}
       >
         {/* ── Results column ── */}
         <div
@@ -706,16 +706,13 @@ function SearchPageInner() {
         <div
           className={`${
             mobileView === "map" ? "block" : "hidden lg:block"
-          } lg:w-[300px] xl:w-[340px] shrink-0 lg:sticky lg:overflow-hidden`}
+          } lg:w-[360px] xl:w-[408px] shrink-0 lg:sticky lg:overflow-hidden`}
           style={{
             borderLeft: "1px solid #D5D0E4",
             top:        `${MAP_STICKY_TOP}px`,
           }}
         >
-          <div
-            className="w-full h-[60vh]"
-            style={{ height: `calc(100vh - ${MAP_STICKY_TOP}px)` }}
-          >
+          <div className="w-full h-[60vh]">
             <MapView directors={filteredAndSorted} />
           </div>
         </div>
