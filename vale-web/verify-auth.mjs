@@ -8,21 +8,16 @@ page.on("pageerror", (err) => errors.push("PAGEERROR: " + err.message));
 
 const shot = (name) => page.screenshot({ path: `auth-${name}.png`, fullPage: false });
 
-console.log("--- 1. Unauthenticated access to /admin/dashboard ---");
-await page.goto("http://localhost:3000/admin/dashboard", { waitUntil: "networkidle" });
+console.log("--- 1. Unauthenticated access to /directors/dashboard ---");
+await page.goto("http://localhost:3000/directors/dashboard", { waitUntil: "networkidle" });
 console.log("URL after nav:", page.url());
 await shot("01-blocked-dashboard");
-
-console.log("--- 2. Unauthenticated access to /admin/verification ---");
-await page.goto("http://localhost:3000/admin/verification", { waitUntil: "networkidle" });
-console.log("URL after nav:", page.url());
-await shot("02-blocked-verification");
 
 const testEmail = `test-fd-${Date.now()}@example.com`;
 const testPassword = "TestPassword123!";
 
-console.log("--- 3. Sign up:", testEmail, "---");
-await page.goto("http://localhost:3000/admin/signup", { waitUntil: "networkidle" });
+console.log("--- 2. Sign up:", testEmail, "---");
+await page.goto("http://localhost:3000/directors/signup", { waitUntil: "networkidle" });
 await page.fill("#email", testEmail);
 await page.fill("#password", testPassword);
 await page.fill("#confirmPassword", testPassword);
@@ -33,7 +28,7 @@ await shot("03-after-signup");
 const bodyText = await page.evaluate(() => document.body.innerText);
 console.log("Needs confirmation screen?", bodyText.includes("Check your email"));
 
-if (page.url().includes("/admin/onboard")) {
+if (page.url().includes("/directors/onboard")) {
   console.log("--- 4. Onboarding flow ---");
   await page.fill("#businessName", "Test Funeral Home E2E");
   await page.click('button:has-text("Continue")');
@@ -90,12 +85,12 @@ if (page.url().includes("/admin/onboard")) {
   console.log("URL after sign out:", page.url());
 
   console.log("--- 8. Re-access dashboard after sign out ---");
-  await page.goto("http://localhost:3000/admin/dashboard", { waitUntil: "networkidle" });
+  await page.goto("http://localhost:3000/directors/dashboard", { waitUntil: "networkidle" });
   console.log("URL:", page.url());
   await shot("09-blocked-after-signout");
 
   console.log("--- 9. Log back in ---");
-  await page.goto("http://localhost:3000/admin/login", { waitUntil: "networkidle" });
+  await page.goto("http://localhost:3000/directors/login", { waitUntil: "networkidle" });
   await page.fill("#email", testEmail);
   await page.fill("#password", testPassword);
   await page.click('button[type="submit"]');

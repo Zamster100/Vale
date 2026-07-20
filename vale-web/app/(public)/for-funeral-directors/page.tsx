@@ -248,7 +248,7 @@ export default function ForFuneralDirectors() {
                 animate={{ opacity: 1, y: 0, transition: { duration: 0.55, delay: 0.3, ease: EASE } }}
               >
                 <Link
-                  href="/admin/signup"
+                  href="/directors/signup"
                   className="inline-flex items-center justify-center gap-2 min-h-[44px] px-7 py-3 rounded-xl bg-[#4F34C4] text-white text-[15px] font-[700] transition-[background-color] duration-200 ease-out hover:bg-[#3B229D] active:bg-[#26126E] group"
                 >
                   List your business — it&apos;s free
@@ -552,7 +552,7 @@ export default function ForFuneralDirectors() {
 
           <motion.div className="text-center" {...fadeUp(0.1)}>
             <Link
-              href="/admin/signup"
+              href="/directors/signup"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none"
               style={{ background: GOLD, color: DARK }}
             >
@@ -647,7 +647,7 @@ export default function ForFuneralDirectors() {
                 ].map((item) => <Check key={item}>{item}</Check>)}
               </ul>
               <Link
-                href="/admin/signup"
+                href="/directors/signup"
                 className="block text-center px-6 py-3.5 rounded-xl font-bold text-sm transition-all hover:opacity-90 active:scale-[0.98] focus:outline-none"
                 style={{ background: PURPLE, color: "white" }}
               >
@@ -863,7 +863,7 @@ export default function ForFuneralDirectors() {
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/admin/signup"
+              href="/directors/signup"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.03] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C541]"
               style={{ background: GOLD, color: DARK }}
             >

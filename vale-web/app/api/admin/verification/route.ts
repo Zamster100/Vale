@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { requireStaff } from "@/lib/staffAuth";
 
-// Cross-tenant admin tool (verifies/accredits *any* FD, not just the caller's
-// own) -- intentionally uses the service-role client and has no auth check
-// of its own yet. This mirrors today's access model (any signed-up FD can
-// reach /admin/verification); a real staff-only gate is a follow-up.
+// Cross-tenant admin tool (verifies/accredits *any* FD, not just the
+// caller's own) -- uses the service-role client, gated by requireStaff().
 
 export async function GET() {
+  const staff = await requireStaff();
+  if (!staff) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("funeral_directors")
@@ -17,6 +19,9 @@ export async function GET() {
 }
 
 export async function PATCH(req: NextRequest) {
+  const staff = await requireStaff();
+  if (!staff) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+
   let body: {
     id: string;
     nafdVerified?: boolean;

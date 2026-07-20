@@ -1,11 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PROTECTED_PREFIXES = ["/admin/dashboard", "/admin/verification"];
+const FD_PROTECTED_PREFIXES = ["/directors/dashboard"];
+const STAFF_PROTECTED_PREFIXES = ["/admin/overview", "/admin/verification", "/admin/directors", "/admin/reviews"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (!PROTECTED_PREFIXES.some((p) => pathname.startsWith(p))) {
+  const isFdRoute = FD_PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
+  const isStaffRoute = STAFF_PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
+  if (!isFdRoute && !isStaffRoute) {
     return NextResponse.next();
   }
 
@@ -33,12 +36,29 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.redirect(new URL("/admin/signup", request.url));
+    return NextResponse.redirect(new URL(isStaffRoute ? "/admin/login" : "/directors/signup", request.url));
+  }
+
+  if (isStaffRoute) {
+    const { data: staffRow } = await supabase
+      .from("staff_users")
+      .select("email")
+      .eq("email", user.email ?? "")
+      .maybeSingle();
+    if (!staffRow) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
   }
 
   return response;
 }
 
 export const config = {
-  matcher: ["/admin/dashboard/:path*", "/admin/verification/:path*"],
+  matcher: [
+    "/directors/dashboard/:path*",
+    "/admin/overview/:path*",
+    "/admin/verification/:path*",
+    "/admin/directors/:path*",
+    "/admin/reviews/:path*",
+  ],
 };

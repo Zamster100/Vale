@@ -21,7 +21,7 @@ const MOBILE_LINKS = [
   { href: "/how-it-works",        label: "How it works",        match: ["/how-it-works"] },
   { href: "/resources",           label: "Cost guide",          match: ["/resources", "/guides"] },
   { href: "/about",               label: "About",               match: ["/about"] },
-  { href: "/for-funeral-directors", label: "For funeral directors", match: ["/for-funeral-directors", "/admin"] },
+  { href: "/for-funeral-directors", label: "For funeral directors", match: ["/for-funeral-directors", "/directors"] },
 ] as const;
 
 export default function Navigation() {

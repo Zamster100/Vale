@@ -13,15 +13,14 @@ import {
   RefreshCw,
   LayoutDashboard,
   Images,
-  ShieldCheck,
   Clock,
 } from "lucide-react";
-import MetricCard from "@/components/admin/MetricCard";
-import QuoteRequestFeed from "@/components/admin/QuoteRequestFeed";
-import ProfileViewsChart from "@/components/admin/ProfileViewsChart";
-import ServiceBreakdown from "@/components/admin/ServiceBreakdown";
-import GalleryTeamManager from "@/components/admin/GalleryTeamManager";
-import HoursEditor from "@/components/admin/HoursEditor";
+import MetricCard from "@/components/MetricCard";
+import QuoteRequestFeed from "@/components/directors/QuoteRequestFeed";
+import ProfileViewsChart from "@/components/directors/ProfileViewsChart";
+import ServiceBreakdown from "@/components/directors/ServiceBreakdown";
+import GalleryTeamManager from "@/components/directors/GalleryTeamManager";
+import HoursEditor from "@/components/directors/HoursEditor";
 import { SkeletonMetricCard, SkeletonChartCard, SkeletonFeedItem } from "@/components/Skeleton";
 import { useToast, ToastList } from "@/components/Toast";
 import { getUser, getProfile, signOut, type FDUser, type FDProfile } from "@/lib/auth";
@@ -81,8 +80,8 @@ export default function DashboardPage() {
 
   useEffect(() => {
     getUser().then(async (u) => {
-      if (!u) { router.replace("/admin/signup"); return; }
-      if (!u.onboarded || !u.fdId) { router.replace("/admin/onboard"); return; }
+      if (!u) { router.replace("/directors/signup"); return; }
+      if (!u.onboarded || !u.fdId) { router.replace("/directors/onboard"); return; }
       const p = await getProfile();
       setUser(u);
       setProfile(p);
@@ -100,7 +99,7 @@ export default function DashboardPage() {
 
   const handleSignOut = async () => {
     await signOut();
-    router.push("/admin/signup");
+    router.push("/directors/signup");
   };
 
   if (!authChecked) {
@@ -141,14 +140,6 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/admin/verification"
-              className="hidden sm:flex items-center gap-1.5 text-sm px-3 py-2 rounded min-h-[44px] hover:opacity-75 transition-opacity focus:outline-none"
-              style={{ color: "rgba(255,255,255,0.7)" }}
-            >
-              <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-              Verification
-            </Link>
             <Link
               href={`/funeral-directors/${fdId}`}
               target="_blank"

@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 
   const newRequest = mapQuoteRequestRow(data as QuoteRequestRow);
 
-  const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/admin/dashboard`;
+  const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/directors/dashboard`;
 
   logEmails(
     {

@@ -15,9 +15,7 @@ import {
   List,
   ShieldCheck,
   SlidersHorizontal,
-  Bookmark,
   X,
-  Share2,
 } from "lucide-react";
 import ValeAssuredBadge from "@/components/ValeAssuredBadge";
 import {
@@ -150,20 +148,6 @@ function FDCard({
                 "linear-gradient(to bottom, rgba(16,11,32,0.28) 0%, transparent 45%)",
             }}
           />
-
-          {/* Save / bookmark */}
-          <button
-            type="button"
-            aria-label="Save to favourites"
-            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full hover:scale-110 transition-transform focus:outline-none"
-            style={{
-              background:    "rgba(255,255,255,0.92)",
-              backdropFilter: "blur(4px)",
-            }}
-            onClick={(e) => e.preventDefault()}
-          >
-            <Bookmark className="w-4 h-4" style={{ color: "#4A415E" }} />
-          </button>
 
           {/* Assured / Verified badge */}
           {fd.assured ? (
@@ -418,25 +402,10 @@ function SearchPageInner() {
                   maxWidth:   "440px",
                 }}
               >
-                Search by postcode or city, compare verified prices, add
-                directors to your favourites, get pricing and call them
-                directly.
+                Search by postcode or city, compare verified prices, get
+                pricing and call them directly.
               </p>
             </div>
-
-            {/* Share button — top-right, exactly like Lottie */}
-            <button
-              type="button"
-              className="shrink-0 flex items-center gap-2 text-sm font-semibold rounded-xl px-4 py-2.5 transition-colors hover:bg-[#F8F7FF] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4F34C4]"
-              style={{
-                background: "white",
-                border:     "1px solid #D5D0E4",
-                color:      "#100B20",
-              }}
-            >
-              <Share2 className="w-4 h-4" aria-hidden="true" />
-              Share
-            </button>
           </div>
 
           {/* ── Filter bar — single row, exactly like Lottie ── */}

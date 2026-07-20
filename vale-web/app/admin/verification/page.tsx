@@ -1,66 +1,11 @@
-"use client";
+import { ShieldCheck } from "lucide-react";
+import StaffHeader from "@/components/admin/StaffHeader";
+import VerificationQueue from "@/components/admin/VerificationQueue";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, ShieldCheck } from "lucide-react";
-import { getUser } from "@/lib/auth";
-import VerificationPanel from "@/components/admin/VerificationPanel";
-
-export default function VerificationPage() {
-  const router = useRouter();
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    getUser().then((user) => {
-      if (!user) { router.replace("/admin/signup"); return; }
-      setChecked(true);
-    });
-  }, [router]);
-
-  if (!checked) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FDFCFE" }}>
-        <div
-          className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin"
-          style={{ borderColor: "#100B20", borderTopColor: "transparent" }}
-          aria-label="Loading"
-        />
-      </div>
-    );
-  }
-
+export default function StaffVerificationPage() {
   return (
     <div className="min-h-screen" style={{ background: "#FDFCFE" }}>
-      <header
-        className="sticky top-0 z-50"
-        style={{ background: "#100B20", borderBottom: "1px solid rgba(28,31,42,0.3)" }}
-      >
-        <div className="max-w-[1366px] mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="text-xl tracking-tight focus:outline-none rounded"
-              style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 600, color: "white" }}
-              aria-label="Vale home"
-            >
-              Vale<span style={{ color: "#F5C541" }}>.</span>
-            </Link>
-            <span style={{ color: "rgba(255,255,255,0.3)" }} aria-hidden="true">|</span>
-            <span className="text-sm" style={{ color: "rgba(255,255,255,0.7)" }}>
-              Verification Panel
-            </span>
-          </div>
-          <Link
-            href="/admin/dashboard"
-            className="flex items-center gap-1.5 text-sm px-3 py-2 rounded hover:opacity-75 transition-opacity focus:outline-none min-h-[44px]"
-            style={{ color: "rgba(255,255,255,0.7)" }}
-          >
-            <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-            Dashboard
-          </Link>
-        </div>
-      </header>
+      <StaffHeader />
 
       <main className="max-w-[1366px] mx-auto px-6 py-8">
         <div className="flex items-center gap-3 mb-6">
@@ -78,10 +23,10 @@ export default function VerificationPage() {
               className="text-xl font-semibold"
               style={{ color: "#100B20", fontFamily: "var(--font-dm-sans)" }}
             >
-              Vale Verification Panel
+              Verification queue
             </h1>
             <p className="text-sm" style={{ color: "#4A415E" }}>
-              Accreditation and Assured status management · Vale admin only
+              Accreditation and Assured status management across all providers.
             </p>
           </div>
         </div>
@@ -90,7 +35,7 @@ export default function VerificationPage() {
           className="p-6 rounded-xl"
           style={{ background: "white", border: "1px solid #D5D0E4" }}
         >
-          <VerificationPanel />
+          <VerificationQueue />
         </div>
       </main>
     </div>

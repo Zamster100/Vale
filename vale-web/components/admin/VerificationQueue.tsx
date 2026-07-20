@@ -34,7 +34,7 @@ const ACCRED_COLS: { field: BoolField; label: string }[] = [
   { field: "iccmVerified", label: "ICCM" },
 ];
 
-export default function VerificationPanel() {
+export default function VerificationQueue() {
   const [rows, setRows] = useState<RowState[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);

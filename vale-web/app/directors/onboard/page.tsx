@@ -148,8 +148,8 @@ export default function OnboardPage() {
 
   useEffect(() => {
     getUser().then((user) => {
-      if (!user) router.replace("/admin/signup");
-      else if (user.onboarded) router.replace("/admin/dashboard");
+      if (!user) router.replace("/directors/signup");
+      else if (user.onboarded) router.replace("/directors/dashboard");
     });
   }, [router]);
 
@@ -205,7 +205,7 @@ export default function OnboardPage() {
       setLoading(true);
       try {
         await saveProfile({ ...form, prices: valid });
-        router.push("/admin/dashboard");
+        router.push("/directors/dashboard");
       } catch {
         setErrors({ prices: "Something went wrong saving your profile. Please try again." });
         setLoading(false);
@@ -231,8 +231,14 @@ export default function OnboardPage() {
           aria-label="Vale homepage"
         >
           <span
-            className="text-2xl tracking-tight"
-            style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, color: "#100B20" }}
+            style={{
+              fontFamily: "var(--font-cormorant), Georgia, serif",
+              fontWeight: 600,
+              fontSize: "26px",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+              color: "#000000",
+            }}
           >Vale<span style={{ color: "#4F34C4" }}>.</span></span>
         </Link>
         <span className="text-xs" style={{ color: "#4A415E" }}>For Funeral Directors</span>

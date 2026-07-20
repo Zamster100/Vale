@@ -9,7 +9,7 @@ const FOOTER_LINKS = {
   ],
   "Funeral directors": [
     { label: "List your business",     href: "/for-funeral-directors" },
-    { label: "Sign in",                href: "/admin/signup" },
+    { label: "Sign in",                href: "/directors/signup" },
     { label: "About Vale Assured",     href: "/for-funeral-directors" },
   ],
   Company: [
@@ -20,9 +20,9 @@ const FOOTER_LINKS = {
 } as const;
 
 const LEGAL_LINKS = [
-  { label: "Privacy", href: "/" },
-  { label: "Cookies", href: "/" },
-  { label: "Terms",   href: "/" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Cookies", href: "/privacy#cookies" },
+  { label: "Terms",   href: "/terms" },
 ];
 
 const DM = "var(--font-dm-sans), -apple-system, sans-serif";
