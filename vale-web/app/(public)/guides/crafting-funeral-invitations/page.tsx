@@ -55,6 +55,7 @@ export default function CraftingInvitationsPage() {
       date="2 June 2026"
       readTime="6 min"
       heroColor={MINT}
+      heroImage="/guides/crafting-funeral-invitations.png"
       tocLinks={TOC}
     >
 

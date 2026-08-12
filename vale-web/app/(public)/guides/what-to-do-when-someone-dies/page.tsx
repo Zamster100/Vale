@@ -58,6 +58,7 @@ export default function WhatToDoWhenSomeoneDiesPage() {
       date="28 May 2026"
       readTime="6 min"
       heroColor={MINT}
+      heroImage="/guides/what-to-do-when-someone-dies.png"
       tocLinks={TOC}
     >
       <p style={P}>

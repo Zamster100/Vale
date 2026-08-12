@@ -35,6 +35,7 @@ export default function UnderstandingInheritanceTaxPage() {
       date="16 May 2026"
       readTime="8 min"
       heroColor={MINT}
+      heroImage="/guides/understanding-inheritance-tax.png"
       tocLinks={TOC}
     >
       <p style={P}>

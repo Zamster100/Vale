@@ -35,6 +35,7 @@ export default function WhatToDoWhenChildDiesPage() {
       date="25 May 2026"
       readTime="8 min"
       heroColor={PINK}
+      heroImage="/guides/what-to-do-when-a-child-dies.png"
       tocLinks={TOC}
     >
       {/* Sympathetic intro */}

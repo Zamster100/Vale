@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronRight, Clock, ArrowLeft, Star, Search } from "lucide-react";
 
@@ -28,13 +29,14 @@ export interface BlogLayoutProps {
   date: string;
   readTime: string;
   heroColor: string;
+  heroImage?: string;
   tocLinks: TocLink[];
   children: React.ReactNode;
 }
 
 export default function BlogLayout({
   title, category, categoryBg, categoryText,
-  author, date, readTime, heroColor, tocLinks, children,
+  author, date, readTime, heroColor, heroImage, tocLinks, children,
 }: BlogLayoutProps) {
   const reduce = useReducedMotion();
 
@@ -109,8 +111,14 @@ export default function BlogLayout({
         </div>
       </section>
 
-      {/* ── Hero image area (swap for <img> when photos are ready) ── */}
-      <div style={{ background: heroColor, height: "260px" }} aria-hidden="true" />
+      {/* ── Hero image ── */}
+      {heroImage ? (
+        <div style={{ position: "relative", height: "260px" }} aria-hidden="true">
+          <Image src={heroImage} alt="" fill className="object-cover" priority />
+        </div>
+      ) : (
+        <div style={{ background: heroColor, height: "260px" }} aria-hidden="true" />
+      )}
 
       {/* ── Main content ── */}
       <div className="max-w-[1366px] mx-auto px-6 md:px-10 py-12 md:py-16">

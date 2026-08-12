@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { BookOpen, ChevronRight, Clock } from "lucide-react";
 
@@ -25,7 +26,7 @@ type GuidePost = {
   author: string;
   date: string;
   readTime: string;
-  color: string;
+  image: string;
   href: string;
 };
 
@@ -52,7 +53,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "4 June 2026",
     readTime: "8 min",
-    color: LAV,
+    image: "/guides/cannot-afford-a-funeral.png",
     href: "/guides/cannot-afford-a-funeral",
   },
   {
@@ -64,7 +65,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "3 June 2026",
     readTime: "10 min",
-    color: LAV,
+    image: "/guides/planning-a-meaningful-funeral.png",
     href: "/guides/planning-a-meaningful-funeral",
   },
   {
@@ -76,7 +77,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "2 June 2026",
     readTime: "6 min",
-    color: LAV,
+    image: "/guides/crafting-funeral-invitations.png",
     href: "/guides/crafting-funeral-invitations",
   },
   {
@@ -88,7 +89,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "1 June 2026",
     readTime: "7 min",
-    color: LAV,
+    image: "/guides/understanding-funeral-costs.png",
     href: "/guides/understanding-funeral-costs",
   },
   {
@@ -100,7 +101,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "28 May 2026",
     readTime: "6 min",
-    color: LAV,
+    image: "/guides/what-to-do-when-someone-dies.png",
     href: "/guides/what-to-do-when-someone-dies",
   },
   {
@@ -112,7 +113,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "25 May 2026",
     readTime: "8 min",
-    color: LAV,
+    image: "/guides/what-to-do-when-a-child-dies.png",
     href: "/guides/what-to-do-when-a-child-dies",
   },
   {
@@ -124,7 +125,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "22 May 2026",
     readTime: "7 min",
-    color: LAV,
+    image: "/guides/understanding-next-of-kin.png",
     href: "/guides/understanding-next-of-kin",
   },
   {
@@ -136,7 +137,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "19 May 2026",
     readTime: "9 min",
-    color: LAV,
+    image: "/guides/managing-your-estate.png",
     href: "/guides/managing-your-estate",
   },
   {
@@ -148,7 +149,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "16 May 2026",
     readTime: "8 min",
-    color: LAV,
+    image: "/guides/understanding-inheritance-tax.png",
     href: "/guides/understanding-inheritance-tax",
   },
   {
@@ -160,7 +161,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "13 May 2026",
     readTime: "7 min",
-    color: LAV,
+    image: "/guides/lasting-power-of-attorney.png",
     href: "/guides/lasting-power-of-attorney",
   },
   {
@@ -172,7 +173,7 @@ const GUIDES: GuidePost[] = [
     author: "Vale Family Advisors",
     date: "10 May 2026",
     readTime: "6 min",
-    color: LAV,
+    image: "/guides/planning-for-your-pet.png",
     href: "/guides/planning-for-your-pet",
   },
 ];
@@ -395,15 +396,14 @@ export default function GuidesPage() {
                 aria-label={`Read: ${featured.title}`}
               >
                 <div className="grid md:grid-cols-5">
-                  {/* Image area — replace style with <img> when photos are ready */}
+                  {/* Image area */}
                   <div
-                    className="md:col-span-2"
-                    style={{
-                      background: featured.color,
-                      minHeight: "220px",
-                    }}
+                    className="md:col-span-2 relative"
+                    style={{ minHeight: "220px" }}
                     aria-hidden="true"
-                  />
+                  >
+                    <Image src={featured.image} alt="" fill className="object-cover" />
+                  </div>
 
                   {/* Content */}
                   <div className="md:col-span-3 p-8 flex flex-col justify-center">
@@ -484,14 +484,14 @@ export default function GuidesPage() {
                     style={{ border: `1px solid ${BDR}` }}
                     aria-label={`Read: ${post.title}`}
                   >
-                    {/* Image area — replace style with <img> when photos are ready */}
+                    {/* Image area */}
                     <div
-                      style={{
-                        background: post.color,
-                        aspectRatio: "16 / 9",
-                      }}
+                      className="relative"
+                      style={{ aspectRatio: "16 / 9" }}
                       aria-hidden="true"
-                    />
+                    >
+                      <Image src={post.image} alt="" fill className="object-cover" />
+                    </div>
 
                     {/* Card body */}
                     <div className="flex flex-col flex-1 p-5">

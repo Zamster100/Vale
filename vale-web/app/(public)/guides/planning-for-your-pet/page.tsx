@@ -33,6 +33,7 @@ export default function PlanningForYourPetPage() {
       date="10 May 2026"
       readTime="6 min"
       heroColor={YEL}
+      heroImage="/guides/planning-for-your-pet.png"
       tocLinks={TOC}
     >
       <p style={P}>

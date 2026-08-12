@@ -33,6 +33,7 @@ export default function UnderstandingNextOfKinPage() {
       date="22 May 2026"
       readTime="7 min"
       heroColor={YEL}
+      heroImage="/guides/understanding-next-of-kin.png"
       tocLinks={TOC}
     >
       <p style={P}>

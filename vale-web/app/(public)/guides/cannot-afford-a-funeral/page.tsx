@@ -43,6 +43,7 @@ export default function CannotAffordFuneralPage() {
       date="4 June 2026"
       readTime="8 min"
       heroColor={LAV}
+      heroImage="/guides/cannot-afford-a-funeral.png"
       tocLinks={TOC}
     >
 

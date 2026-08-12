@@ -34,6 +34,7 @@ export default function ManagingYourEstatePage() {
       date="19 May 2026"
       readTime="9 min"
       heroColor={LAV}
+      heroImage="/guides/managing-your-estate.png"
       tocLinks={TOC}
     >
       <p style={P}>

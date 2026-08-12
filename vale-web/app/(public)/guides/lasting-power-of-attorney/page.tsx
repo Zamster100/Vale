@@ -33,6 +33,7 @@ export default function LastingPowerOfAttorneyPage() {
       date="13 May 2026"
       readTime="7 min"
       heroColor={PINK}
+      heroImage="/guides/lasting-power-of-attorney.png"
       tocLinks={TOC}
     >
       <p style={P}>

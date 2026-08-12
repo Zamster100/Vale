@@ -56,6 +56,7 @@ export default function PlanningFuneralPage() {
       date="3 June 2026"
       readTime="10 min"
       heroColor={PINK}
+      heroImage="/guides/planning-a-meaningful-funeral.png"
       tocLinks={TOC}
     >
 

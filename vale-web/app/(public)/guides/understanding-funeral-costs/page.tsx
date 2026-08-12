@@ -34,6 +34,7 @@ export default function UnderstandingFuneralCostsPage() {
       date="1 June 2026"
       readTime="7 min"
       heroColor={LAV}
+      heroImage="/guides/understanding-funeral-costs.png"
       tocLinks={TOC}
     >
       <p style={P}>
