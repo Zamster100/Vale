@@ -10,6 +10,7 @@ const FOOTER_LINKS = {
   "Funeral directors": [
     { label: "List your business",     href: "/for-funeral-directors" },
     { label: "Sign in",                href: "/directors/signup" },
+    { label: "Partner deck",           href: "/deck" },
   ],
   Company: [
     { label: "About Vale",  href: "/about" },

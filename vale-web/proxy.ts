@@ -1,11 +1,23 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { DECK_AUTH_COOKIE, DECK_AUTH_VALUE } from "@/lib/deck-auth";
 
 const FD_PROTECTED_PREFIXES = ["/directors/dashboard"];
 const STAFF_PROTECTED_PREFIXES = ["/admin/overview", "/admin/verification", "/admin/directors", "/admin/reviews"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/deck") && pathname !== "/deck/login") {
+    const authed = request.cookies.get(DECK_AUTH_COOKIE)?.value === DECK_AUTH_VALUE;
+    if (!authed) {
+      const url = new URL("/deck/login", request.url);
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
   const isFdRoute = FD_PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   const isStaffRoute = STAFF_PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   if (!isFdRoute && !isStaffRoute) {
@@ -55,6 +67,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/deck/:path*",
     "/directors/dashboard/:path*",
     "/admin/overview/:path*",
     "/admin/verification/:path*",
