@@ -10,12 +10,10 @@ const FOOTER_LINKS = {
   "Funeral directors": [
     { label: "List your business",     href: "/for-funeral-directors" },
     { label: "Sign in",                href: "/directors/signup" },
-    { label: "About Vale Assured",     href: "/for-funeral-directors" },
   ],
   Company: [
     { label: "About Vale",  href: "/about" },
-    { label: "Contact",     href: "mailto:hello@vale.co.uk" },
-    { label: "Press",       href: "mailto:press@vale.co.uk" },
+    { label: "Contact",     href: "/contact" },
   ],
 } as const;
 
