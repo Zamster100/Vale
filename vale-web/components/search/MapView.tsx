@@ -96,10 +96,10 @@ export default function MapView({ directors: all }: MapViewProps) {
           style={{ width: "100%", height: "100%" }}
           scrollWheelZoom={false}
         >
-          {/* CartoDB Positron — clean greyscale tiles */}
+          {/* OpenStreetMap standard tiles — no API key (CARTO now requires one) */}
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
           {directors.map((fd) => (
