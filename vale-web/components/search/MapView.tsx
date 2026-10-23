@@ -57,7 +57,9 @@ interface MapViewProps {
   directors: FuneralDirector[];
 }
 
-export default function MapView({ directors }: MapViewProps) {
+export default function MapView({ directors: all }: MapViewProps) {
+  // Directors without coordinates are mapped to 0,0 upstream; keep them off the map
+  const directors = all.filter((fd) => fd.latitude !== 0 || fd.longitude !== 0);
   const center: [number, number] =
     directors.length > 0
       ? [
